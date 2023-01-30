@@ -27,7 +27,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-testing-library": "^5.9.1",
     "jest": "28.1.0",
-    "jest-environment-jsdom": "28.1.0",
+    "jest-environment-jsdom": "29.4.1",
     "postcss": "^8.4.18",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.2.2",
