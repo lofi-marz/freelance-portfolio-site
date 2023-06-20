@@ -77,12 +77,7 @@ export function Projects() {
             <RepeatText n={2}>Projects</RepeatText>
             <div className="flex w-full flex-col items-start justify-center">
                 {projects.map((p, i) => (
-                    <Project
-                        key={p.id}
-                        {...p.attributes}
-                        first={i == 0}
-                        last={i == projects.length - 1}
-                    />
+                    <Project key={p.id} {...p.attributes} first={i == 0} />
                 ))}
             </div>
         </motion.section>
