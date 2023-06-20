@@ -6,6 +6,7 @@ import {
     PT_Sans,
     Rubik,
     Vollkorn,
+    Lexend,
 } from 'next/font/google';
 
 export const title = IBM_Plex_Sans({

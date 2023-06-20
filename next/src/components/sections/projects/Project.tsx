@@ -169,7 +169,7 @@ export function Project({
             </motion.div>
             <motion.div
                 className={clsx(
-                    'absolute right-0 top-0 h-full w-full overflow-clip brightness-50 lg:block lg:w-[50vw] lg:brightness-100'
+                    'absolute right-0 top-0 h-full w-full overflow-clip brightness-50 will-change-[height] lg:block lg:w-[50vw] lg:brightness-100'
                 )}
                 style={{
                     height: first ? '100%' : imageHeight,

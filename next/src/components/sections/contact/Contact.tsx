@@ -61,7 +61,8 @@ function LinksRow({ links }: { links: [string, string][] }) {
                     key={text}
                     href={url}
                     target="_blank"
-                    rel="noreferrer">
+                    rel="noreferrer"
+                    className="transition-all hover:scale-110 hover:text-primary">
                     {text}
                 </motion.a>
             ))}
