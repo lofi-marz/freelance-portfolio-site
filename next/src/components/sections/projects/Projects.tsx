@@ -72,24 +72,18 @@ export function Projects() {
     const md = useMediaQuery('md');
     return (
         <motion.section
-            className="themed-bg themed-text relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center py-24 pb-[25vh] font-title md:pb-[50vh]"
+            className="themed-bg themed-text relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center py-24 font-title "
             id="projects">
             <RepeatText n={2}>Projects</RepeatText>
-            <div className="flex w-full flex-col-reverse items-start justify-center px-6 md:flex-row md:items-start md:justify-start md:px-24">
-                <div className="flex w-full flex-col items-center justify-center md:z-50 md:-mt-[50vh] md:mt-auto md:w-3/5">
-                    {projects.map((p, i) => (
-                        <Project
-                            key={p.id}
-                            {...p.attributes}
-                            onView={onChange(i)}
-                        />
-                    ))}
-                </div>
-                {md && (
-                    <div className="sticky top-0 z-0 flex h-[50vh] w-full grow items-start justify-between md:h-screen md:w-auto md:items-center">
-                        <ProjectPreview project={project} />
-                    </div>
-                )}
+            <div className="flex w-full flex-col items-start justify-center">
+                {projects.map((p, i) => (
+                    <Project
+                        key={p.id}
+                        {...p.attributes}
+                        first={i == 0}
+                        last={i == projects.length - 1}
+                    />
+                ))}
             </div>
         </motion.section>
     );

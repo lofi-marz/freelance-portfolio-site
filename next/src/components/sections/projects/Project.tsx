@@ -57,10 +57,7 @@ const ProjectPreviewVariants = {
     },
 };
 
-export type ProjectProps = ProjectContent['attributes'] & {
-    onView: () => void;
-};
-
+export type ProjectProps = ProjectContent['attributes'] & { first?: boolean };
 function ProjectsHeading() {
     //TODO: why does the z index mess up
     return (
@@ -124,55 +121,74 @@ export function Project({
     brief,
     desktopPreview,
     mobilePreview,
-    onView,
+    fullDesktop,
+    first = false,
 }: ProjectProps) {
-    const [colourIndex, setColourIndex] = useState(0);
-    useEffect(() => {
-        setColourIndex(Math.floor(Math.random() * 3));
-    }, []);
-    const colour = ['bg-primary', 'bg-secondary', 'themed-bg-invert'][
-        colourIndex
-    ];
-    const md = useMediaQuery('md');
+    const target = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target,
+        offset: ['start end', 'center center'],
+    });
+    const imageHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+    const imagePosition = useTransform(scrollYProgress, (v) => {
+        if (v === 1) return 'fixed';
+        if (first) return 'absolute';
+        if (v > 0) return 'fixed';
+        return 'relative';
+    });
     return (
-        <motion.div
-            className={clsx(
-                'relative flex w-full flex-col items-center justify-start gap-6 md:h-[100vh] md:h-screen md:snap-center md:justify-center md:pb-12 md:pb-6'
-            )}
-            initial="initial"
-            whileHover="hover"
-            onViewportEnter={() => onView()}
-            viewport={{ margin: '-50%' }}
-            transition={{ staggerChildren: 0.1 }}>
-            <NavSpacer />
-            {!md && (
-                <MobileProjectImage
-                    src={
-                        'https://marimari.tech/cms' +
-                        mobilePreview.data.attributes.url
-                    }
-                />
-            )}
-            <div className="justify-baseline flex w-full flex-col items-start md:gap-6">
-                <h3 className="w-full text-4xl font-bold md:w-4/5 md:text-7xl lg:text-8xl">
-                    {title}
-                </h3>
-                <p className="hidden w-full font-body md:block md:w-1/2">
-                    {brief}
-                </p>
-                <div className="card mt-6 flex flex-row items-center justify-center gap-3 text-xl">
-                    {liveLink && (
-                        <ProjectLink href={liveLink}>
-                            <FaLink /> Link
-                        </ProjectLink>
-                    )}
-                    {repoLink && (
-                        <ProjectLink href={repoLink}>
-                            <FaGithub /> Code
-                        </ProjectLink>
-                    )}
+        <div
+            className="relative flex h-screen w-full flex-row justify-start"
+            ref={target}>
+            <motion.div
+                className={clsx(
+                    'relative z-10 flex flex-col items-center justify-start pl-24 md:h-screen md:justify-center lg:w-[50vw]'
+                )}>
+                <NavSpacer />
+
+                <div className="justify-baseline flex w-full flex-col items-start md:gap-6">
+                    <h3 className="w-full text-4xl font-bold md:text-7xl lg:text-8xl">
+                        {title}
+                    </h3>
+                    <p className="hidden w-full font-body md:block md:w-80">
+                        {brief}
+                    </p>
+                    <div className="card mt-6 flex flex-row items-center justify-center gap-3 text-xl">
+                        {liveLink && (
+                            <ProjectLink href={liveLink}>
+                                <FaLink /> Link
+                            </ProjectLink>
+                        )}
+                        {repoLink && (
+                            <ProjectLink href={repoLink}>
+                                <FaGithub /> Code
+                            </ProjectLink>
+                        )}
+                    </div>
                 </div>
-            </div>
-        </motion.div>
+            </motion.div>
+            <motion.div
+                className={clsx(
+                    'absolute right-0 top-0 h-full w-full overflow-clip brightness-50 lg:block lg:w-[50vw] lg:brightness-100'
+                )}
+                style={{
+                    height: first ? '100%' : imageHeight,
+                    position: imagePosition,
+                }}>
+                <div className="relative h-screen w-full">
+                    <Image
+                        src={
+                            'https://marimari.tech/cms' +
+                            (fullDesktop
+                                ? fullDesktop?.data.attributes.url
+                                : desktopPreview.data.attributes.url)
+                        }
+                        className="h-full w-full object-cover"
+                        fill
+                        alt="Desktop preview"
+                    />
+                </div>
+            </motion.div>
+        </div>
     );
 }
