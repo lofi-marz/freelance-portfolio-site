@@ -13,7 +13,7 @@
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "eslint-config-next": "^13.4.6",
-    "framer-motion": "^10.12.16",
+    "framer-motion": "^10.12.17",
     "next": "^13.4.6",
     "next-seo": "^6.0.0",
 
