@@ -26,7 +26,7 @@ function RepeatText({ n, children }: RepeatTextProps) {
         offset: ['start end', 'end start'],
     });
     const spring = useSpring(scrollYProgress, {
-        stiffness: 100,
+        stiffness: 10,
         damping: 30,
         restDelta: 0.001,
     });
