@@ -14,7 +14,7 @@
     "clsx": "^1.2.1",
     "eslint-config-next": "^13.4.7",
     "framer-motion": "^10.12.18",
-    "next": "^13.4.7",
+    "next": "^13.4.10",
     "next-seo": "^6.1.0",
 
     "qs": "^6.11.2",
