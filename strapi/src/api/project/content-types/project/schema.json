@@ -62,6 +62,22 @@
         "mobile"
       ],
       "default": "desktop"
+    },
+    "target": {
+      "type": "enumeration",
+      "enum": [
+        "job",
+        "freelance",
+        "both"
+      ],
+      "default": "both"
+    },
+    "mockup": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
