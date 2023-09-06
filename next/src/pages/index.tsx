@@ -184,7 +184,7 @@ export default function Home({ content }: HomeProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
     const query = qs.stringify(
         {
-            populate: ['*', 'desktopPreview', 'mobilePreview'],
+            populate: ['desktopPreview', 'mobilePreview'],
         },
         {
             encodeValuesOnly: true, // prettify URL
