@@ -31,7 +31,7 @@ export function ProjectPreview({ project }: { project: ProjectContent }) {
                     }}>
                     <Image
                         src={
-                            'https://marimari.tech/cms' +
+                            'https://marileon.me/cms' +
                             project.attributes.desktopPreview.data.attributes
                                 .url
                         }

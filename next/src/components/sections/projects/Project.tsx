@@ -178,7 +178,7 @@ export function Project({
                 <div className="relative h-screen w-full">
                     <Image
                         src={
-                            'https://marimari.tech/cms' +
+                            'https://marileon.me/cms' +
                             (fullDesktop
                                 ? fullDesktop?.data.attributes.url
                                 : desktopPreview.data.attributes.url)
