@@ -10,7 +10,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@vercel/analytics": "^1.0.1",
-    "axios": "^1.4.0",
+    "axios": "^1.5.0",
     "clsx": "^1.2.1",
     "eslint-config-next": "^13.4.19",
     "framer-motion": "^10.12.18",
