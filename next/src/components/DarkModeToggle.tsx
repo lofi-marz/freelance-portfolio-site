@@ -2,10 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaMoon, FaSun } from 'react-icons/fa';
-import {
-    useDarkModeContext,
-    useSetStoredModeContext,
-} from '@/components/DarkModeContextProvider';
+import { useSetStoredModeContext } from '@/components/DarkModeContextProvider';
 import { Theme } from '../types';
 
 function toggleTheme(theme: Theme): Theme {
@@ -18,7 +15,6 @@ export function DarkModeSpacer() {
 }
 
 export function DarkModeToggle({ className }: { className?: string }) {
-    const darkMode = useDarkModeContext();
     const setStoredMode = useSetStoredModeContext();
     //TODO: The animation on hover is a little slow but it does work
     return (
@@ -26,13 +22,10 @@ export function DarkModeToggle({ className }: { className?: string }) {
             layout
             className={clsx(
                 'hover:themed-bg-invert hover:themed-text-invert flex flex-col items-center rounded transition-all duration-500 hover:aspect-[1/2]',
-                className,
-                darkMode === 'dark' ? 'justify-end' : 'justify-start'
+                className
             )}
-            onClick={() => {
-                setStoredMode(toggleTheme(darkMode));
-            }}>
-            <DarkModeIcon dark={darkMode === 'dark'} />
+            onClick={() => {}}>
+            <DarkModeIcon dark={true} />
         </motion.button>
     );
 }
