@@ -30,7 +30,7 @@ dependencies:
     specifier: ^10.12.18
     version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
   next:
-    specifier: ^13.4.12
+    specifier: ^13.5.4
     version: 13.5.4(@babel/core@7.23.0)(react-dom@18.2.0)(react@18.2.0)
   next-seo:
     specifier: ^6.1.0
