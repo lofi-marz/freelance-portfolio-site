@@ -142,7 +142,7 @@ export function Project({
             ref={target}>
             <motion.div
                 className={clsx(
-                    'relative z-10 flex flex-col items-center justify-start pl-24 md:h-screen md:justify-center lg:w-[50vw]'
+                    'relative z-10 flex flex-col items-center justify-start pl-6 md:pl-24 md:h-screen md:justify-center lg:w-[50vw]'
                 )}>
                 <NavSpacer />
 

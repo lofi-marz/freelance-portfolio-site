@@ -21,7 +21,7 @@ export function ParallaxImage({
     return (
         <motion.div
             className={cn(
-                'w-1/2 bg-theme-invert relative',
+                'w-1/2 bg-theme-invert relative saturate-[.9]',
                 frame && 'p-[5%]',
 
                 className

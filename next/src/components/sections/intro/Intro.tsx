@@ -21,7 +21,10 @@ import omniMockup from 'assets/mockup-omni.jpg';
 import socialMockup from 'assets/mockup-socialmate.jpg';
 import petsMockup from 'assets/mockup-pets.jpg';
 import drmworldScreenshot from 'assets/screenshot-drmworld.png';
+import foodMockup from 'assets/mockup-food.jpg';
+import socialmateScreenshot from 'assets/screenshot-socialmate.png';
 import { ParallaxLayer } from './ParallaxLayer';
+import { useMediaQuery } from 'hooks/useMediaQuery';
 
 const ContainerVariants: Variants = {
     hide: { opacity: 0, height: '100vh' },
@@ -71,22 +74,25 @@ export const trackVariants: Variants = {
 const lines = ["Hi, I'm Omari.", 'I create creative experiences with code.'];
 
 export function Intro() {
+    const desktop = useMediaQuery('lg');
     const target = useRef(null);
     const { scrollYProgress } = useScroll({
         target,
         offset: ['start start', 'end end'],
     });
 
-    const scale = useTransform(
+    const maxTextScale = desktop ? 1.5 : 1;
+
+    const textScale = useTransform(
         scrollYProgress,
         [0, 0.25, 0.75, 1],
-        [1, 1, 1.5, 1.5]
+        [1, 1, maxTextScale, maxTextScale]
     );
 
-    const parallax = useTransform(
+    const textParallax = useTransform(
         scrollYProgress,
-        [0, 0.25, 1],
-        ['0%', '100%', '-100%']
+        [0, 0.3, 1],
+        ['0%', '0%', '-100%']
     );
 
     const currentlyPlaying = useCurrentlyPlayingContext();
@@ -113,7 +119,7 @@ export function Intro() {
                     key={lineI}
                     layout
                     className={clsx(
-                        'top-0 flex h-screen w-full flex-col items-center justify-center gap-6 p-12 text-center text-6xl font-bold md:text-7xl',
+                        'top-0 flex h-screen w-full flex-col items-center justify-center gap-6 p-12 text-center text-5xl sm:text-6xl font-bold md:text-7xl',
                         lineI === 0 ? 'sticky' : 'sticky'
                     )}
                     initial="hide"
@@ -125,14 +131,15 @@ export function Intro() {
                         start="100%"
                         end="-100%">
                         <ParallaxImage
-                            src={omniMockup}
+                            src={foodMockup}
                             alt="Mockup for omni"
                             className="mr-[10%]"
                         />
                         <ParallaxImage
-                            src={socialMockup}
+                            src={socialmateScreenshot}
                             alt="Mockup for omni"
                             className="ml-[10%]"
+                            frame
                         />
                     </ParallaxLayer>
                     <ParallaxLayer
@@ -164,7 +171,7 @@ export function Intro() {
                     </ParallaxLayer>
 
                     <motion.div
-                        style={{ scale, y: parallax }}
+                        style={{ scale: textScale, y: textParallax }}
                         className="mix-blend-difference">
                         <SlideInText className="z-10 md:max-w-screen-lg mix-blend-multiply">
                             {lines[lineI]}

@@ -7,6 +7,7 @@ import {
 } from 'framer-motion';
 import { WithChildrenProps } from '../../../types';
 import { cn } from 'utils';
+import { useMediaQuery } from 'hooks/useMediaQuery';
 
 export function ParallaxLayer({
     children,
@@ -20,6 +21,7 @@ export function ParallaxLayer({
 } & WithChildrenProps) {
     const willChange = useWillChange();
     const reducedMotion = useReducedMotion();
+    const desktop = useMediaQuery('md');
     const parallaxY = useTransform(
         scrollProgress,
         [0, 0.25, 1],
