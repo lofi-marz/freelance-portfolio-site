@@ -162,9 +162,9 @@ export function Intro() {
     });
     const currentlyPlaying = useCurrentlyPlayingContext();
     useMotionValueEvent(scrollYProgress, 'change', (v) => {
-        if (v < 0.3 && lineI !== 0) {
+        if (v < 0.25 && lineI !== 0) {
             setLineI(0);
-        } else if (v >= 0.3 && lineI !== 1) {
+        } else if (v >= 0.25 && lineI !== 1) {
             setLineI(1);
         }
     });
@@ -175,7 +175,7 @@ export function Intro() {
     return (
         <section
             className={clsx(
-                'themed-bg relative flex h-[250vh] w-full flex-col items-center justify-start overflow-clip',
+                'themed-bg relative flex h-[300vh] w-full flex-col items-center justify-start overflow-clip',
                 title.className
             )}
             ref={target}>

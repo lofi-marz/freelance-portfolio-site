@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@p5-wrapper/next':
+    specifier: ^0.2.0
+    version: 0.2.0(@p5-wrapper/react@4.2.0)(next@13.5.4)(react-dom@18.2.0)(react@18.2.0)
+  '@p5-wrapper/react':
+    specifier: ^4.2.0
+    version: 4.2.0(react-dom@18.2.0)(react@18.2.0)
   '@tailwindcss/typography':
     specifier: ^0.5.9
     version: 0.5.10(tailwindcss@3.3.3)
@@ -55,6 +61,9 @@ devDependencies:
   '@testing-library/user-event':
     specifier: 14.4.3
     version: 14.4.3(@testing-library/dom@9.3.3)
+  '@types/p5':
+    specifier: ^1.7.0
+    version: 1.7.0
   '@types/q':
     specifier: ^1.5.5
     version: 1.5.6
@@ -858,6 +867,32 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
+  /@p5-wrapper/next@0.2.0(@p5-wrapper/react@4.2.0)(next@13.5.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-aA6TUDRgBc6czw0MXoOILKt/rm+S8I8I62+e6YWIkq783DGkNfPXR/kbLMpkdphAa2SpMQmJlkYw98iZGqparw==}
+    peerDependencies:
+      '@p5-wrapper/react': '>= 4.2.0'
+      next: '>= 12.3.4'
+      react: '>= 18.2.0'
+      react-dom: '>= 18.2.0'
+    dependencies:
+      '@p5-wrapper/react': 4.2.0(react-dom@18.2.0)(react@18.2.0)
+      next: 13.5.4(@babel/core@7.23.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@p5-wrapper/react@4.2.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-LOTd/1W8sPiXo7/U0PwapsoOf74DQAFMibovvhrB+aImYNXbg+5xoAadnmgC28OBySeBNKXwchWhF1ctf6Pnpw==}
+    peerDependencies:
+      react: '>= 18.2.0'
+      react-dom: '>= 18.2.0'
+    dependencies:
+      microdiff: 1.3.2
+      p5: 1.7.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@rushstack/eslint-patch@1.5.1:
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
     dev: false
@@ -1035,6 +1070,10 @@ packages:
     resolution: {integrity: sha512-ZVPnqU58giiCjSxjVUESDtdPk4QR5WQhhINbc9UBrKLU68MX5BF6kbQzTrkwbolyr0X8ChBpXfavr5mZFKZQ5A==}
     dependencies:
       undici-types: 5.25.3
+    dev: true
+
+  /@types/p5@1.7.0:
+    resolution: {integrity: sha512-6AnjmW98/edgXB+pYDBx7t6QbCogIG6NUzey93JpGTZA4096C+KjSN8y0sj43QRd9XtblrAhoRXHj1pFZ2vsCg==}
     dev: true
 
   /@types/prop-types@15.7.8:
@@ -3800,6 +3839,10 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
+  /microdiff@1.3.2:
+    resolution: {integrity: sha512-pKy60S2febliZIbwdfEQKTtL5bLNxOyiRRmD400gueYl9XcHyNGxzHSlJWn9IMHwYXT0yohPYL08+bGozVk8cQ==}
+    dev: false
+
   /micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
@@ -4088,6 +4131,10 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
     dev: true
+
+  /p5@1.7.0:
+    resolution: {integrity: sha512-qrbT/44Dwm63ZtOKX/mp61pw+5yj6ijYLOmRv7p6zcfjbo83Vb0gVFEvW0kTLFu7hceWCig0HONo9F1bSlqbsQ==}
+    dev: false
 
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}

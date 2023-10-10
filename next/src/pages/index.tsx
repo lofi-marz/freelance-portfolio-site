@@ -1,41 +1,17 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import me from '../me.png';
 import clsx from 'clsx';
-import {
-    AnimatePresence,
-    motion,
-    useMotionValueEvent,
-    useScroll,
-    useSpring,
-    useTransform,
-    Variants,
-} from 'framer-motion';
-import { createContext, Fragment, useEffect, useRef, useState } from 'react';
+import { motion, Variants } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { LoadingScreen } from '@/components/sections/LoadingScreen';
-import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { useDarkModeContext } from '@/components/DarkModeContextProvider';
 import { SlideInText } from '@/components/SlideInText';
 import { body, title } from '../fonts';
 import { SocialsDesktop } from '@/components/sections/intro/Socials';
-import { IoMdLeaf } from 'react-icons/io';
-import { FaArrowDown, FaInstagram } from 'react-icons/fa';
-import { FaAt, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { About } from '@/components/sections/about/About';
 import { CallToAction } from '@/components/sections/intro/CallToAction';
 import { Intro } from '@/components/sections/intro';
-import {
-    CurrentlyPlayingContextProvider,
-    Nav,
-    NavSpacer,
-} from '@/components/index';
+import { Nav } from '@/components/index';
 import { GetServerSideProps } from 'next';
-import axios from 'axios';
-import {
-    GetCurrentlyPlayingResponse,
-    getCurrentlyPlayingTrack,
-    getSpotifyProps,
-} from '../utils/spotify';
+import { GetCurrentlyPlayingResponse } from '../utils/spotify';
 import {
     AboutContent,
     getStrapiContent,
@@ -48,6 +24,8 @@ import qs from 'qs';
 import { Contact } from '@/components/sections/contact';
 import theme from '../../tailwind.config';
 //const title = Poppins({ weight: ['600', '700', '800', '900'] });
+
+import { NextReactP5Wrapper } from '@p5-wrapper/next';
 
 const headingVariants: Variants = {
     hidden: { opacity: 0, y: -10 },
@@ -172,6 +150,7 @@ export default function Home({ content }: HomeProps) {
                     className="themed-bg themed-text w-full snap-y snap-mandatory">
                     <Nav />
                     <Intro />
+
                     <About />
                     <Projects />
                     <Contact />
