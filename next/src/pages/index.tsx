@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { motion, Variants } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { LoadingScreen } from '@/components/sections/LoadingScreen';
-import { useDarkModeContext } from '@/components/DarkModeContextProvider';
+
 import { SlideInText } from '@/components/SlideInText';
 import { body, title } from '../fonts';
 import { SocialsDesktop } from '@/components/sections/intro/Socials';
@@ -26,6 +26,7 @@ import theme from '../../tailwind.config';
 //const title = Poppins({ weight: ['600', '700', '800', '900'] });
 
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
+import { Dots } from '@/components/Dots';
 
 const headingVariants: Variants = {
     hidden: { opacity: 0, y: -10 },
@@ -37,9 +38,6 @@ const underlineVariants: Variants = {
     visible: { width: '100%', transition: { duration: 1, ease: 'easeInOut' } },
 };
 
-const dark = theme.theme.extend.colors.black as string;
-const light = theme.theme.extend.colors.light as string;
-
 function Title() {
     return (
         <motion.div
@@ -47,14 +45,14 @@ function Title() {
             variants={contentVariants}>
             <h1
                 className={clsx(
-                    'flex flex-col gap-2  text-8xl font-bold',
+                    'flex flex-col gap-2  text-8xl font-bold lowercase',
                     title.className
                 )}>
                 <SlideInText>
                     Hi, <br />
                     I&apos;m
                     <br />
-                    Omari.
+                    Omari
                 </SlideInText>
             </h1>
             <div className="h-3 w-3/5">
@@ -107,7 +105,7 @@ function Content() {
             <div className="relative flex h-full w-full flex-col items-start justify-evenly">
                 <Title />
                 <motion.p
-                    className="w-full text-center text-2xl text-black dark:text-light md:text-start"
+                    className="w-full text-center text-2xl text-dark dark:text-light md:text-start"
                     variants={fadeVariants}>
                     Nottingham-based freelance web design and development.
                 </motion.p>
@@ -127,8 +125,6 @@ export default function Home({ content }: HomeProps) {
 
     const [loading, setLoading] = useState(true);
     useEffect(() => console.log('Loading:', loading), [loading]);
-    const darkMode = useDarkModeContext();
-    const theme = darkMode === 'dark' ? darkMode : 'light';
 
     if (content === undefined) return <div>Hi! Somethings gone wrong</div>;
 
@@ -138,7 +134,7 @@ export default function Home({ content }: HomeProps) {
             <motion.div
                 className={clsx(
                     'relative flex min-h-screen w-full flex-col items-center justify-center',
-                    theme,
+
                     title.variable,
                     body.variable
                 )}
@@ -149,6 +145,7 @@ export default function Home({ content }: HomeProps) {
                     key={theme + 'content'}
                     className="themed-bg themed-text w-full snap-y snap-mandatory">
                     <Nav />
+
                     <Intro />
 
                     <About />

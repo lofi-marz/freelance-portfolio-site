@@ -1,12 +1,12 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { DarkModeContextProvider } from '@/components/DarkModeContextProvider';
 import Head from 'next/head';
 import { Analytics } from '@vercel/analytics/react';
 import { NextSeo } from 'next-seo';
+import { ThemeProvider } from 'next-themes';
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <DarkModeContextProvider>
+        <ThemeProvider attribute="class">
             <Head>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -16,6 +16,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             />
             <Component {...pageProps} />
             <Analytics />
-        </DarkModeContextProvider>
+        </ThemeProvider>
     );
 }

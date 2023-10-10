@@ -9,10 +9,6 @@ const SetStoredModeContext = createContext<
     console.log('Default function:', value);
 });
 
-export function useDarkModeContext() {
-    return useContext(DarkModeContext);
-}
-
 export function useSetStoredModeContext() {
     return useContext(SetStoredModeContext);
 }

@@ -1,31 +1,27 @@
+import { useCurrentlyPlayingContext } from '@/components/CurrentlyPlayingContext';
+import { SlideInText } from '@/components/SlideInText';
+import clsx from 'clsx';
 import {
     AnimatePresence,
     motion,
-    useMotionValue,
     useMotionValueEvent,
     useScroll,
     useTransform,
     Variants,
 } from 'framer-motion';
-import clsx from 'clsx';
-import { title } from '../../../fonts';
-import { SocialsDesktop } from '@/components/sections/intro/Socials';
-import { WithChildrenProps } from '../../../types';
-import { useCurrentlyPlayingContext } from '@/components/CurrentlyPlayingContext';
-import {
-    FaArrowDown,
-    FaArrowLeft,
-    FaArrowUp,
-    FaChevronDown,
-    FaCompactDisc,
-} from 'react-icons/fa';
-import { useMediaQuery } from '../../../hooks/useMediaQuery';
-import { SlideInText } from '@/components/SlideInText';
 import { useRef, useState } from 'react';
-import React from 'react';
-import { DarkModeToggle } from '@/components/DarkModeToggle';
+import { FaArrowUp } from 'react-icons/fa';
 import { TARGET_AUDIENCE } from '../../../env';
-import { setState } from 'jest-circus';
+import { title } from '../../../fonts';
+import { WithChildrenProps } from '../../../types';
+
+import { ParallaxImage } from './ParallaxImage';
+
+import omniMockup from 'assets/mockup-omni.jpg';
+import socialMockup from 'assets/mockup-socialmate.jpg';
+import petsMockup from 'assets/mockup-pets.jpg';
+import drmworldScreenshot from 'assets/screenshot-drmworld.png';
+import { ParallaxLayer } from './ParallaxLayer';
 
 const ContainerVariants: Variants = {
     hide: { opacity: 0, height: '100vh' },
@@ -49,7 +45,7 @@ const SubtitleVariants: Variants = {
     show: { opacity: 1, y: 0, transition: { ease: 'easeOut' } },
 };
 
-const IntroTextVariants: Variants = {
+export const IntroTextVariants: Variants = {
     hide: { opacity: 0, transition: { duration: 0.5 } },
     show: { opacity: 1, transition: { duration: 1 } },
 };
@@ -62,95 +58,15 @@ function SideSpacer({ children }: Partial<WithChildrenProps>) {
     );
 }
 
-const subtitle =
+export const subtitle =
     TARGET_AUDIENCE === 'freelance'
         ? 'freelance developer'
         : 'web developer + student';
 
-function IntroText() {
-    const sm = useMediaQuery('sm');
-
-    return (
-        <motion.div className="themed-bg-invert themed-text-invert relative flex h-full w-full flex-grow items-center justify-start overflow-clip py-12">
-            <motion.div className="flex w-full flex-col items-start justify-center p-4 text-3xl font-bold sm:p-10 sm:text-4xl">
-                <motion.div
-                    style={{ writingMode: sm ? 'inherit' : 'vertical-rl' }}
-                    variants={IntroTextVariants}>
-                    hi, I&apos;m omari
-                </motion.div>
-                <motion.div
-                    className="hide max-w-sm text-primary md:block"
-                    variants={IntroTextVariants}>
-                    {subtitle}
-                </motion.div>
-            </motion.div>
-        </motion.div>
-    );
-}
-
-const trackVariants: Variants = {
+export const trackVariants: Variants = {
     hide: { opacity: 0, height: 0, transition: { delay: 5 } },
     show: { opacity: 1, height: 'auto' },
 };
-function CurrentlyPlaying() {
-    const currentlyPlaying = useCurrentlyPlayingContext()!;
-    const [trackShown, setTrackShown] = useState(false);
-    const showTrack = () => setTrackShown(true);
-    const hideTrack = () => setTrackShown(false);
-    const isDesktop = useMediaQuery('md');
-    return (
-        <motion.div
-            className="flex h-full w-full rotate-180 flex-row items-center justify-center gap-2"
-            style={{ writingMode: 'vertical-rl' }}
-            onHoverEnd={() => hideTrack()}
-            onTapStart={() => showTrack()}
-            onTap={(e) => hideTrack()}
-            layout>
-            <motion.div
-                animate={{
-                    rotate: [0, 60, 120, 180, 240, 300, 360],
-                    opacity: [0.9, 1, 0.9, 1, 0.9, 0.9],
-                }}
-                transition={{
-                    repeat: Infinity,
-                    ease: 'linear',
-                    duration: 5,
-                }}
-                onHoverStart={() => showTrack()}
-                layout>
-                <FaCompactDisc />
-            </motion.div>
-            <AnimatePresence>
-                {trackShown && (
-                    <motion.div
-                        className="flex w-full flex-row items-center justify-center gap-2"
-                        key="currently-playing"
-                        variants={trackVariants}
-                        initial="hide"
-                        animate="show"
-                        exit="hide"
-                        layout>
-                        Currently Listening
-                        {isDesktop ? (
-                            <a
-                                href={
-                                    currentlyPlaying.item.external_urls.spotify
-                                }
-                                target="_blank"
-                                className="transition-all hover:text-primary hover:underline"
-                                rel="noreferrer">
-                                {currentlyPlaying.item.name}
-                            </a>
-                        ) : (
-                            currentlyPlaying.item.name
-                        )}
-                        ({currentlyPlaying.item.artists[0].name})
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
-    );
-}
 /* eslint-disable-next-line */
 const lines = ["Hi, I'm Omari.", 'I create creative experiences with code.'];
 
@@ -160,6 +76,19 @@ export function Intro() {
         target,
         offset: ['start start', 'end end'],
     });
+
+    const scale = useTransform(
+        scrollYProgress,
+        [0, 0.25, 0.75, 1],
+        [1, 1, 1.5, 1.5]
+    );
+
+    const parallax = useTransform(
+        scrollYProgress,
+        [0, 0.25, 1],
+        ['0%', '100%', '-100%']
+    );
+
     const currentlyPlaying = useCurrentlyPlayingContext();
     useMotionValueEvent(scrollYProgress, 'change', (v) => {
         if (v < 0.25 && lineI !== 0) {
@@ -175,7 +104,7 @@ export function Intro() {
     return (
         <section
             className={clsx(
-                'themed-bg relative flex h-[300vh] w-full flex-col items-center justify-start overflow-clip',
+                'themed-bg relative flex h-[500vh] w-full flex-col items-center justify-start overflow-clip',
                 title.className
             )}
             ref={target}>
@@ -185,15 +114,62 @@ export function Intro() {
                     layout
                     className={clsx(
                         'top-0 flex h-screen w-full flex-col items-center justify-center gap-6 p-12 text-center text-6xl font-bold md:text-7xl',
-                        lineI === 0 ? 'sticky' : 'fixed'
+                        lineI === 0 ? 'sticky' : 'sticky'
                     )}
                     initial="hide"
                     animate="show"
                     exit="hide"
                     transition={{ staggerChildren: 0.5, staggerDirection: 1 }}>
-                    <SlideInText className="z-10 md:max-w-screen-lg">
-                        {lines[lineI]}
-                    </SlideInText>
+                    <ParallaxLayer
+                        scrollProgress={scrollYProgress}
+                        start="100%"
+                        end="-100%">
+                        <ParallaxImage
+                            src={omniMockup}
+                            alt="Mockup for omni"
+                            className="mr-[10%]"
+                        />
+                        <ParallaxImage
+                            src={socialMockup}
+                            alt="Mockup for omni"
+                            className="ml-[10%]"
+                        />
+                    </ParallaxLayer>
+                    <ParallaxLayer
+                        scrollProgress={scrollYProgress}
+                        start="200%"
+                        end="-200%">
+                        <ParallaxImage
+                            src={omniMockup}
+                            alt="Mockup for omni"
+                            className="scale-[.5] mr-[70%]"
+                        />
+                        <ParallaxImage
+                            src={socialMockup}
+                            alt="Mockup for omni"
+                            className="scale-[.8] mr-[20%] mt-[0%]"
+                        />
+                        <ParallaxImage
+                            src={petsMockup}
+                            alt="Mockup for omni"
+                            className="scale-[.9] mr-[30%] mt-[100%]"
+                        />
+
+                        <ParallaxImage
+                            src={drmworldScreenshot}
+                            alt="Mockup for omni"
+                            className="mt-[80%]"
+                            frame
+                        />
+                    </ParallaxLayer>
+
+                    <motion.div
+                        style={{ scale, y: parallax }}
+                        className="mix-blend-difference">
+                        <SlideInText className="z-10 md:max-w-screen-lg mix-blend-multiply">
+                            {lines[lineI]}
+                        </SlideInText>
+                    </motion.div>
                     {lineI === 0 && (
                         <motion.div
                             className="text-xl uppercase text-primary"

@@ -20,9 +20,11 @@ const theme = {
             colors: {
                 primary: colors.red[400],
                 secondary: colors.orange[400],
-                dark: colors.stone,
+                grey: colors.stone,
                 light: colors.stone[50],
-                black: colors.stone[950]
+                dark: colors.stone[950],
+                theme: 'var(--theme)',
+                'theme-invert': 'var(--theme-invert)',
             },
         },
     },
@@ -30,5 +32,3 @@ const theme = {
 } satisfies Config;
 
 export default theme;
-
-

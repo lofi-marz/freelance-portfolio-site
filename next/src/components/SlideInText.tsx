@@ -1,4 +1,4 @@
-import { motion, Variants } from 'framer-motion';
+import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { WithChildrenProps } from '../types';
 import clsx from 'clsx';
 import { title } from '../fonts';
@@ -22,7 +22,10 @@ const lineVariants: Variants = {
     },
 };
 const charVariants = {
-    hide: { y: '120%', opacity: 0 },
+    hide: (reducedMotion: boolean) => ({
+        y: reducedMotion ? 0 : '120%',
+        opacity: 0,
+    }),
     show: {
         y: 0,
         opacity: 1,
@@ -35,16 +38,18 @@ const charVariants = {
 };
 
 function SlideInChar({ char }: { char: string }) {
-    return <motion.div variants={charVariants}>{char}</motion.div>;
+    const shouldReduceMotion = useReducedMotion();
+    return (
+        <motion.div variants={charVariants} custom={shouldReduceMotion}>
+            {char}
+        </motion.div>
+    );
 }
 
 function SlideInWord({ word, invert }: { word: string; invert: boolean }) {
     return (
         <motion.div
-            className={clsx(
-                'flex flex-row whitespace-pre',
-                invert ? 'themed-bg-invert' : 'themed-bg'
-            )}
+            className={clsx('flex flex-row whitespace-pre')}
             variants={lineVariants}
             transition={{ staggerChildren: 1 }}>
             {[...word].map((c, i) => (

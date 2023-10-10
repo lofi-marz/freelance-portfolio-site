@@ -9,7 +9,7 @@ import {
     Lexend,
 } from 'next/font/google';
 
-export const title = IBM_Plex_Sans({
+export const title = Rubik({
     subsets: ['latin'],
     weight: ['500', '600', '700'],
     variable: '--font-title',

@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        --theme: theme(colors.light);
+        --theme-invert: theme(colors.dark);
+    }
+
+    .dark {
+        --theme: theme(colors.dark);
+        --theme-invert: theme(colors.light);
+    }
+}
+
 body {
-    @apply bg-black;
+    @apply bg-dark;
 }
 
 @layer base {
-
     html {
         scroll-behavior: smooth;
         @apply snap-y snap-proximity;
@@ -16,25 +27,24 @@ body {
 
 @layer utilities {
     .themed-bg {
-        @apply bg-light dark:bg-black;
+        @apply bg-light dark:bg-dark;
     }
 
     .themed-text {
-        @apply text-black dark:text-light;
+        @apply text-dark dark:text-light;
     }
 
     .themed-bg-invert {
-        @apply bg-black dark:bg-light;
+        @apply bg-dark dark:bg-light;
     }
 
     .themed-text-invert {
-        @apply text-light dark:text-black;
+        @apply text-light dark:text-dark;
     }
 
     .text-gradient {
-        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important
+        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important;
     }
-
 }
 
 @layer components {
