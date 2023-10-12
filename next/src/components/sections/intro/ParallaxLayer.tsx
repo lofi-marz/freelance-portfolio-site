@@ -21,7 +21,7 @@ export function ParallaxLayer({
 } & WithChildrenProps) {
     const willChange = useWillChange();
     const reducedMotion = useReducedMotion();
-    const desktop = useMediaQuery('md');
+
     const parallaxY = useTransform(
         scrollProgress,
         [0, 0.25, 1],
@@ -31,7 +31,7 @@ export function ParallaxLayer({
     return (
         <motion.div
             className={cn(
-                'w-full h-screen absolute top-0 grid grid-cols-2 place-content-center justify-items-center items-center justify-center',
+                'w-full h-screen absolute pointer-events-none top-0 grid grid-cols-2 place-content-center justify-items-center items-center justify-center',
                 Array.isArray(children) &&
                     children.length === 4 &&
                     'grid-rows-2'

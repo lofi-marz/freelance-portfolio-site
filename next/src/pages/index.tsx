@@ -45,7 +45,7 @@ function Title() {
             variants={contentVariants}>
             <h1
                 className={clsx(
-                    'flex flex-col gap-2  text-8xl font-bold lowercase',
+                    'flex flex-col gap-2 text-8xl font-bold lowercase',
                     title.className
                 )}>
                 <SlideInText>

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {
     AnimatePresence,
     motion,
+    MotionValue,
     useMotionValueEvent,
     useScroll,
     useTransform,
@@ -25,6 +26,9 @@ import foodMockup from 'assets/mockup-food.jpg';
 import socialmateScreenshot from 'assets/screenshot-socialmate.png';
 import { ParallaxLayer } from './ParallaxLayer';
 import { useMediaQuery } from 'hooks/useMediaQuery';
+import { memo } from 'react';
+import { cn } from 'utils';
+import theme from '../../../../tailwind.config';
 
 const ContainerVariants: Variants = {
     hide: { opacity: 0, height: '100vh' },
@@ -61,10 +65,7 @@ function SideSpacer({ children }: Partial<WithChildrenProps>) {
     );
 }
 
-export const subtitle =
-    TARGET_AUDIENCE === 'freelance'
-        ? 'freelance developer'
-        : 'web developer + student';
+export const subtitle = 'web developer + student';
 
 export const trackVariants: Variants = {
     hide: { opacity: 0, height: 0, transition: { delay: 5 } },
@@ -72,6 +73,60 @@ export const trackVariants: Variants = {
 };
 /* eslint-disable-next-line */
 const lines = ["Hi, I'm Omari.", 'I create creative experiences with code.'];
+
+const ParallaxImages = memo(function ParallaxImages({
+    scrollYProgress,
+}: {
+    scrollYProgress: MotionValue;
+}) {
+    return (
+        <>
+            <ParallaxLayer
+                scrollProgress={scrollYProgress}
+                start="100%"
+                end="-100%">
+                <ParallaxImage
+                    src={foodMockup}
+                    alt="Mockup for omni"
+                    className="mr-[10%]"
+                />
+                <ParallaxImage
+                    src={socialmateScreenshot}
+                    alt="Mockup for omni"
+                    className="ml-[50%]"
+                    frame
+                />
+            </ParallaxLayer>
+            <ParallaxLayer
+                scrollProgress={scrollYProgress}
+                start="200%"
+                end="-200%">
+                <ParallaxImage
+                    src={omniMockup}
+                    alt="Mockup for omni"
+                    className="scale-[.5] mr-[70%]"
+                />
+                <ParallaxImage
+                    src={socialMockup}
+                    alt="Mockup for omni"
+                    className="scale-[.8] mr-[50%] mt-[0%]"
+                />
+                <ParallaxImage
+                    src={drmworldScreenshot}
+                    alt="Mockup for omni"
+                    className="scale-[.9] mr-[30%] mt-[100%]"
+                    frame
+                />
+
+                <ParallaxImage
+                    src={petsMockup}
+                    alt="Mockup for omni"
+                    className="mt-[80%] mr-[60%]"
+                />
+            </ParallaxLayer>
+        </>
+    );
+});
 
 export function Intro() {
     const desktop = useMediaQuery('lg');
@@ -81,6 +136,17 @@ export function Intro() {
         offset: ['start start', 'end end'],
     });
 
+    useMotionValueEvent(scrollYProgress, 'change', (v) =>
+        console.log('scroll:', v)
+    );
+
+    const dark = theme.theme.extend.colors.dark;
+    const light = theme.theme.extend.colors.light;
+    const backgroundColor = useTransform(
+        scrollYProgress,
+        [0, 0.9, 1],
+        [dark, dark, light]
+    );
     const maxTextScale = desktop ? 1.5 : 1;
 
     const textScale = useTransform(
@@ -108,72 +174,29 @@ export function Intro() {
     const [lineI, setLineI] = useState(0);
 
     return (
-        <section
+        <motion.section
             className={clsx(
-                'themed-bg relative flex h-[500vh] w-full flex-col items-center justify-start overflow-clip',
-                title.className
+                'themed-bg relative -mb-1 flex h-[500vh] w-full flex-col items-center justify-start overflow-clip font-title'
             )}
-            ref={target}>
+            ref={target}
+            style={{ backgroundColor }}>
             <AnimatePresence mode="wait">
                 <motion.header
                     key={lineI}
                     layout
-                    className={clsx(
-                        'top-0 flex h-screen w-full flex-col items-center justify-center gap-6 p-12 text-center text-5xl sm:text-6xl font-bold md:text-7xl',
-                        lineI === 0 ? 'sticky' : 'sticky'
+                    className={cn(
+                        'top-0 flex sticky h-screen w-full flex-col items-center justify-center gap-6 p-12 text-center text-5xl sm:text-6xl font-bold md:text-7xl'
                     )}
                     initial="hide"
                     animate="show"
                     exit="hide"
                     transition={{ staggerChildren: 0.5, staggerDirection: 1 }}>
-                    <ParallaxLayer
-                        scrollProgress={scrollYProgress}
-                        start="100%"
-                        end="-100%">
-                        <ParallaxImage
-                            src={foodMockup}
-                            alt="Mockup for omni"
-                            className="mr-[10%]"
-                        />
-                        <ParallaxImage
-                            src={socialmateScreenshot}
-                            alt="Mockup for omni"
-                            className="ml-[10%]"
-                            frame
-                        />
-                    </ParallaxLayer>
-                    <ParallaxLayer
-                        scrollProgress={scrollYProgress}
-                        start="200%"
-                        end="-200%">
-                        <ParallaxImage
-                            src={omniMockup}
-                            alt="Mockup for omni"
-                            className="scale-[.5] mr-[70%]"
-                        />
-                        <ParallaxImage
-                            src={socialMockup}
-                            alt="Mockup for omni"
-                            className="scale-[.8] mr-[20%] mt-[0%]"
-                        />
-                        <ParallaxImage
-                            src={petsMockup}
-                            alt="Mockup for omni"
-                            className="scale-[.9] mr-[30%] mt-[100%]"
-                        />
-
-                        <ParallaxImage
-                            src={drmworldScreenshot}
-                            alt="Mockup for omni"
-                            className="mt-[80%]"
-                            frame
-                        />
-                    </ParallaxLayer>
+                    <ParallaxImages scrollYProgress={scrollYProgress} />
 
                     <motion.div
                         style={{ scale: textScale, y: textParallax }}
-                        className="mix-blend-difference">
-                        <SlideInText className="z-10 md:max-w-screen-lg mix-blend-multiply">
+                        className="mix-blend-difference ">
+                        <SlideInText className="z-10 md:max-w-screen-lg ">
                             {lines[lineI]}
                         </SlideInText>
                     </motion.div>
@@ -195,6 +218,6 @@ export function Intro() {
                     </div>
                 </motion.header>
             </AnimatePresence>
-        </section>
+        </motion.section>
     );
 }

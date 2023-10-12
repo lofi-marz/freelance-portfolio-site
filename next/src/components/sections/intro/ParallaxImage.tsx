@@ -21,12 +21,17 @@ export function ParallaxImage({
     return (
         <motion.div
             className={cn(
-                'w-1/2 bg-theme-invert relative saturate-[.9]',
+                'w-1/2 bg-red-400 relative saturate-[.9] overflow-clip pointer-events-auto',
                 frame && 'p-[5%]',
 
                 className
             )}>
-            <Image src={src} alt={alt} />
+            <Image
+                src={src}
+                alt={alt}
+                priority
+                className="hover:scale-110 transition-all ease-out duration-1000"
+            />
         </motion.div>
     );
 }

@@ -23,6 +23,7 @@ const theme = {
                 grey: colors.stone,
                 light: colors.stone[50],
                 dark: colors.stone[950],
+                
                 theme: 'var(--theme)',
                 'theme-invert': 'var(--theme-invert)',
             },
