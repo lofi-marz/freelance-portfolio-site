@@ -55,10 +55,12 @@ My personal portfolio site.
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Next.js logo">
 </div>
 
-
+* Next.js
+* TypeScript
 * ESLint
 * Prettier
 * TailwindCSS
+* Framer Motion
 
 
 
