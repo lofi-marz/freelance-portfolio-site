@@ -26,7 +26,10 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-
+<div align="center">
+  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js logo">
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Next.js logo">
+</div>
 <h1 align="center">Portfolio</h3>
 
   <p align="center">
@@ -35,7 +38,6 @@
     <br />
     <br />
     <a href="https://omarileon.me/">View Demo</a>
-
   </p>
 </div>
 
@@ -50,10 +52,7 @@
 My personal portfolio site.
 
 ### Built With
-<div align="center">
-  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js logo">
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Next.js logo">
-</div>
+
 
 * Next.js
 * TypeScript
