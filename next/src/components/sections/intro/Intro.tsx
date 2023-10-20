@@ -83,7 +83,7 @@ const ParallaxImages = memo(function ParallaxImages({
         <>
             <ParallaxLayer
                 scrollProgress={scrollYProgress}
-                start="100%"
+                start="150%"
                 end="-100%">
                 <ParallaxImage
                     src={foodMockup}
@@ -140,13 +140,13 @@ export function Intro() {
         console.log('scroll:', v)
     );
 
-    const dark = theme.theme.extend.colors.dark;
+    /*const dark = theme.theme.extend.colors.dark;
     const light = theme.theme.extend.colors.light;
     const backgroundColor = useTransform(
         scrollYProgress,
         [0, 0.9, 1],
         [dark, dark, light]
-    );
+    );*/
     const maxTextScale = desktop ? 1.5 : 1;
 
     const textScale = useTransform(
@@ -178,8 +178,7 @@ export function Intro() {
             className={clsx(
                 'themed-bg relative -mb-1 flex h-[500vh] w-full flex-col items-center justify-start overflow-clip font-title'
             )}
-            ref={target}
-            style={{ backgroundColor }}>
+            ref={target}>
             <AnimatePresence mode="wait">
                 <motion.header
                     key={lineI}

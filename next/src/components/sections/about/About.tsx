@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { CallToAction } from '@/components/sections/intro/CallToAction';
 import { WithChildrenProps, WithClassNameProps } from '../../../types';
 import Image from 'next/image';
-import me from 'assets/me.webp';
+import me from 'assets/me-brighton.jpg';
 import {
     motion,
     useMotionValue,
@@ -29,34 +29,29 @@ export function About() {
         <motion.section
             id="about"
             className={clsx(
-                'themed-bg-invert font-title -mt-1 themed-text-invert relative gap-10 lg:gap-20 flex flex-col-reverse md:flex-row lg:h-screen w-full p-8 py-24 md:p-24 items-center justify-center'
+                'themed-bg font-title -mt-1 themed-text relative gap-10 xl:gap-20 flex flex-col xl:flex-row xl:h-screen w-full p-10 py-24 md:p-24 items-center justify-between'
             )}
             ref={target}>
-            <div className="whitespace-pre-line text-start flex flex-col gap-5 lg:gap-10 font-medium">
-                <h2 className="text-primary font-bold text-2xl lg:text-5xl ">
-                    Hi, I&apos;m Omari! <br /> I&apos;m a Web Developer based in
-                    England, currently studying in Nottingham.
-                </h2>
-                <HighlightText className="text-base lg:text-3xl">
-                    I like making fun, creative things with code. Creating new
-                    experiences, implementing eye pleasing designs, and bringing
-                    them to life with eye-catching animations is what I do best.
-                </HighlightText>
-                <CallToAction />
-            </div>
-            <div className="flex flex-col items-center gap-24 justify-center ">
-                <div className="rounded-full overflow-clip w-full lg:w-96 max-w-lg bg-primary/100 relative">
+            <div className="flex flex-col items-center gap-24 justify-center">
+                <div className="overflow-clip w-full xl:w-[32rem] pb-[20%] max-w-lg bg-light relative p-[10%]">
                     <motion.div
-                        className="w-full h-full "
+                        className="w-full h-full overflow-clip"
                         style={{ y: parallax }}>
                         <Image
                             src={me}
                             alt="Photo of me"
-                            className="saturate-50 scale-110"
+                            className="scale-110 "
                         />
                     </motion.div>
-                    <div className="absolute top-0 w-full h-full bg-primary mix-blend-hue" />
                 </div>
+            </div>
+            <div className="whitespace-pre-line text-start flex flex-col gap-5 font-normal px-2 max-w-lg xl:max-w-none">
+                <HighlightText className="text-lg lg:text-3xl xl:text-5xl">
+                    Hi, I&apos;m Omari. I&apos;m a Web Developer based in
+                    England, currently studying in Nottingham. Creating new
+                    experiences, implementing eye pleasing designs, and bringing
+                    them to life with slick animations is what I do best.
+                </HighlightText>
             </div>
         </motion.section>
     );
