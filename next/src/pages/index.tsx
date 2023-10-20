@@ -10,7 +10,7 @@ import { About } from '@/components/sections/about/About';
 import { CallToAction } from '@/components/sections/intro/CallToAction';
 import { Intro } from '@/components/sections/intro';
 import { Nav } from '@/components/index';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import { GetCurrentlyPlayingResponse } from '../utils/spotify';
 import {
     AboutContent,
@@ -157,7 +157,7 @@ export default function Home({ content }: HomeProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
     const query = qs.stringify(
         {
             populate: ['desktopPreview', 'mobilePreview'],
