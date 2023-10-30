@@ -33,7 +33,7 @@
     "@types/p5": "^1.7.1",
     "@types/q": "^1.5.7",
     "@types/qs": "^6.9.9",
-    "@types/react": "18.2.31",
+    "@types/react": "18.2.33",
     "autoprefixer": "^10.4.16",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-testing-library": "^6.1.0",
