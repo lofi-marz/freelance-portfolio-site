@@ -22,8 +22,8 @@ const theme = {
                 secondary: colors.orange[400],
                 grey: colors.stone,
                 light: colors.stone[50],
-                dark: colors.stone[950],
-                    
+                dark: colors.stone[900],
+
                 theme: 'var(--theme)',
                 'theme-invert': 'var(--theme-invert)',
             },

@@ -149,7 +149,7 @@ export function Intro() {
         restDelta: 0.001,
     });
     const textScale = useTransform(
-        scrollYProgress,
+        spring,
         [0, 0.25, 0.75, 1],
         [1, 1, maxTextScale, maxTextScale]
     );
@@ -206,10 +206,11 @@ export function Intro() {
                         <Image
                             src={background}
                             className="w-full h-full object-cover"
+                            alt="Rumi Ando"
                         />
                     </motion.div>
                 )}
-                <ParallaxImages scrollYProgress={scrollYProgress} />
+                <ParallaxImages scrollYProgress={spring} />
             </div>
         </motion.section>
     );

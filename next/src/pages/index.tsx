@@ -10,7 +10,7 @@ import { About } from '@/components/sections/about/About';
 import { CallToAction } from '@/components/sections/intro/CallToAction';
 import { Intro } from '@/components/sections/intro';
 import { Nav } from '@/components/index';
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import { GetCurrentlyPlayingResponse } from '../utils/spotify';
 import {
     AboutContent,
@@ -25,8 +25,6 @@ import { Contact } from '@/components/sections/contact';
 import theme from '../../tailwind.config';
 //const title = Poppins({ weight: ['600', '700', '800', '900'] });
 
-import { NextReactP5Wrapper } from '@p5-wrapper/next';
-import { Dots } from '@/components/Dots';
 
 const headingVariants: Variants = {
     hidden: { opacity: 0, y: -10 },
