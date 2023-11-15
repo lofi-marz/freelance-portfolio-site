@@ -7,17 +7,16 @@ import {
     MotionValue,
     useMotionValueEvent,
     useScroll,
+    useSpring,
     useTransform,
     Variants,
 } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
-import { TARGET_AUDIENCE } from '../../../env';
-import { title } from '../../../fonts';
 import { WithChildrenProps } from '../../../types';
 
 import { ParallaxImage } from './ParallaxImage';
-
+import Image from 'next/image';
 import omniMockup from 'assets/mockup-omni.jpg';
 import socialMockup from 'assets/mockup-socialmate.jpg';
 import petsMockup from 'assets/mockup-pets.jpg';
@@ -28,8 +27,7 @@ import { ParallaxLayer } from './ParallaxLayer';
 import { useMediaQuery } from 'hooks/useMediaQuery';
 import { memo } from 'react';
 import { cn } from 'utils';
-import theme from '../../../../tailwind.config';
-
+import background from 'assets/ando-1.jpg';
 const ContainerVariants: Variants = {
     hide: { opacity: 0, height: '100vh' },
     show: {
@@ -72,7 +70,7 @@ export const trackVariants: Variants = {
     show: { opacity: 1, height: 'auto' },
 };
 /* eslint-disable-next-line */
-const lines = ["Hi, I'm Omari.", 'I create creative experiences with code.'];
+const lines = ["hi, i'm omari.", 'I create creative experiences with code.'];
 
 const ParallaxImages = memo(function ParallaxImages({
     scrollYProgress,
@@ -136,10 +134,6 @@ export function Intro() {
         offset: ['start start', 'end end'],
     });
 
-    useMotionValueEvent(scrollYProgress, 'change', (v) =>
-        console.log('scroll:', v)
-    );
-
     /*const dark = theme.theme.extend.colors.dark;
     const light = theme.theme.extend.colors.light;
     const backgroundColor = useTransform(
@@ -148,7 +142,12 @@ export function Intro() {
         [dark, dark, light]
     );*/
     const maxTextScale = desktop ? 1.5 : 1;
-
+    const spring = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 20,
+        mass: 1,
+        restDelta: 0.001,
+    });
     const textScale = useTransform(
         scrollYProgress,
         [0, 0.25, 0.75, 1],
@@ -158,7 +157,13 @@ export function Intro() {
     const textParallax = useTransform(
         scrollYProgress,
         [0, 0.3, 1],
-        ['0%', '0%', '-100%']
+        ['0vh', '0vh', '-10vh']
+    );
+
+    const imageWidth = useTransform(
+        spring,
+        [0, 0.1, 0.2],
+        ['33%', '33%', '0%']
     );
 
     const currentlyPlaying = useCurrentlyPlayingContext();
@@ -173,50 +178,39 @@ export function Intro() {
     //There has got to be a better way of doing this
     const [lineI, setLineI] = useState(0);
 
+    const lg = useMediaQuery('lg');
+
     return (
         <motion.section
             className={clsx(
                 'themed-bg relative -mb-1 flex h-[500vh] w-full flex-col items-center justify-start overflow-clip font-title'
             )}
             ref={target}>
-            <AnimatePresence mode="wait">
-                <motion.header
-                    key={lineI}
-                    layout
-                    className={cn(
-                        'top-0 flex sticky h-screen w-full flex-col items-center justify-center gap-6 p-12 text-center text-5xl sm:text-6xl font-bold md:text-7xl'
-                    )}
-                    initial="hide"
-                    animate="show"
-                    exit="hide"
-                    transition={{ staggerChildren: 0.5, staggerDirection: 1 }}>
-                    <ParallaxImages scrollYProgress={scrollYProgress} />
-
-                    <motion.div
-                        style={{ scale: textScale, y: textParallax }}
-                        className="mix-blend-difference ">
-                        <SlideInText className="z-10 md:max-w-screen-lg ">
-                            {lines[lineI]}
-                        </SlideInText>
+            <div className="w-full h-screen sticky top-0 flex flex-row bg-theme">
+                <div className="z-10 flex flex-col items-center justify-center h-full w-full px-[10%]">
+                    <AnimatePresence mode="wait">
+                        <motion.h1
+                            className="text-5xl font-title font-semibold"
+                            variants={IntroTextVariants}
+                            initial="hide"
+                            animate="show"
+                            exit="exit"
+                            key={`line-${lineI}`}
+                            style={{ y: textParallax, scale: textScale }}>
+                            <SlideInText>{lines[lineI]}</SlideInText>
+                        </motion.h1>
+                    </AnimatePresence>
+                </div>
+                {lg && (
+                    <motion.div style={{ width: imageWidth }}>
+                        <Image
+                            src={background}
+                            className="w-full h-full object-cover"
+                        />
                     </motion.div>
-                    {lineI === 0 && (
-                        <motion.div
-                            className="text-xl uppercase text-primary"
-                            variants={SubtitleVariants}>
-                            {subtitle}
-                        </motion.div>
-                    )}
-                    <div className="absolute left-0 top-0 flex h-full w-12 flex-col items-center justify-end gap-4 py-12 text-base font-normal">
-                        <a
-                            className="flex rotate-180 flex-row items-center justify-center gap-4 transition-all hover:text-primary"
-                            href="#about"
-                            style={{ writingMode: 'vertical-lr' }}>
-                            <FaArrowUp />
-                            Scroll
-                        </a>
-                    </div>
-                </motion.header>
-            </AnimatePresence>
+                )}
+                <ParallaxImages scrollYProgress={scrollYProgress} />
+            </div>
         </motion.section>
     );
 }

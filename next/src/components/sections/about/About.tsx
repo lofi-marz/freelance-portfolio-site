@@ -33,7 +33,7 @@ export function About() {
             )}
             ref={target}>
             <div className="flex flex-col items-center gap-24 justify-center">
-                <div className="overflow-clip w-full xl:w-[32rem] pb-[20%] max-w-lg bg-light relative p-[10%]">
+                <div className="overflow-clip w-full xl:w-[32rem] pb-[10%] max-w-lg bg-theme-invert text-theme relative p-[10%]">
                     <motion.div
                         className="w-full h-full overflow-clip"
                         style={{ y: parallax }}>
@@ -43,6 +43,9 @@ export function About() {
                             className="scale-110 "
                         />
                     </motion.div>
+                    <div className="text-xs text-end opacity-50 hover:opacity-100 transition-all">
+                        brighton, gb
+                    </div>
                 </div>
             </div>
             <div className="whitespace-pre-line text-start flex flex-col gap-5 font-normal px-2 max-w-lg xl:max-w-none">

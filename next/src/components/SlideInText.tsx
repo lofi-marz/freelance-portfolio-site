@@ -2,6 +2,7 @@ import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { WithChildrenProps } from '../types';
 import clsx from 'clsx';
 import { title } from '../fonts';
+import { cn } from 'utils';
 
 const lineVariants: Variants = {
     hide: {
@@ -20,10 +21,17 @@ const lineVariants: Variants = {
             duration: 4,
         },
     },
+    exit: {
+        transition: {
+            ease: 'easeOut',
+            bounce: 0,
+            duration: 4,
+        },
+    },
 };
 const charVariants = {
     hide: (reducedMotion: boolean) => ({
-        y: reducedMotion ? 0 : '120%',
+        y: reducedMotion ? 0 : '50%',
         opacity: 0,
     }),
     show: {
@@ -32,7 +40,16 @@ const charVariants = {
         transition: {
             ease: 'easeOut',
             bounce: 1,
-            duration: 1,
+            duration: 0.5,
+        },
+    },
+    exit: {
+        y: 0,
+        opacity: 0,
+        transition: {
+            ease: 'easeIn',
+            bounce: 1,
+            duration: 0.5,
         },
     },
 };
@@ -40,7 +57,10 @@ const charVariants = {
 function SlideInChar({ char }: { char: string }) {
     const shouldReduceMotion = useReducedMotion();
     return (
-        <motion.div variants={charVariants} custom={shouldReduceMotion}>
+        <motion.div
+            variants={charVariants}
+            custom={shouldReduceMotion}
+            className={cn(char === '.' && 'text-primary')}>
             {char}
         </motion.div>
     );
@@ -51,7 +71,7 @@ function SlideInWord({ word, invert }: { word: string; invert: boolean }) {
         <motion.div
             className={clsx('flex flex-row whitespace-pre')}
             variants={lineVariants}
-            transition={{ staggerChildren: 1 }}>
+            transition={{ staggerChildren: 0.5 }}>
             {[...word].map((c, i) => (
                 <SlideInChar key={c + i} char={c} />
             ))}
@@ -79,7 +99,7 @@ export function SlideInText({
                     className
                 )}
                 layout
-                variants={{ hide: {}, show: {} }}
+                variants={{ hide: {}, show: {}, exit: {} }}
                 transition={{ staggerChildren: 0.1 }}>
                 {words.map((w, i) => (
                     <SlideInWord key={w + i} word={w + ' '} invert={invert} />

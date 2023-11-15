@@ -7,14 +7,15 @@ import {
     Rubik,
     Vollkorn,
     Lexend,
+    Work_Sans,
 } from 'next/font/google';
 
-export const title = IBM_Plex_Sans({
+export const title = Work_Sans({
     subsets: ['latin'],
     weight: ['400', '500', '600', '700'],
     variable: '--font-title',
 });
-export const body = Inter({
+export const body = Vollkorn({
     subsets: ['latin'],
     variable: '--font-body',
 });

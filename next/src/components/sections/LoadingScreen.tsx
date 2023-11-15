@@ -52,13 +52,7 @@ function Bar({ className }: WithClassNameProps) {
 export function LoadingScreen({ onEnd }: LoadingScreenProps) {
     const controls = useAnimationControls();
     const [visible, setVisible] = useState(true);
-    const backgroundColourClasses = [
-        'bg-red-400',
-        'bg-amber-400',
-        'bg-green-400',
-        'bg-blue-400',
-        'bg-violet-400',
-    ];
+    const backgroundColourClasses = ['bg-primary'];
     useLayoutEffect(() => {
         controls.start('hidden').then(() => {
             onEnd();
@@ -85,7 +79,11 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
                 {[...new Array(5)].map((_, i) => (
                     <Bar
                         key={`bar-${i}`}
-                        className={backgroundColourClasses[i]}
+                        className={
+                            backgroundColourClasses[
+                                i % backgroundColourClasses.length
+                            ]
+                        }
                     />
                 ))}
             </motion.div>
