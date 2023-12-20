@@ -4,7 +4,7 @@ import {
     useReducedMotion,
     Variants,
 } from 'framer-motion';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { WithClassNameProps } from 'types';
 import { cn } from 'utils';
 
@@ -53,7 +53,7 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
     const controls = useAnimationControls();
     const [visible, setVisible] = useState(true);
     const backgroundColourClasses = ['bg-primary'];
-    useLayoutEffect(() => {
+    useEffect(() => {
         controls.start('hidden').then(() => {
             onEnd();
             setTimeout(() => setVisible(false), 2500);

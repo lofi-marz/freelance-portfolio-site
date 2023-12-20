@@ -14,6 +14,7 @@ import theme from '../../../../tailwind.config';
 import { cn } from 'utils';
 import { useRef } from 'react';
 import { Button } from 'react-aria-components';
+import { MotionButton } from '@/components/motion';
 
 const primary = theme.theme.extend.colors.primary;
 function Photo({ parallax }: { parallax: MotionValue }) {
@@ -42,20 +43,18 @@ export function About() {
         <motion.section
             id="about"
             className={clsx(
-                'relative mx-auto -mt-1 flex max-w-screen-xl grid-cols-2 flex-col items-center gap-8 bg-theme p-6 lg:grid lg:px-24'
+                'relative mx-auto -mt-1 flex max-w-screen-xl grid-cols-2 flex-col items-center gap-8 bg-theme p-6 text-theme lg:grid lg:px-24'
             )}
             ref={target}>
             <div className="lg:px-12 lg:py-24 xl:px-0">
                 <Photo parallax={parallax} />
             </div>
-            <div className="flex flex-col gap-14 whitespace-pre-line px-2 text-start text-lg font-medium lg:text-3xl xl:max-w-none xl:text-3xl">
+            <div className="flex flex-col gap-14 whitespace-pre-line px-2 text-start text-lg font-medium text-theme-invert lg:text-3xl xl:max-w-none xl:text-3xl">
                 <HighlightText className="">
                     Hi, I&apos;m Omari. I&apos;m a Web Developer based in
                     England. I focus on creative web development in React.
                 </HighlightText>
-                <Button className="mx-auto w-full rounded-full border border-theme-invert p-12 lowercase">
-                    Get in touch<span className="text-primary">.</span>
-                </Button>
+                <CTA />
             </div>
         </motion.section>
     );
@@ -94,6 +93,24 @@ const charVariants = {
         transition: { ease: 'easeOut', delay: 1, duration: 3 },
     },
 };
+
+function CTA() {
+    return (
+        <MotionButton
+            className="group relative mx-auto w-full overflow-clip rounded-full border border-theme-invert p-12 lowercase transition-all"
+            initial="outline"
+            whileHover="solid">
+            <motion.div
+                className="absolute bottom-0 left-0 w-full rounded-full bg-theme-invert"
+                variants={{ outline: { height: 0 }, solid: { height: '100%' } }}
+                transition={{ ease: 'easeInOut', duration: 0.2 }}
+            />
+            <span className="relative z-10 transition-all group-hover:text-theme">
+                Get in touch<span className="text-primary">.</span>
+            </span>
+        </MotionButton>
+    );
+}
 
 function HighlightChar({ char }: { char: string }) {
     return (

@@ -191,7 +191,7 @@ export function Intro() {
             initial="hide"
             animate="show">
             <motion.div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center gap-12 bg-theme p-12 pt-20">
-                <header className="flex h-full w-fit flex-col items-start justify-end gap-3 text-center text-7xl font-semibold">
+                <header className="flex h-full w-fit flex-col items-start justify-center gap-3 text-center text-7xl font-semibold">
                     <h1>
                         hi, i&apos;m omari
                         <span className="w-fit text-primary">.</span>
