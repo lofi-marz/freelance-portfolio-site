@@ -151,7 +151,7 @@ export function Intro() {
         restDelta: 0.001,
     });
     const textScale = useTransform(
-        scrollYProgress,
+        spring,
         [0, 0.25, 0.75, 1],
         [1, 1, maxTextScale, maxTextScale]
     );
