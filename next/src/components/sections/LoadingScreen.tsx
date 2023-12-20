@@ -43,7 +43,7 @@ function Bar({ className }: WithClassNameProps) {
     const reducedMotion = useReducedMotion();
     return (
         <motion.div
-            className={cn('w-full h-full', className)}
+            className={cn('h-full w-full', className)}
             variants={barVariants}
             custom={reducedMotion}
         />
@@ -62,7 +62,7 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
     if (!visible) return null;
     return (
         <motion.div
-            className="themed-text fixed top-0 z-50 w-screen h-screen flex-col items-center justify-start overflow-hidden font-title text-8xl font-bold"
+            className="themed-text fixed top-0 z-50 h-screen w-screen flex-col items-center justify-start overflow-hidden font-title text-8xl font-bold"
             initial="visible"
             animate={controls}
             layoutId="intro-section"
@@ -70,7 +70,7 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
             transition={{ delay: 1, delayChildren: 1 }}
             style={{ originY: 0 }}>
             <motion.div
-                className="w-full h-screen absolute top-0 flex flex-col"
+                className="absolute top-0 flex h-screen w-full flex-col"
                 variants={{ visible: {}, hidden: {} }}
                 transition={{
                     staggerChildren: 0.1,
@@ -87,7 +87,7 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
                     />
                 ))}
             </motion.div>
-            <motion.div className="flex w-full items-center justify-center h-full">
+            <motion.div className="flex h-full w-full items-center justify-center">
                 <motion.div
                     animate={{
                         rotate: [-10, 10, -10, 10, 10, 0],

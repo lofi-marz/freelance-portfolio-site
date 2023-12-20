@@ -72,7 +72,7 @@ export function Projects() {
     const md = useMediaQuery('md');
     return (
         <motion.section
-            className="themed-bg themed-text relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center py-24 font-title "
+            className="themed-text relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center bg-theme py-24 font-title "
             id="projects">
             <RepeatText n={2}>Projects</RepeatText>
             <div className="flex w-full flex-col items-start justify-center">
@@ -100,7 +100,7 @@ function ProjectLinks({ repoLink, liveLink }: ProjectLinksProps) {
         <div className="f lex  z-10 flex-row text-xl font-bold">
             {repoLink && (
                 <a
-                    className="themed-bg-invert themed-text-invert p-2 px-4"
+                    className="themed-text-invert bg-theme-invert p-2 px-4"
                     href={repoLink}>
                     github
                 </a>

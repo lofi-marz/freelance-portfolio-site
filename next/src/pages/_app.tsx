@@ -6,10 +6,11 @@ import { NextSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider attribute="class" forcedTheme="light">
+        <ThemeProvider attribute="class" forcedTheme="dark">
             <Head>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            
             <NextSeo
                 title="Omari Thompson-Edwards"
                 description="Nottingham-based freelance web developer."

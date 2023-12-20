@@ -6,7 +6,7 @@ function IntroText() {
     const sm = useMediaQuery('sm');
 
     return (
-        <motion.div className="themed-bg-invert themed-text-invert relative flex h-full w-full flex-grow items-center justify-start overflow-clip py-12">
+        <motion.div className="themed-text-invert relative flex h-full w-full flex-grow items-center justify-start overflow-clip bg-theme-invert py-12">
             <motion.div className="flex w-full flex-col items-start justify-center p-4 text-3xl font-bold sm:p-10 sm:text-4xl">
                 <motion.div
                     style={{ writingMode: sm ? 'inherit' : 'vertical-rl' }}

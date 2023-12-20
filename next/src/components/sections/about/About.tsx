@@ -1,11 +1,10 @@
 import clsx from 'clsx';
-import { CallToAction } from '@/components/sections/intro/CallToAction';
 import { WithChildrenProps, WithClassNameProps } from '../../../types';
 import Image from 'next/image';
 import me from 'assets/me-brighton.jpg';
 import {
     motion,
-    useMotionValue,
+    MotionValue,
     useMotionValueEvent,
     useScroll,
     useTransform,
@@ -14,9 +13,23 @@ import {
 import theme from '../../../../tailwind.config';
 import { cn } from 'utils';
 import { useRef } from 'react';
+import { Button } from 'react-aria-components';
 
 const primary = theme.theme.extend.colors.primary;
-
+function Photo({ parallax }: { parallax: MotionValue }) {
+    return (
+        <div className="relative w-full max-w-lg overflow-clip bg-theme-invert p-[5%] pb-[10%] text-theme xl:w-[30rem]">
+            <motion.div
+                className="h-full w-full overflow-clip"
+                style={{ y: parallax }}>
+                <Image src={me} alt="Photo of me" className="scale-110 " />
+            </motion.div>
+            <div className="text-end text-xs opacity-50 transition-all hover:opacity-100">
+                brighton, gb
+            </div>
+        </div>
+    );
+}
 export function About() {
     const target = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -29,32 +42,20 @@ export function About() {
         <motion.section
             id="about"
             className={clsx(
-                'themed-bg font-title -mt-1 themed-text relative gap-10 xl:gap-20 flex flex-col xl:flex-row xl:h-screen w-full p-10 py-24 md:p-24 items-center justify-between'
+                'relative mx-auto -mt-1 flex max-w-screen-xl grid-cols-2 flex-col items-center gap-8 bg-theme p-6 lg:grid lg:px-24'
             )}
             ref={target}>
-            <div className="flex flex-col items-center gap-24 justify-center">
-                <div className="overflow-clip w-full xl:w-[32rem] pb-[10%] max-w-lg bg-theme-invert text-theme relative p-[10%]">
-                    <motion.div
-                        className="w-full h-full overflow-clip"
-                        style={{ y: parallax }}>
-                        <Image
-                            src={me}
-                            alt="Photo of me"
-                            className="scale-110 "
-                        />
-                    </motion.div>
-                    <div className="text-xs text-end opacity-50 hover:opacity-100 transition-all">
-                        brighton, gb
-                    </div>
-                </div>
+            <div className="lg:px-12 lg:py-24 xl:px-0">
+                <Photo parallax={parallax} />
             </div>
-            <div className="whitespace-pre-line text-start flex flex-col gap-5 font-normal px-2 max-w-lg xl:max-w-none">
-                <HighlightText className="text-lg lg:text-3xl xl:text-5xl">
+            <div className="flex flex-col gap-14 whitespace-pre-line px-2 text-start text-lg font-medium lg:text-3xl xl:max-w-none xl:text-3xl">
+                <HighlightText className="">
                     Hi, I&apos;m Omari. I&apos;m a Web Developer based in
-                    England, currently studying in Nottingham. Creating new
-                    experiences, implementing eye pleasing designs, and bringing
-                    them to life with slick animations is what I do best.
+                    England. I focus on creative web development in React.
                 </HighlightText>
+                <Button className="mx-auto w-full rounded-full border border-theme-invert p-12 lowercase">
+                    Get in touch<span className="text-primary">.</span>
+                </Button>
             </div>
         </motion.section>
     );

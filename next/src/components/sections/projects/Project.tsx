@@ -80,7 +80,7 @@ function ProjectsHeading() {
 function ProjectLink({ href, children }: { href: string } & WithChildrenProps) {
     return (
         <a
-            className="themed-bg-invert themed-text-invert card flex flex-row items-center justify-center gap-2 p-2 px-4 transition-all hover:bg-primary hover:text-light"
+            className="themed-text-invert card flex flex-row items-center justify-center gap-2 bg-theme-invert p-2 px-4 transition-all hover:bg-primary hover:text-light"
             href={href}>
             {children}
         </a>
@@ -95,7 +95,7 @@ export function MobileProjectImage({ src }: { src: string }) {
                     src={src}
                     alt=""
                     fill
-                    className="themed-bg z-10 rounded-t-xl object-cover object-top"
+                    className="z-10 rounded-t-xl bg-theme object-cover object-top"
                 />
             </div>
         </div>
@@ -108,7 +108,7 @@ export function ProjectImage({ src }: { src: string }) {
                 src={src}
                 alt=""
                 fill
-                className="card themed-bg z-10 object-cover object-top"
+                className="card z-10 bg-theme object-cover object-top"
             />
         </div>
     );
@@ -142,7 +142,7 @@ export function Project({
             ref={target}>
             <motion.div
                 className={clsx(
-                    'relative z-10 flex flex-col items-center justify-start pl-6 md:pl-24 md:h-screen md:justify-center lg:w-[50vw]'
+                    'relative z-10 flex flex-col items-center justify-start pl-6 md:h-screen md:justify-center md:pl-24 lg:w-[50vw]'
                 )}>
                 <NavSpacer />
 

@@ -93,7 +93,7 @@ function Content() {
     return (
         <motion.main
             className={clsx(
-                'themed-bg themed-text flex h-full w-full flex-col items-center justify-center gap-10 bg-light px-10 md:w-1/2 md:max-w-2xl md:p-10',
+                'themed-text flex h-full w-full flex-col items-center justify-center gap-10 bg-light bg-theme px-10 md:w-1/2 md:max-w-2xl md:p-10',
                 title.className
             )}
             layoutId="intro-section"
@@ -105,7 +105,7 @@ function Content() {
             <div className="relative flex h-full w-full flex-col items-start justify-evenly">
                 <Title />
                 <motion.p
-                    className="w-full text-center text-2xl text-dark dark:text-light md:text-start"
+                    className="w-full text-center text-2xl text-dark md:text-start dark:text-light"
                     variants={fadeVariants}>
                     Nottingham-based freelance web design and development.
                 </motion.p>
@@ -133,17 +133,14 @@ export default function Home({ content }: HomeProps) {
         <StrapiContentContextProvider strapiContent={content}>
             <motion.div
                 className={clsx(
-                    'relative flex min-h-screen w-full flex-col items-center justify-center',
-
+                    'relative flex min-h-screen w-full flex-col items-center justify-center font-title',
                     title.variable,
                     body.variable
                 )}
                 id="home">
                 <LoadingScreen onEnd={() => setLoading(false)} />
 
-                <motion.div
-                    key={theme + 'content'}
-                    className="themed-bg themed-text w-full snap-y snap-mandatory">
+                <motion.div className="themed-text w-full snap-y snap-mandatory bg-theme">
                     <Nav />
 
                     <Intro />

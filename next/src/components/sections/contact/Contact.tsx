@@ -28,7 +28,7 @@ export function Contact() {
             whileInView="show"
             transition={{ staggerChildren: 1 }}
             className={clsx(
-                'themed-bg-invert themed-text-invert relative z-30 flex h-screen w-full flex-col items-center justify-center overflow-clip p-12 text-6xl md:text-8xl lg:text-9xl',
+                'themed-text-invert relative z-30 flex h-screen w-full flex-col items-center justify-center overflow-clip bg-theme-invert p-12 text-6xl md:text-8xl lg:text-9xl',
                 title.className
             )}>
             <LinksRow links={firstHalf} />

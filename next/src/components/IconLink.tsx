@@ -43,7 +43,7 @@ export function AnimatedIconLink({
             <AnimatePresence>
                 {index === social && (
                     <motion.div
-                        className="themed-bg-invert card absolute mx-auto h-full w-full"
+                        className="card absolute mx-auto h-full w-full bg-theme-invert"
                         layoutId="social"
                         key="social"
                         variants={iconBackgroundVariants}

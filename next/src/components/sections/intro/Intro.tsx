@@ -28,6 +28,8 @@ import { useMediaQuery } from 'hooks/useMediaQuery';
 import { memo } from 'react';
 import { cn } from 'utils';
 import background from 'assets/ando-1.jpg';
+import { Dots } from '@/components/Dots';
+import { FaArrowDown } from 'react-icons/fa6';
 const ContainerVariants: Variants = {
     hide: { opacity: 0, height: '100vh' },
     show: {
@@ -102,24 +104,24 @@ const ParallaxImages = memo(function ParallaxImages({
                 <ParallaxImage
                     src={omniMockup}
                     alt="Mockup for omni"
-                    className="scale-[.5] mr-[70%]"
+                    className="mr-[70%] scale-[.5]"
                 />
                 <ParallaxImage
                     src={socialMockup}
                     alt="Mockup for omni"
-                    className="scale-[.8] mr-[50%] mt-[0%]"
+                    className="mr-[50%] mt-[0%] scale-[.8]"
                 />
                 <ParallaxImage
                     src={drmworldScreenshot}
                     alt="Mockup for omni"
-                    className="scale-[.9] mr-[30%] mt-[100%]"
+                    className="mr-[30%] mt-[100%] scale-[.9]"
                     frame
                 />
 
                 <ParallaxImage
                     src={petsMockup}
                     alt="Mockup for omni"
-                    className="mt-[80%] mr-[60%]"
+                    className="mr-[60%] mt-[80%]"
                 />
             </ParallaxLayer>
         </>
@@ -183,34 +185,28 @@ export function Intro() {
     return (
         <motion.section
             className={clsx(
-                'themed-bg relative -mb-1 flex h-[500vh] w-full flex-col items-center justify-start overflow-clip font-title'
+                'relative -mb-1 flex h-screen w-full flex-col items-center justify-start overflow-clip bg-theme font-title'
             )}
-            ref={target}>
-            <div className="w-full h-screen sticky top-0 flex flex-row bg-theme">
-                <div className="z-10 flex flex-col items-center justify-center h-full w-full px-[10%]">
-                    <AnimatePresence mode="wait">
-                        <motion.h1
-                            className="text-5xl font-title font-semibold"
-                            variants={IntroTextVariants}
-                            initial="hide"
-                            animate="show"
-                            exit="exit"
-                            key={`line-${lineI}`}
-                            style={{ y: textParallax, scale: textScale }}>
-                            <SlideInText>{lines[lineI]}</SlideInText>
-                        </motion.h1>
-                    </AnimatePresence>
+            ref={target}
+            initial="hide"
+            animate="show">
+            <motion.div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center gap-12 bg-theme p-12 pt-20">
+                <header className="flex h-full w-fit flex-col items-start justify-end gap-3 text-center text-7xl font-semibold">
+                    <h1>
+                        hi, i&apos;m omari
+                        <span className="w-fit text-primary">.</span>
+                    </h1>
+                    <p className="w-full whitespace-pre text-center text-base font-medium md:text-xl">
+                        ( web developer + student )
+                    </p>
+                </header>
+                <div className="relative h-full w-full overflow-clip rounded ">
+                    <Dots />
                 </div>
-                {lg && (
-                    <motion.div style={{ width: imageWidth }}>
-                        <Image
-                            src={background}
-                            className="w-full h-full object-cover"
-                        />
-                    </motion.div>
-                )}
-                <ParallaxImages scrollYProgress={scrollYProgress} />
-            </div>
+                <div className="flex grow items-center justify-center">
+                    <FaArrowDown />
+                </div>
+            </motion.div>
         </motion.section>
     );
 }

@@ -2,17 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    :root {
-        --theme: theme(colors.light);
-        --theme-invert: theme(colors.dark);
-    }
 
-    .dark {
-        --theme: theme(colors.dark);
-        --theme-invert: theme(colors.light);
-    }
-}
 
 body {
     @apply bg-dark;
@@ -26,21 +16,6 @@ body {
 }
 
 @layer utilities {
-    .themed-bg {
-        @apply bg-light dark:bg-dark;
-    }
-
-    .themed-text {
-        @apply text-dark dark:text-light;
-    }
-
-    .themed-bg-invert {
-        @apply bg-dark dark:bg-light;
-    }
-
-    .themed-text-invert {
-        @apply text-light dark:text-dark;
-    }
 
     .text-gradient {
         @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important;
@@ -49,6 +24,12 @@ body {
 
 @layer components {
     .card {
-        @apply rounded-md;
+        @apply rounded-full;
     }
+
+    .card-solid-primary {
+        @apply card bg-primary;
+    }
+
+
 }
