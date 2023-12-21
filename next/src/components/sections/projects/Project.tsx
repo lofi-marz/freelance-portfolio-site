@@ -2,7 +2,7 @@ import { ProjectContent } from '../../../utils/strapi';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { WithChildrenProps } from '../../../types';
+import { WithChildrenProps, WithClassNameProps } from '../../../types';
 import {
     motion,
     useMotionValueEvent,
@@ -19,6 +19,7 @@ import {
 } from '@/components/sections/projects/variants';
 import { useEffect, useRef, useState } from 'react';
 import { NavSpacer } from '@/components/Nav';
+import { cn } from '@/utils/index';
 
 const NoHoverTitleVariants: Variants = {
     initial: { bottom: 0, top: 'auto' },
@@ -57,7 +58,9 @@ const ProjectPreviewVariants = {
     },
 };
 
-export type ProjectProps = ProjectContent['attributes'] & { first?: boolean };
+export type ProjectProps = ProjectContent['attributes'] & {
+    first?: boolean;
+} & WithClassNameProps;
 function ProjectsHeading() {
     //TODO: why does the z index mess up
     return (
@@ -113,6 +116,7 @@ export function ProjectImage({ src }: { src: string }) {
         </div>
     );
 }
+const MotionImage = motion(Image);
 export function Project({
     title,
     description,
@@ -122,73 +126,44 @@ export function Project({
     desktopPreview,
     mobilePreview,
     fullDesktop,
+    mockup,
     first = false,
+    className,
 }: ProjectProps) {
     const target = useRef(null);
     const { scrollYProgress } = useScroll({
         target,
         offset: ['start end', 'center center'],
     });
-    const imageHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-    const imagePosition = useTransform(scrollYProgress, (v) => {
-        if (v === 1) return 'fixed';
-        if (first) return 'absolute';
-        if (v > 0) return 'fixed';
-        return 'relative';
+    const spring = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 50,
+        mass: 1,
+        restDelta: 0.001,
     });
+    const parallax = useTransform(spring, [0, 1], ['-10%', '10%']);
+
     return (
         <div
-            className="relative flex h-screen w-full flex-row justify-start"
+            className={cn(
+                'relative flex aspect-square h-full w-full max-w-[90vh] flex-row items-end justify-start gap-3 overflow-clip rounded-[3rem] p-6',
+                className
+            )}
             ref={target}>
-            <motion.div
-                className={clsx(
-                    'relative z-10 flex flex-col items-center justify-start pl-6 md:h-screen md:justify-center md:pl-24 lg:w-[50vw]'
-                )}>
-                <NavSpacer />
-
-                <div className="justify-baseline flex w-full flex-col items-start md:gap-6">
-                    <h3 className="w-full text-4xl font-bold md:text-7xl lg:text-8xl">
-                        {title}
-                    </h3>
-                    <p className="hidden w-full font-body md:block md:w-80">
-                        {brief}
-                    </p>
-                    <div className="card mt-6 flex flex-row items-center justify-center gap-3 text-xl">
-                        {liveLink && (
-                            <ProjectLink href={liveLink}>
-                                <FaLink /> Link
-                            </ProjectLink>
-                        )}
-                        {repoLink && (
-                            <ProjectLink href={repoLink}>
-                                <FaGithub /> Code
-                            </ProjectLink>
-                        )}
-                    </div>
-                </div>
-            </motion.div>
-            <motion.div
-                className={clsx(
-                    'absolute right-0 top-0 h-full w-full overflow-clip brightness-50 will-change-[height] lg:block lg:w-[50vw] lg:brightness-100'
-                )}
-                style={{
-                    height: first ? '100%' : imageHeight,
-                    position: imagePosition,
-                }}>
-                <div className="relative h-screen w-full">
-                    <Image
-                        src={
-                            'https://marileon.me/cms' +
-                            (fullDesktop
-                                ? fullDesktop?.data.attributes.url
-                                : desktopPreview.data.attributes.url)
-                        }
-                        className="h-full w-full object-cover"
-                        fill
-                        alt="Desktop preview"
-                    />
-                </div>
-            </motion.div>
+            <MotionImage
+                src={`https://marileon.me/cms/${mockup.data?.attributes.url}`}
+                alt=""
+                className="h-full w-full object-cover"
+                fill
+                style={{ y: parallax, scale: 1.2 }}
+            />
+            <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent from-80% to-dark/50" />
+            <div className="card-solid-theme-invert relative z-10 px-20 py-6 text-3xl font-semibold lowercase text-theme">
+                {title}
+            </div>
+            <div className="relative rounded-full bg-theme-invert p-6 text-3xl text-theme">
+                <FaLink />
+            </div>
         </div>
     );
 }

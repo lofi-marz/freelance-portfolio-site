@@ -1,17 +1,10 @@
-import React, {
-    MouseEventHandler,
-    useRef,
-    useState,
-    useSyncExternalStore,
-} from 'react';
+import { MouseEventHandler, useRef, useState } from 'react';
 import { type Sketch } from '@p5-wrapper/react';
-import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import theme from '../../../tailwind.config';
 import {
     MotionValue,
     motion,
     useMotionValue,
-    useMotionValueEvent,
     useSpring,
     useTime,
     useTransform,
@@ -128,7 +121,7 @@ export function Dots() {
     };
     return (
         <motion.div
-            className="flex h-full w-full flex-row flex-wrap items-center justify-between"
+            className="flex h-[40vh] w-full flex-row flex-wrap items-center justify-between overflow-clip"
             onMouseMove={onMouseMove}
             onMouseEnter={() => setMouseEntered(true)}
             onMouseLeave={() => setMouseEntered(false)}>

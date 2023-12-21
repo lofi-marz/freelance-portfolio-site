@@ -13,7 +13,8 @@ import { useMediaQuery } from 'hooks/useMediaQuery';
 import { Project } from './Project';
 import { useRef, useState } from 'react';
 import { ProjectPreview } from '@/components/sections/projects/ProjectPreview';
-
+import Image from 'next/image';
+import { FaLink } from 'react-icons/fa6';
 type RepeatTextProps = {
     n: number;
 } & WithChildrenProps;
@@ -66,19 +67,25 @@ function RepeatText({ n, children }: RepeatTextProps) {
 
 export function Projects() {
     const { projects } = useStrapiContentContext()!;
-    const [projectI, setProjectI] = useState(0);
-    const onChange = (p: number) => () => setProjectI(p);
-    const project = projects[projectI];
+
+    const [p1, p2, p3, p4, p5, ...rest] = projects.filter((p) =>
+        Boolean(p.attributes.mockup?.data)
+    );
+
+    console.log(p1, p2, p3, p4, p5, rest);
+
     const md = useMediaQuery('md');
     return (
         <motion.section
-            className="themed-text relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center bg-theme py-24 font-title "
+            className="relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center bg-theme py-24 font-title "
             id="projects">
             <RepeatText n={2}>Projects</RepeatText>
-            <div className="flex w-full flex-col items-start justify-center">
-                {projects.map((p, i) => (
-                    <Project key={p.id} {...p.attributes} first={i == 0} />
-                ))}
+            <div className="flex w-full flex-col items-start justify-center gap-32 px-12">
+                <div className="flex w-full flex-row items-end gap-32">
+                    <Project {...p1.attributes} />
+                    <Project {...p2.attributes} className="w-1/3" />
+                </div>
+                <Project {...p3.attributes} className="mx-auto" />
             </div>
         </motion.section>
     );

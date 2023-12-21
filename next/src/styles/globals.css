@@ -27,9 +27,8 @@ body {
         @apply rounded-full;
     }
 
-    .card-solid-primary {
-        @apply card bg-primary;
-    }
+
+ 
 
 
 }

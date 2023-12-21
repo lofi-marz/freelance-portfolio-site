@@ -25,7 +25,6 @@ import { Contact } from '@/components/sections/contact';
 import theme from '../../tailwind.config';
 //const title = Poppins({ weight: ['600', '700', '800', '900'] });
 
-
 const headingVariants: Variants = {
     hidden: { opacity: 0, y: -10 },
     visible: { opacity: 1, y: 0 },
@@ -155,7 +154,7 @@ export default function Home({ content }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
     const query = qs.stringify(
         {
-            populate: ['desktopPreview', 'mobilePreview'],
+            populate: '*',
         },
         {
             encodeValuesOnly: true, // prettify URL

@@ -72,7 +72,7 @@ export const trackVariants: Variants = {
     show: { opacity: 1, height: 'auto' },
 };
 /* eslint-disable-next-line */
-const lines = ["hi, i'm omari.", 'I create creative experiences with code.'];
+const lines = ["hi, i'm omari", 'I create creative experiences with code'];
 
 const ParallaxImages = memo(function ParallaxImages({
     scrollYProgress,
@@ -150,29 +150,14 @@ export function Intro() {
         mass: 1,
         restDelta: 0.001,
     });
-    const textScale = useTransform(
-        spring,
-        [0, 0.25, 0.75, 1],
-        [1, 1, maxTextScale, maxTextScale]
-    );
 
-    const textParallax = useTransform(
-        scrollYProgress,
-        [0, 0.3, 1],
-        ['0vh', '0vh', '-10vh']
-    );
-
-    const imageWidth = useTransform(
-        spring,
-        [0, 0.1, 0.2],
-        ['33%', '33%', '0%']
-    );
-
-    const currentlyPlaying = useCurrentlyPlayingContext();
+    const dotsHeight = useTransform(spring, [0, 0.4], ['100%', '0%']);
+    const dotsOpacity = useTransform(spring, [0, 0.05, 0.25], [1, 1, 0]);
+    //const currentlyPlaying = useCurrentlyPlayingContext();
     useMotionValueEvent(scrollYProgress, 'change', (v) => {
-        if (v < 0.25 && lineI !== 0) {
+        if (v < 0.5 && lineI !== 0) {
             setLineI(0);
-        } else if (v >= 0.25 && lineI !== 1) {
+        } else if (v >= 0.5 && lineI !== 1) {
             setLineI(1);
         }
     });
@@ -185,24 +170,28 @@ export function Intro() {
     return (
         <motion.section
             className={clsx(
-                'relative -mb-1 flex h-screen w-full flex-col items-center justify-start overflow-clip bg-theme font-title'
+                'relative -mb-1 flex h-[400vh] w-full flex-col items-center justify-start overflow-clip bg-theme font-title'
             )}
             ref={target}
             initial="hide"
             animate="show">
             <motion.div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center gap-12 bg-theme p-12 pt-20">
                 <header className="flex h-full w-fit flex-col items-start justify-center gap-3 text-center text-7xl font-semibold">
-                    <h1>
-                        hi, i&apos;m omari
-                        <span className="w-fit text-primary">.</span>
-                    </h1>
-                    <p className="w-full whitespace-pre text-center text-base font-medium md:text-xl">
-                        ( web developer + student )
-                    </p>
+                    <AnimatePresence mode="wait">
+                        <motion.h1
+                            key={lineI}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}>
+                            {lines[lineI]}
+                            <span className="w-fit text-primary">.</span>
+                        </motion.h1>
+                    </AnimatePresence>
                 </header>
-                <div className="relative h-full w-full overflow-clip rounded ">
+                <motion.div
+                    className="relative w-full"
+                    style={{ height: dotsHeight, opacity: dotsOpacity }}>
                     <Dots />
-                </div>
+                </motion.div>
                 <div className="flex grow items-center justify-center">
                     <FaArrowDown />
                 </div>

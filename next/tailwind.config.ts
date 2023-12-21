@@ -43,6 +43,36 @@ const theme = {
                 },
             });
         }),
+        plugin(function ({ addUtilities, matchUtilities, theme }) {
+            addUtilities({
+                '.card-outline': {
+                    'border-radius': '9999px',
+                    borderColor: theme('colors.light'),
+                    borderWidth: theme('borderWidth.DEFAULT'),
+                    backgroundColor: 'transparent',
+                },
+            });
+            matchUtilities(
+                {
+                    'card-solid': (value) => ({
+                        'border-radius': '9999px',
+                        backgroundColor: value,
+                        textColor: theme('colors.light'),
+                    }),
+                    'card-theme-solid': (value) => ({
+                        'border-radius': '9999px',
+                        backgroundColor: value,
+                        textColor: theme('colors.theme'),
+                    }),
+                    'card-theme-invert-solid': (value) => ({
+                        'border-radius': '9999px',
+                        backgroundColor: value,
+                        textColor: theme('colors.theme-invert'),
+                    }),
+                },
+                { values: theme('colors') }
+            );
+        }),
     ],
 } satisfies Config;
 

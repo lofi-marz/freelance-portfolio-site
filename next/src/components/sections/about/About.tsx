@@ -17,18 +17,21 @@ import { Button } from 'react-aria-components';
 import { MotionButton } from '@/components/motion';
 
 const primary = theme.theme.extend.colors.primary;
-function Photo({ parallax }: { parallax: MotionValue }) {
+function Photo({ scroll }: { scroll: MotionValue }) {
+    const rotate = useTransform(scroll, [0, 0.5, 1], [-10, 0, 5]);
     return (
-        <div className="relative w-full max-w-lg overflow-clip bg-theme-invert p-[5%] pb-[10%] text-theme xl:w-[30rem]">
+        <motion.div
+            className="relative w-full max-w-lg overflow-clip bg-theme-invert p-[5%] pb-[10%] text-theme xl:w-[30rem]"
+            style={{ rotate }}>
             <motion.div
                 className="h-full w-full overflow-clip"
-                style={{ y: parallax }}>
+                style={{ y: scroll }}>
                 <Image src={me} alt="Photo of me" className="scale-110 " />
             </motion.div>
             <div className="text-end text-xs opacity-50 transition-all hover:opacity-100">
                 brighton, gb
             </div>
-        </div>
+        </motion.div>
     );
 }
 export function About() {
@@ -47,12 +50,13 @@ export function About() {
             )}
             ref={target}>
             <div className="lg:px-12 lg:py-24 xl:px-0">
-                <Photo parallax={parallax} />
+                <Photo scroll={scrollYProgress} />
             </div>
             <div className="flex flex-col gap-14 whitespace-pre-line px-2 text-start text-lg font-medium text-theme-invert lg:text-3xl xl:max-w-none xl:text-3xl">
                 <HighlightText className="">
-                    Hi, I&apos;m Omari. I&apos;m a Web Developer based in
-                    England. I focus on creative web development in React.
+                    Hi, I&apos;m Omari. I make creative, fun and functional
+                    things for the web. I focus on full-stack development with
+                    React.
                 </HighlightText>
                 <CTA />
             </div>
