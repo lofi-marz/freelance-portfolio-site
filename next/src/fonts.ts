@@ -10,7 +10,7 @@ import {
     Work_Sans,
 } from 'next/font/google';
 //['400', '500', '600', '700']
-export const title = Work_Sans({
+export const title = Inter({
     subsets: ['latin'],
     weight: 'variable',
     variable: '--font-title',

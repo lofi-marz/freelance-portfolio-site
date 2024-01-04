@@ -21,7 +21,7 @@ export function ParallaxImage({
     return (
         <motion.div
             className={cn(
-                'w-1/2 bg-red-400 relative saturate-[.9] overflow-clip pointer-events-auto',
+                'pointer-events-auto relative w-1/2 overflow-clip bg-red-400 saturate-[.9]',
                 frame && 'p-[5%]',
 
                 className
@@ -30,7 +30,7 @@ export function ParallaxImage({
                 src={src}
                 alt={alt}
                 priority
-                className="hover:scale-110 transition-all ease-out duration-1000"
+                className="transition-all duration-1000 ease-out hover:scale-110"
             />
         </motion.div>
     );

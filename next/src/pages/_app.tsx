@@ -10,7 +10,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            
+
             <NextSeo
                 title="Omari Thompson-Edwards"
                 description="Nottingham-based freelance web developer."

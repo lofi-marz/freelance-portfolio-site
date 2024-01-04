@@ -141,15 +141,17 @@ export function Project({
         mass: 1,
         restDelta: 0.001,
     });
+    //const scroll = useTransform(spring, [0,1], [])
     const parallax = useTransform(spring, [0, 1], ['-10%', '10%']);
-
+    const reverseParallax = useTransform(spring, [0, 1], ['10%', '-10%']);
     return (
-        <div
+        <motion.div
             className={cn(
-                'relative flex aspect-square h-full w-full max-w-[90vh] flex-row items-end justify-start gap-3 overflow-clip rounded-[3rem] p-6',
+                'relative flex aspect-square h-full w-full max-w-[90vh] flex-row items-end justify-start gap-3 overflow-clip rounded-[3rem] p-6 text-xl font-semibold lg:text-3xl',
                 className
             )}
-            ref={target}>
+            ref={target}
+            style={{ y: reverseParallax }}>
             <MotionImage
                 src={`https://marileon.me/cms/${mockup.data?.attributes.url}`}
                 alt=""
@@ -158,12 +160,16 @@ export function Project({
                 style={{ y: parallax, scale: 1.2 }}
             />
             <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent from-80% to-dark/50" />
-            <div className="card-solid-theme-invert relative z-10 px-20 py-6 text-3xl font-semibold lowercase text-theme">
-                {title}
+            <div className="flex h-12 flex-row gap-3 md:h-14 lg:h-20">
+                <div className="relative z-10 flex items-center justify-center px-10 font-semibold lowercase text-theme card-solid-theme-invert lg:px-20">
+                    {title}
+                </div>
+                <a
+                    className="relative flex aspect-square items-center justify-center rounded-full bg-theme-invert text-theme transition-all hover:bg-primary hover:text-light"
+                    href={liveLink}>
+                    <FaLink />
+                </a>
             </div>
-            <div className="relative rounded-full bg-theme-invert p-6 text-3xl text-theme">
-                <FaLink />
-            </div>
-        </div>
+        </motion.div>
     );
 }

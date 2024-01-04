@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
     @apply bg-dark;
 }
@@ -16,19 +14,17 @@ body {
 }
 
 @layer utilities {
-
     .text-gradient {
         @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important;
     }
 }
 
 @layer components {
+
+    .heading {
+        @apply font-bold tracking-tight;
+    }
     .card {
         @apply rounded-full;
     }
-
-
- 
-
-
 }

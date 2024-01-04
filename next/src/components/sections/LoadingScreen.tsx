@@ -32,7 +32,7 @@ const barVariants: Variants = {
         width: '0%',
         transition: {
             ease: 'easeInOut',
-            duration: 0.5,
+            duration: 1,
         },
     },
 };
@@ -43,7 +43,7 @@ function Bar({ className }: WithClassNameProps) {
     const reducedMotion = useReducedMotion();
     return (
         <motion.div
-            className={cn('h-full w-full', className)}
+            className={cn('h-full w-full rounded-r-full', className)}
             variants={barVariants}
             custom={reducedMotion}
         />
@@ -70,7 +70,7 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
             transition={{ delay: 1, delayChildren: 1 }}
             style={{ originY: 0 }}>
             <motion.div
-                className="absolute top-0 flex h-screen w-full flex-col"
+                className="absolute top-0 -ml-[5vw] flex h-screen w-[150vw] flex-col"
                 variants={{ visible: {}, hidden: {} }}
                 transition={{
                     staggerChildren: 0.1,

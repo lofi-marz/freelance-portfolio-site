@@ -31,7 +31,7 @@ export function ParallaxLayer({
     return (
         <motion.div
             className={cn(
-                'w-full h-screen absolute pointer-events-none top-0 grid grid-cols-2 place-content-center justify-items-center items-center justify-center',
+                'pointer-events-none absolute top-0 grid h-screen w-full grid-cols-2 place-content-center items-center justify-center justify-items-center',
                 Array.isArray(children) &&
                     children.length === 4 &&
                     'grid-rows-2'

@@ -1,10 +1,11 @@
-import { MouseEventHandler, useRef, useState } from 'react';
+import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { type Sketch } from '@p5-wrapper/react';
 import theme from '../../../tailwind.config';
 import {
     MotionValue,
     motion,
     useMotionValue,
+    useReducedMotion,
     useSpring,
     useTime,
     useTransform,
@@ -64,6 +65,8 @@ const sketch: Sketch = (p5) => {
         }
     };
 };
+const MOUSE_OFFSET_X = 25;
+const MOUSE_OFFSET_y = MOUSE_OFFSET_X;
 
 function Dot({
     x,
@@ -74,59 +77,70 @@ function Dot({
     y: MotionValue<number>;
     followMouse: boolean;
 }) {
+    const reducedMotion = useReducedMotion();
     const ref = useRef<HTMLDivElement>(null);
     const time = useTime();
+    const pos = ref.current?.getBoundingClientRect();
     const distance = useTransform(() => {
         if (typeof window === 'undefined') return 0;
-        const pos = ref.current?.getBoundingClientRect();
+
         const dotX = pos?.x ?? 0;
         const dotY = pos?.y ?? 0;
-        if (!followMouse) {
-            const sin = Math.sin(time.get() / 750 + dotX / 250);
+        if (reducedMotion) {
+            const sin = Math.sin((dotY + dotX) / 250);
             return ((sin + 1) / 2) * 0.2;
         }
-        const xPos = (x.get() - dotX) / window.screen.width;
-        const yPos = (y.get() - dotY) / window.screen.height;
-        return Math.sqrt(xPos ** 2 + yPos ** 2);
+        if (!followMouse) {
+            const sin = Math.sin(
+                time.get() / 750 +
+                    dotX / 250 +
+                    Math.cos(time.get() / 500 + dotY / 250)
+            );
+            return ((sin + 1) / 2) * 0.2;
+        }
+        const xPos = (x.get() - MOUSE_OFFSET_X - dotX) / window.screen.width;
+        const yPos = (y.get() - MOUSE_OFFSET_y - dotY) / window.screen.height;
+        return Math.hypot(xPos, yPos);
     });
 
     const spring = useSpring(distance, {
         stiffness: 100,
-        damping: 50,
-        mass: 1,
+        damping: 30,
         restDelta: 0.001,
     });
     const scale = useTransform(spring, (v) =>
-        Math.min(0.9, (1 - v) ** 8 + 0.2)
+        Math.min(1, Math.max(0.1, (1 - v) ** 5))
     );
 
     return (
-        <div className="aspect-square h-1/5 p-0 sm:h-1/3">
+        <motion.div className="aspect-square h-[5%] sm:h-[10%]">
             <motion.div
                 className="aspect-square h-full rounded-full bg-primary"
                 style={{ scale }}
                 ref={ref}
             />
-        </div>
+        </motion.div>
     );
 }
 
-export function Dots() {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-    const [mouseEntered, setMouseEntered] = useState(false);
-    const onMouseMove: MouseEventHandler = (e) => {
-        x.set(e.clientX); //Offsets to make the image line up with the actual cursor
-        y.set(e.clientY);
-    };
+export function Dots({
+    followMouse,
+    x,
+    y,
+}: {
+    followMouse: boolean;
+    x: MotionValue<number>;
+    y: MotionValue<number>;
+}) {
     return (
         <motion.div
-            className="flex h-[40vh] w-full flex-row flex-wrap items-center justify-between overflow-clip"
-            onMouseMove={onMouseMove}
-            onMouseEnter={() => setMouseEntered(true)}
-            onMouseLeave={() => setMouseEntered(false)}>
-            {[...new Array(48)].map((_, i) => (
-                <Dot key={i} x={x} y={y} followMouse={mouseEntered} />
+            className="flex h-screen w-screen flex-wrap place-content-center place-items-center overflow-clip p-6"
+            initial="hide"
+            whileInView="show"
+            transition={{ delayChildren: 2 }}
+            layout>
+            {[...new Array(100)].map((_, i) => (
+                <Dot key={i} x={x} y={y} followMouse={followMouse} />
             ))}
         </motion.div>
     );

@@ -15,6 +15,8 @@ import { useRef, useState } from 'react';
 import { ProjectPreview } from '@/components/sections/projects/ProjectPreview';
 import Image from 'next/image';
 import { FaLink } from 'react-icons/fa6';
+import { ProjectContent } from '@/utils/strapi';
+import { Dot } from '../..';
 type RepeatTextProps = {
     n: number;
 } & WithChildrenProps;
@@ -27,11 +29,11 @@ function RepeatText({ n, children }: RepeatTextProps) {
         offset: ['start end', 'end start'],
     });
     const spring = useSpring(scrollYProgress, {
-        stiffness: 10,
+        stiffness: 50,
         damping: 30,
         restDelta: 0.001,
     });
-    const x = useTransform(spring, [0, 1], ['0%', '100%']);
+    const x = useTransform(spring, [0, 1], ['0%', '150%']);
 
     /*useMotionValueEvent(x, 'change', (v) => {
         console.log(scrollYProgress.get(), spring.get(), v);
@@ -64,28 +66,98 @@ function RepeatText({ n, children }: RepeatTextProps) {
         </motion.header>
     );
 }
+const MAX_FEATURED = 5;
 
+function ExtraProjectLink({
+    project: { attributes },
+}: {
+    project: ProjectContent;
+}) {
+    return (
+        <motion.a
+            href={attributes.liveLink}
+            className="flex transition-all  hover:text-primary "
+            whileHover="wide"
+            variants={{
+                hide: { opacity: 0, y: 50, justifyContent: 'start' },
+                show: { opacity: 1, y: 0, justifyContent: 'start' },
+            }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            layout>
+            <div className="w-fit whitespace-nowrap">{attributes.title}</div>
+            <motion.span
+                animate="show"
+                variants={{ show: { width: '100%' }, wide: { width: '1ch' } }}
+                className="flex justify-end">
+                <Dot />
+            </motion.span>
+        </motion.a>
+    );
+}
 export function Projects() {
     const { projects } = useStrapiContentContext()!;
 
-    const [p1, p2, p3, p4, p5, ...rest] = projects.filter((p) =>
-        Boolean(p.attributes.mockup?.data)
+    const [featured, rest] = projects.reduce(
+        ([featured, rest], curr) => {
+            const featuredHasSpace = featured.length < MAX_FEATURED;
+            return featuredHasSpace && curr.attributes.mockup.data
+                ? [[...featured, curr], rest]
+                : [featured, [...rest, curr]];
+        },
+        [[], []] as [ProjectContent[], ProjectContent[]]
     );
 
-    console.log(p1, p2, p3, p4, p5, rest);
+    console.log(projects, featured, rest);
+
+    console.assert(
+        projects.length === featured.length + rest.length,
+        'asserted'
+    );
+
+    const [p1, p2, p3, p4, p5] = featured;
 
     const md = useMediaQuery('md');
     return (
         <motion.section
-            className="relative z-10 mt-[-1px] flex min-h-screen w-full flex-col items-center justify-center bg-theme py-24 font-title "
+            className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-primary to-theme-invert font-title "
             id="projects">
-            <RepeatText n={2}>Projects</RepeatText>
-            <div className="flex w-full flex-col items-start justify-center gap-32 px-12">
-                <div className="flex w-full flex-row items-end gap-32">
-                    <Project {...p1.attributes} />
-                    <Project {...p2.attributes} className="w-1/3" />
+            <div className="flex h-full w-full flex-col items-center justify-center rounded-3xl bg-dark py-24 pb-48 lg:rounded-[9rem]">
+                <RepeatText n={2}>Projects</RepeatText>
+                <div className="flex w-full flex-col items-start justify-center gap-8 p-6 lg:gap-32 lg:px-12">
+                    <div className="items-between flex w-full flex-col gap-8 lg:flex-row lg:gap-32">
+                        <Project {...p1.attributes} />
+                        <Project {...p2.attributes} className="lg:w-1/3" />
+                    </div>
+                    <Project {...p3.attributes} className="mx-auto" />
+                    <div className="items-between flex w-full flex-col justify-between gap-8 lg:flex-row lg:gap-32">
+                        <Project {...p4.attributes} className="lg:w-1/3" />
+                        <Project {...p5.attributes} />
+                    </div>
                 </div>
-                <Project {...p3.attributes} className="mx-auto" />
+                <motion.div
+                    className="flex w-full flex-col gap-2 px-12 text-3xl lowercase"
+                    initial="hide"
+                    whileInView="show"
+                    exit="hide"
+                    transition={{
+                        staggerChildren: 0.1,
+                        transition: { duration: 0.1 },
+                    }}>
+                    <motion.h2
+                        className="heading"
+                        variants={{
+                            hide: { opacity: 0 },
+                            show: { opacity: 1 },
+                        }}>
+                        ( Or check out the rest )
+                    </motion.h2>
+                    {...rest.map(({ id, attributes }) => (
+                        <ExtraProjectLink
+                            key={id}
+                            project={{ id, attributes }}
+                        />
+                    ))}
+                </motion.div>
             </div>
         </motion.section>
     );
@@ -104,7 +176,7 @@ type ProjectLinksProps = {
 };
 function ProjectLinks({ repoLink, liveLink }: ProjectLinksProps) {
     return (
-        <div className="f lex  z-10 flex-row text-xl font-bold">
+        <div className="z-10  flex flex-row text-xl font-bold">
             {repoLink && (
                 <a
                     className="themed-text-invert bg-theme-invert p-2 px-4"

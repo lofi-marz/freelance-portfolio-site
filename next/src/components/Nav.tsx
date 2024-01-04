@@ -10,17 +10,19 @@ import { title } from 'fonts';
 import { cn } from 'utils';
 import Link from 'next/link';
 import { socials } from 'utils/socials';
+import { WithChildrenProps } from 'types';
 
 function Logo() {
     return (
         <motion.div className="z-50 font-semibold" layoutId="logo" layout>
-            mari<span className="text-primary">.</span>
+            mari
+            <Dot />
         </motion.div>
     );
 }
 const dialogVariants: Variants = {
-    hide: { opacity: 1 },
-    show: { opacity: 1 },
+    hide: {},
+    show: {},
 };
 
 const links: { name: string; href: string }[] = [
@@ -34,19 +36,31 @@ type NavLinksProps = { onClick: () => void };
 function NavLinks({ onClick }: NavLinksProps) {
     return (
         <motion.ul
-            className="relative z-10 flex w-full grow flex-col justify-center text-6xl font-semibold lg:text-8xl "
+            className="heading relative z-10 flex w-full grow flex-col justify-center text-6xl font-semibold lg:text-8xl "
             variants={{ hide: {}, show: {} }}>
             {links.map(({ name, href }) => (
                 <motion.li key={name} className="py-4">
                     <Link
                         href={href}
-                        className="hover:card-solid-primary transition-all hover:px-6 hover:py-2 lg:hover:px-20"
+                        className="transition-all hover:px-6 hover:py-2 hover:card-solid-primary lg:hover:px-20"
                         onClick={onClick}>
                         {name}
                     </Link>
                 </motion.li>
             ))}
         </motion.ul>
+    );
+}
+
+function SocialLink({ href, children }: { href: string } & WithChildrenProps) {
+    return (
+        <motion.li
+            className="transition-all"
+            variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}>
+            <Link href={href} target="_blank" className="transition-all">
+                {children}
+            </Link>
+        </motion.li>
     );
 }
 
@@ -57,18 +71,9 @@ function SocialsBar() {
             variants={{ hide: {}, show: {} }}
             transition={{ staggerChildren: 0.5 }}>
             {socials.map(({ name, href }) => (
-                <motion.li
-                    key={name}
-                    className="transition-all"
-                    variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}
-                    transition={{ ease: 'easeOut' }}>
-                    <Link
-                        href={href}
-                        target="_blank"
-                        className="transition-all">
-                        {name}
-                    </Link>
-                </motion.li>
+                <SocialLink key={name} href={href}>
+                    {name}
+                </SocialLink>
             ))}
         </motion.ul>
     );

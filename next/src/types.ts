@@ -6,5 +6,5 @@ export type WithChildrenProps = {
 
 export type WithClassNameProps = {
     className?: string;
-}
+};
 export type Theme = 'dark' | 'light';

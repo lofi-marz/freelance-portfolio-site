@@ -5,8 +5,10 @@ import me from 'assets/me-brighton.jpg';
 import {
     motion,
     MotionValue,
+    useMotionTemplate,
     useMotionValueEvent,
     useScroll,
+    useSpring,
     useTransform,
     Variants,
 } from 'framer-motion';
@@ -15,50 +17,69 @@ import { cn } from 'utils';
 import { useRef } from 'react';
 import { Button } from 'react-aria-components';
 import { MotionButton } from '@/components/motion';
+import { Dot } from '@/components/Dot';
+import { GrowingDot } from '../..';
 
 const primary = theme.theme.extend.colors.primary;
 function Photo({ scroll }: { scroll: MotionValue }) {
+    const spring = useSpring(scroll);
     const rotate = useTransform(scroll, [0, 0.5, 1], [-10, 0, 5]);
+
+    const y = useTransform(spring, [0, 1], [-100, 0]);
     return (
         <motion.div
-            className="relative w-full max-w-lg overflow-clip bg-theme-invert p-[5%] pb-[10%] text-theme xl:w-[30rem]"
-            style={{ rotate }}>
+            className="relative w-full max-w-lg overflow-clip rounded-xl bg-theme-invert p-[5%] pb-[10%] text-theme xl:w-[30rem]"
+            style={{ rotate, y }}>
             <motion.div
                 className="h-full w-full overflow-clip"
                 style={{ y: scroll }}>
                 <Image src={me} alt="Photo of me" className="scale-110 " />
             </motion.div>
-            <div className="text-end text-xs opacity-50 transition-all hover:opacity-100">
-                brighton, gb
+            <div className="text-end text-xs opacity-10 transition-all hover:text-primary hover:opacity-100">
+                me!
             </div>
         </motion.div>
     );
 }
+
 export function About() {
     const target = useRef(null);
     const { scrollYProgress } = useScroll({
         target,
-        offset: ['start end', 'end start'],
+        offset: ['start end', 'start start'],
     });
-    const parallax = useTransform(scrollYProgress, [0, 1], ['10%', '-10%']);
-    useMotionValueEvent(parallax, 'change', (v) => console.log('parallax', v));
+
+    /*const dark = theme.theme.extend.colors.dark;
+    const light = theme.theme.extend.colors.light;
+    const backgroundColor = useTransform(
+        scrollYProgress,
+        [0, 0.9, 1],
+        [dark, dark, light]
+    );*/
+
+    const spring = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 20,
+        mass: 1,
+        restDelta: 0.001,
+    });
+
+    //useMotionValueEvent(parallax, 'change', (v) => console.log('parallax', v));
     return (
         <motion.section
             id="about"
             className={clsx(
-                'relative mx-auto -mt-1 flex max-w-screen-xl grid-cols-2 flex-col items-center gap-8 bg-theme p-6 text-theme lg:grid lg:px-24'
+                'relative z-50 mx-auto -mt-[5%] flex h-screen flex-col items-center justify-center gap-96 overflow-visible bg-primary p-6 px-24 font-semibold text-theme-invert'
             )}
             ref={target}>
-            <div className="lg:px-12 lg:py-24 xl:px-0">
-                <Photo scroll={scrollYProgress} />
-            </div>
-            <div className="flex flex-col gap-14 whitespace-pre-line px-2 text-start text-lg font-medium text-theme-invert lg:text-3xl xl:max-w-none xl:text-3xl">
-                <HighlightText className="">
-                    Hi, I&apos;m Omari. I make creative, fun and functional
-                    things for the web. I focus on full-stack development with
-                    React.
-                </HighlightText>
-                <CTA />
+            <div className="heading relative text-5xl lg:px-24 lg:text-7xl">
+                I make{' '}
+                <span className="text-primary mix-blend-difference">
+                    creative
+                </span>
+                , fun and functional things for the web, with a focus on
+                front-end development, powered by React/Next.js
+                <Dot />
             </div>
         </motion.section>
     );
