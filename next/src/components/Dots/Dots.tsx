@@ -115,7 +115,7 @@ function Dot({
     );
 
     return (
-        <motion.div className="aspect-square h-[5%]  sm:h-[10%] lg:h-auto lg:w-[5%]">
+        <motion.div className="aspect-square w-[10%] lg:w-[5%]">
             <motion.div
                 className="aspect-square h-full rounded-full bg-primary"
                 style={{ scale }}
@@ -136,7 +136,7 @@ export function Dots({
 }) {
     return (
         <motion.div
-            className="flex h-screen w-screen flex-wrap place-content-center place-items-center overflow-clip p-6"
+            className="mx-auto flex h-screen w-screen max-w-screen-2xl flex-wrap place-content-center place-items-center overflow-clip p-6"
             initial="hide"
             whileInView="show"
             transition={{ delayChildren: 2 }}
