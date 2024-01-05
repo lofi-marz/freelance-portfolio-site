@@ -3,6 +3,7 @@ import {
     motion,
     MotionValue,
     useMotionValueEvent,
+    useReducedMotion,
     useScroll,
     useSpring,
     useTransform,
@@ -73,21 +74,25 @@ function ExtraProjectLink({
 }: {
     project: ProjectContent;
 }) {
+    const reducedMotion = useReducedMotion();
     return (
         <motion.a
             href={attributes.liveLink}
-            className="flex transition-all  hover:text-primary "
-            whileHover="wide"
+            className="flex transition-all  hover:text-primary"
+            whileHover={reducedMotion ? 'show' : 'hover'}
             variants={{
-                hide: { opacity: 0, y: 50, justifyContent: 'start' },
-                show: { opacity: 1, y: 0, justifyContent: 'start' },
+                hide: { opacity: 0, y: 50 },
+                show: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
             layout>
             <div className="w-fit whitespace-nowrap">{attributes.title}</div>
             <motion.span
                 animate="show"
-                variants={{ show: { width: '100%' }, wide: { width: '1ch' } }}
+                variants={{
+                    show: { width: '100%' },
+                    hover: { width: '1ch' },
+                }}
                 className="flex justify-end">
                 <Dot />
             </motion.span>
