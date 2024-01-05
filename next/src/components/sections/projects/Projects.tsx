@@ -74,7 +74,7 @@ function ExtraProjectLink({
         <motion.a
             href={attributes.liveLink}
             className="flex transition-all  hover:text-primary"
-            whileHover={reducedMotion ? 'show' : 'hover'}
+            whileHover="hover"
             variants={{
                 hide: { opacity: 0, y: 50 },
                 show: { opacity: 1, y: 0 },
@@ -83,8 +83,8 @@ function ExtraProjectLink({
             layout>
             <div className="w-fit whitespace-nowrap">{attributes.title}</div>
             <motion.span
-                animate="show"
                 variants={{
+                    hide: { width: '1ch' },
                     show: { width: '100%' },
                     hover: { width: '1ch' },
                 }}
@@ -119,9 +119,9 @@ export function Projects() {
     const md = useMediaQuery('md');
     return (
         <motion.section
-            className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-primary to-theme-invert font-title "
+            className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-primary to-theme-invert font-title  "
             id="projects">
-            <div className="flex h-full w-full flex-col items-center justify-center rounded-3xl bg-dark py-24 pb-48 text-theme lg:rounded-[9rem]">
+            <div className="flex h-full w-full flex-col items-center justify-center rounded-3xl bg-theme py-24 pb-48 text-theme-invert lg:rounded-[9rem]">
                 <RepeatText n={2}>Projects</RepeatText>
                 <div className="flex w-full flex-col items-start justify-center gap-8 p-6 lg:gap-32 lg:px-12">
                     <div className="flex w-full flex-col items-end gap-8 lg:flex-row lg:gap-32">

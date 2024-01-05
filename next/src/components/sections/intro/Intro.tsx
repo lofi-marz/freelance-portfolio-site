@@ -199,7 +199,7 @@ export function Intro() {
                     <AnimatePresence>
                         {lineI === 1 && (
                             <motion.div
-                                className="absolute top-0 flex h-full w-full items-center justify-center"
+                                className="absolute top-0 flex h-full w-full items-center justify-center "
                                 initial="hide"
                                 animate="show"
                                 variants={{
@@ -237,7 +237,7 @@ export function Intro() {
                             </motion.div>
                         )}
                     </AnimatePresence>
-                    <header className="heading relative flex h-full w-fit max-w-screen-lg flex-col items-start justify-center gap-3 text-center text-5xl md:text-7xl">
+                    <header className="heading relative flex h-full w-fit max-w-screen-lg flex-col items-start justify-center gap-3 text-center text-5xl drop-shadow-xl saturate-0 md:text-7xl">
                         <AnimatePresence mode="wait">
                             <motion.h2
                                 key={lineI}

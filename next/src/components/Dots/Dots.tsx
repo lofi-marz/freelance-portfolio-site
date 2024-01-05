@@ -86,6 +86,7 @@ function Dot({
 
         const dotX = pos?.x ?? 0;
         const dotY = pos?.y ?? 0;
+
         if (reducedMotion) {
             const sin = Math.sin((dotY + dotX) / 250);
             return ((sin + 1) / 2) * 0.2;
@@ -96,10 +97,11 @@ function Dot({
                     dotX / 250 +
                     Math.cos(time.get() / 500 + dotY / 250)
             );
-            return ((sin + 1) / 2) * 0.2;
+            return ((sin + 1) / 2) * 0.5;
         }
         const xPos = (x.get() - MOUSE_OFFSET_X - dotX) / window.screen.width;
         const yPos = (y.get() - MOUSE_OFFSET_y - dotY) / window.screen.height;
+
         return Math.hypot(xPos, yPos);
     });
 
@@ -113,7 +115,7 @@ function Dot({
     );
 
     return (
-        <motion.div className="aspect-square h-[5%] sm:h-[10%]">
+        <motion.div className="aspect-square h-[5%]  sm:h-[10%] lg:h-auto lg:w-[5%]">
             <motion.div
                 className="aspect-square h-full rounded-full bg-primary"
                 style={{ scale }}
