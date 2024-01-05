@@ -105,7 +105,7 @@ export function SlideInText({
                 {words.map((w, i) => (
                     <SlideInWord key={w + i} word={w + ' '} invert={invert} />
                 ))}
-                <Dot />
+                <Dot animate/>
             </motion.div>
         );
     }
