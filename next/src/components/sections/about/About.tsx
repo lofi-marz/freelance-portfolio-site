@@ -57,12 +57,6 @@ export function About() {
         [dark, dark, light]
     );*/
 
-    const spring = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 20,
-        mass: 1,
-        restDelta: 0.001,
-    });
 
     //useMotionValueEvent(parallax, 'change', (v) => console.log('parallax', v));
     return (

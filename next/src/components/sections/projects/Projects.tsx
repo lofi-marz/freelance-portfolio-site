@@ -1,8 +1,6 @@
 import { useStrapiContentContext } from '@/components/StrapiContextProvider';
 import {
     motion,
-    MotionValue,
-    useMotionValueEvent,
     useReducedMotion,
     useScroll,
     useSpring,
@@ -12,10 +10,7 @@ import {
 import { WithChildrenProps } from 'types';
 import { useMediaQuery } from 'hooks/useMediaQuery';
 import { Project } from './Project';
-import { useRef, useState } from 'react';
-import { ProjectPreview } from '@/components/sections/projects/ProjectPreview';
-import Image from 'next/image';
-import { FaLink } from 'react-icons/fa6';
+import { useRef } from 'react';
 import { ProjectContent } from '@/utils/strapi';
 import { Dot } from '../..';
 type RepeatTextProps = {
@@ -126,10 +121,10 @@ export function Projects() {
         <motion.section
             className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-primary to-theme-invert font-title "
             id="projects">
-            <div className="flex h-full w-full flex-col items-center justify-center rounded-3xl bg-dark py-24 pb-48 lg:rounded-[9rem]">
+            <div className="flex h-full w-full flex-col items-center justify-center rounded-3xl bg-dark py-24 pb-48 text-theme lg:rounded-[9rem]">
                 <RepeatText n={2}>Projects</RepeatText>
                 <div className="flex w-full flex-col items-start justify-center gap-8 p-6 lg:gap-32 lg:px-12">
-                    <div className="items-between flex w-full flex-col gap-8 lg:flex-row lg:gap-32">
+                    <div className="flex w-full flex-col items-end gap-8 lg:flex-row lg:gap-32">
                         <Project {...p1.attributes} />
                         <Project {...p2.attributes} className="lg:w-1/3" />
                     </div>
@@ -140,7 +135,7 @@ export function Projects() {
                     </div>
                 </div>
                 <motion.div
-                    className="flex w-full flex-col gap-2 px-12 text-3xl lowercase"
+                    className="flex w-full flex-col gap-2 px-12 text-xl lowercase md:text-3xl"
                     initial="hide"
                     whileInView="show"
                     exit="hide"

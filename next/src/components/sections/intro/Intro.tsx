@@ -213,7 +213,7 @@ export function Intro() {
                                 {mockups.map((p, i) => (
                                     <motion.div
                                         key={i}
-                                        className="absolute h-full pt-6"
+                                        className="absolute h-4/5 pt-6 md:h-full"
                                         initial={{ rotate: 0 }}
                                         animate={{
                                             rotate: 360 * (i / mockups.length),
@@ -222,12 +222,14 @@ export function Intro() {
                                             ease: 'easeInOut',
                                             duration: 2,
                                         }}>
-                                        <div className="relative aspect-square h-36 bg-primary">
+                                        <div className="relative aspect-square h-32 bg-primary md:h-36">
                                             <Image
                                                 src={`https://marileon.me/cms/${p.attributes.mockup.data?.attributes.url}`}
                                                 alt=""
                                                 fill
                                                 className="object-cover"
+                                                priority
+                                                sizes="(max-width: 768px) 50vw, (max-width: 1280px) 30vw, 20vw"
                                             />
                                         </div>
                                     </motion.div>
@@ -235,7 +237,7 @@ export function Intro() {
                             </motion.div>
                         )}
                     </AnimatePresence>
-                    <header className="heading relative flex h-full w-fit max-w-screen-lg flex-col items-start justify-center gap-3 text-center text-7xl">
+                    <header className="heading relative flex h-full w-fit max-w-screen-lg flex-col items-start justify-center gap-3 text-center text-5xl md:text-7xl">
                         <AnimatePresence mode="wait">
                             <motion.h2
                                 key={lineI}

@@ -12,7 +12,11 @@ export function GrowingDot({
     className,
     children,
 }: { scroll: MotionValue<number> } & WithClassNameProps & WithChildrenProps) {
-    const circleSize = useTransform(scroll, [0, 0.8, 1], ['0%', '0%', '100%']);
+    const circleSize = useTransform(
+        scroll,
+        [0, 0.8, 0.9],
+        ['0%', '0%', '100%']
+    );
     const clipPath = useMotionTemplate`circle(${circleSize} at 50% 50%)`;
     return (
         <motion.div

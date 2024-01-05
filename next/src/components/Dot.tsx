@@ -1,11 +1,16 @@
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 const dotVariants: Variants = {
-    hide: { scale: 0 },
-    show: { scale: 1 },
+    hide: { opacity: 0 },
+    show: { opacity: 1 },
+    exit: { opacity: 0 },
 };
 export function Dot() {
     return (
-        <motion.span className="w-fit text-primary mix-blend-difference" layout>
+        <motion.span
+            className="h-fit w-fit text-primary dark:mix-blend-difference"
+            layout
+            variants={dotVariants}
+            transition={{ ease: 'easeOut', duration: 1 }}>
             .
         </motion.span>
     );

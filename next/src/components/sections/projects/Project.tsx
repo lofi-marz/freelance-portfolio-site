@@ -1,24 +1,18 @@
 import { ProjectContent } from '../../../utils/strapi';
-import { useMediaQuery } from '../../../hooks/useMediaQuery';
-import clsx from 'clsx';
+import { MdArrowOutward } from 'react-icons/md';
+import { HiArrowUpRight, HiMiniArrowUpRight } from 'react-icons/hi2';
 import Image from 'next/image';
 import { WithChildrenProps, WithClassNameProps } from '../../../types';
 import {
     motion,
-    useMotionValueEvent,
     useScroll,
     useSpring,
     useTransform,
     Variants,
 } from 'framer-motion';
-import { FaGithub, FaLink } from 'react-icons/fa';
-import {
-    projectTitleVariants,
-    underlineVariants,
-    verticalUnderlineVariants,
-} from '@/components/sections/projects/variants';
-import { useEffect, useRef, useState } from 'react';
-import { NavSpacer } from '@/components/Nav';
+import { FaGithub } from 'react-icons/fa';
+import { underlineVariants } from '@/components/sections/projects/variants';
+import { useRef } from 'react';
 import { cn } from '@/utils/index';
 
 const NoHoverTitleVariants: Variants = {
@@ -83,7 +77,7 @@ function ProjectsHeading() {
 function ProjectLink({ href, children }: { href: string } & WithChildrenProps) {
     return (
         <a
-            className="themed-text-invert card flex flex-row items-center justify-center gap-2 bg-theme-invert p-2 px-4 transition-all hover:bg-primary hover:text-light"
+            className="relative flex aspect-square h-full items-center justify-center rounded-full bg-theme-invert text-theme transition-all hover:bg-primary hover:text-light"
             href={href}>
             {children}
         </a>
@@ -160,15 +154,20 @@ export function Project({
                 style={{ y: parallax, scale: 1.2 }}
             />
             <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent from-80% to-dark/50" />
-            <div className="flex h-12 flex-row gap-3 md:h-14 lg:h-20">
-                <div className="relative z-10 flex items-center justify-center px-10 font-semibold lowercase text-theme card-solid-theme-invert lg:px-20">
+            <div className="flex w-full flex-row flex-wrap-reverse gap-3  ">
+                <div className=" relative  z-10 flex h-12 items-center justify-center whitespace-nowrap px-10 font-semibold lowercase text-theme card-solid-theme-invert md:h-14 lg:h-20 lg:px-20">
                     {title}
                 </div>
-                <a
-                    className="relative flex aspect-square items-center justify-center rounded-full bg-theme-invert text-theme transition-all hover:bg-primary hover:text-light"
-                    href={liveLink}>
-                    <FaLink />
-                </a>
+                <div className="flex h-12 flex-row gap-3 md:h-14 lg:h-20">
+                    <ProjectLink href={liveLink}>
+                        <HiMiniArrowUpRight />
+                    </ProjectLink>
+                    {repoLink && (
+                        <ProjectLink href={repoLink}>
+                            <FaGithub />
+                        </ProjectLink>
+                    )}
+                </div>
             </div>
         </motion.div>
     );

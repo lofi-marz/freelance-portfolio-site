@@ -3,6 +3,7 @@ import { WithChildrenProps } from '../types';
 import clsx from 'clsx';
 import { title } from '../fonts';
 import { cn } from 'utils';
+import { Dot } from './Dot';
 
 const lineVariants: Variants = {
     hide: {
@@ -104,6 +105,7 @@ export function SlideInText({
                 {words.map((w, i) => (
                     <SlideInWord key={w + i} word={w + ' '} invert={invert} />
                 ))}
+                <Dot />
             </motion.div>
         );
     }

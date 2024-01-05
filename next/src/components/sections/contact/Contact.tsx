@@ -53,7 +53,7 @@ function LinksRow({ links }: { links: [string, string][] }) {
     return (
         <motion.div
             variants={linksRowVariants}
-            className="flex w-full flex-row justify-between text-sm font-bold uppercase">
+            className="flex w-full flex-row justify-between text-sm font-bold lowercase">
             {links.map(([text, url]) => (
                 <motion.a
                     variants={linkVariants}

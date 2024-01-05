@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider attribute="class" forcedTheme="dark">
+        <ThemeProvider attribute="class" forcedTheme="light">
             <Head>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
