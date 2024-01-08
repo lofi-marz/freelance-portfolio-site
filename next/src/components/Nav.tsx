@@ -32,32 +32,68 @@ const links: { name: string; href: string }[] = [
 ];
 
 type NavLinksProps = { onClick: () => void };
+function useHoverIndex() {
+    const [current, setCurrent] = useState<number | null>(null);
+    const onHoverChange = (i: number) => setCurrent(i);
+    return [current, onHoverChange] as const;
+}
+
+function NavDot({ layoutId }: { layoutId: string }) {
+    return (
+        <motion.div className="text-primary" layout layoutId={layoutId}>
+            .
+        </motion.div>
+    );
+}
 
 function NavLinks({ onClick }: NavLinksProps) {
+    const [current, onHoverChange] = useHoverIndex();
     return (
         <motion.ul
-            className="heading relative z-10 flex w-full grow flex-col justify-center text-6xl font-semibold lg:text-8xl "
-            variants={{ hide: {}, show: {} }}>
-            {links.map(({ name, href }) => (
-                <motion.li key={name} className="py-4">
+            className="heading relative z-10 flex w-full grow flex-col justify-center text-6xl  lg:text-8xl"
+            variants={{ hide: {}, show: {} }}
+            transition={{ when: 'afterChildren', staggerChildren: 0.1 }}>
+            {links.map(({ name, href }, i) => (
+                <motion.li
+                    key={name}
+                    className="flex flex-row items-center justify-start py-4"
+                    variants={{
+                        hide: { opacity: 0, x: '-10%' },
+                        show: { opacity: 1, x: 0 },
+                    }}
+                    transition={{ ease: 'easeOut', duration: 0.5 }}
+                    onHoverStart={() => onHoverChange(i)}>
                     <Link
                         href={href}
-                        className="transition-all hover:px-6 hover:py-2 hover:card-solid-primary lg:hover:px-20"
+                        className="transition-all hover:underline"
                         onClick={onClick}>
                         {name}
                     </Link>
+                    {i === current && <NavDot layoutId="nav-dot" />}
                 </motion.li>
             ))}
         </motion.ul>
     );
 }
 
-function SocialLink({ href, children }: { href: string } & WithChildrenProps) {
+function SocialLink({
+    href,
+    children,
+    onHoverStart,
+}: { href: string; onHoverStart: () => void } & WithChildrenProps) {
     return (
         <motion.li
-            className="transition-all"
-            variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}>
-            <Link href={href} target="_blank" className="transition-all">
+            className="relative transition-all"
+            variants={{
+                hide: { opacity: 0, y: '10%' },
+                show: { opacity: 1, y: 0 },
+            }}
+            transition={{ ease: 'easeOut', duration: 0.5 }}
+            onHoverStart={onHoverStart}>
+            <Link
+                href={href}
+                target="_blank"
+                className="flex w-fit flex-row transition-all">
                 {children}
             </Link>
         </motion.li>
@@ -65,14 +101,24 @@ function SocialLink({ href, children }: { href: string } & WithChildrenProps) {
 }
 
 function SocialsBar() {
+    const [current, onHoverChange] = useHoverIndex();
     return (
         <motion.ul
-            className="z-10 flex w-full flex-row justify-between text-sm"
+            className="relative z-10 flex w-full flex-row justify-between text-sm font-semibold"
             variants={{ hide: {}, show: {} }}
-            transition={{ staggerChildren: 0.5 }}>
-            {socials.map(({ name, href }) => (
-                <SocialLink key={name} href={href}>
-                    {name}
+            transition={{ staggerChildren: 0.1 }}>
+            {socials.map(({ name, href }, i) => (
+                <SocialLink
+                    key={name}
+                    href={href}
+                    onHoverStart={() => onHoverChange(i)}>
+                    {i === current && (
+                        <motion.div
+                            className="absolute h-full w-full rounded-full bg-primary "
+                            layoutId="social-bg"
+                        />
+                    )}
+                    <div className="relative px-2 py-1">{name}</div>
                 </SocialLink>
             ))}
         </motion.ul>
@@ -86,7 +132,7 @@ export function Nav() {
     return (
         <nav
             className={clsx(
-                'fixed top-0 z-20 flex h-16 w-full items-center justify-between px-12 font-title text-xl text-theme-invert'
+                'heading fixed top-0 z-20 flex h-16 w-full items-center justify-between px-12 font-title text-xl  text-theme-invert'
             )}>
             <Logo />
 
