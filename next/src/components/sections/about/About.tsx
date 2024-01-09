@@ -4,21 +4,14 @@ import Image from 'next/image';
 import me from 'assets/me-brighton.jpg';
 import {
     motion,
-    MotionValue,
-    useMotionTemplate,
-    useMotionValueEvent,
-    useScroll,
-    useSpring,
+    MotionValue, useSpring,
     useTransform,
-    Variants,
+    Variants
 } from 'framer-motion';
 import theme from '../../../../tailwind.config';
 import { cn } from 'utils';
-import { useRef } from 'react';
-import { Button } from 'react-aria-components';
 import { MotionButton } from '@/components/motion';
 import { Dot } from '@/components/Dot';
-import { GrowingDot } from '../..';
 
 const primary = theme.theme.extend.colors.primary;
 function Photo({ scroll }: { scroll: MotionValue }) {
@@ -42,13 +35,7 @@ function Photo({ scroll }: { scroll: MotionValue }) {
     );
 }
 
-export function About() {
-    const target = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target,
-        offset: ['start end', 'start start'],
-    });
-
+export function About({}) {
     /*const dark = theme.theme.extend.colors.dark;
     const light = theme.theme.extend.colors.light;
     const backgroundColor = useTransform(
@@ -57,15 +44,13 @@ export function About() {
         [dark, dark, light]
     );*/
 
-
     //useMotionValueEvent(parallax, 'change', (v) => console.log('parallax', v));
     return (
         <motion.section
             id="about"
             className={clsx(
                 'relative z-50 mx-auto -mt-[5%] flex h-screen flex-col items-center justify-center gap-96 overflow-visible bg-primary p-6 px-24 font-semibold text-theme-invert'
-            )}
-            ref={target}>
+            )}>
             <div className="heading relative text-5xl lg:px-24 lg:text-7xl">
                 I make{' '}
                 <span className="text-primary mix-blend-difference">

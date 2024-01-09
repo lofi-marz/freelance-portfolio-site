@@ -11,10 +11,15 @@ export function GrowingDot({
     scroll,
     className,
     children,
-}: { scroll: MotionValue<number> } & WithClassNameProps & WithChildrenProps) {
+    breakpoints: [start, end],
+}: {
+    scroll: MotionValue<number>;
+    breakpoints: [number, number];
+} & WithClassNameProps &
+    WithChildrenProps) {
     const circleSize = useTransform(
         scroll,
-        [0, 0.8, 0.9],
+        [0, start, end],
         ['0%', '0%', '100%']
     );
     const clipPath = useMotionTemplate`circle(${circleSize} at 50% 50%)`;

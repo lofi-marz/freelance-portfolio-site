@@ -82,60 +82,9 @@ export const trackVariants: Variants = {
 /* eslint-disable-next-line */
 const lines = ["hi, i'm omari", 'I develop creative experiences with code'];
 
-const ParallaxImages = memo(function ParallaxImages({
-    scrollYProgress,
-}: {
-    scrollYProgress: MotionValue;
-}) {
-    return (
-        <>
-            <ParallaxLayer
-                scrollProgress={scrollYProgress}
-                start="150%"
-                end="-100%">
-                <ParallaxImage
-                    src={foodMockup}
-                    alt="Mockup for omni"
-                    className="mr-[10%]"
-                />
-                <ParallaxImage
-                    src={socialmateScreenshot}
-                    alt="Mockup for omni"
-                    className="ml-[50%]"
-                    frame
-                />
-            </ParallaxLayer>
-            <ParallaxLayer
-                scrollProgress={scrollYProgress}
-                start="200%"
-                end="-200%">
-                <ParallaxImage
-                    src={omniMockup}
-                    alt="Mockup for omni"
-                    className="mr-[70%] scale-[.5]"
-                />
-                <ParallaxImage
-                    src={socialMockup}
-                    alt="Mockup for omni"
-                    className="mr-[50%] mt-[0%] scale-[.8]"
-                />
-                <ParallaxImage
-                    src={drmworldScreenshot}
-                    alt="Mockup for omni"
-                    className="mr-[30%] mt-[100%] scale-[.9]"
-                    frame
-                />
-
-                <ParallaxImage
-                    src={petsMockup}
-                    alt="Mockup for omni"
-                    className="mr-[60%] mt-[80%]"
-                />
-            </ParallaxLayer>
-        </>
-    );
-});
-
+const LINE_CHANGE = 1 / 3;
+const DOTS_FADE_START = 0.05;
+const DOTS_FADE_END = 0.2;
 export function Intro() {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -154,21 +103,26 @@ export function Intro() {
 
     const spring = useSpring(scrollYProgress, {
         stiffness: 100,
-        damping: 20,
+        damping: 100,
         mass: 1,
         restDelta: 0.001,
     });
 
-    const dotsOpacity = useTransform(spring, [0, 0.05, 0.25], [1, 1, 0]);
+    const dotsOpacity = useTransform(
+        spring,
+        [0, DOTS_FADE_START, DOTS_FADE_END],
+        [1, 1, 0]
+    );
 
+    const textScale = useTransform(spring, [0, LINE_CHANGE, 1], [1, 1, 1.5]);
     const { projects = [] } = useStrapiContentContext() ?? {};
     const mockups = projects.filter((p) => p.attributes.mockup.data);
 
     //const currentlyPlaying = useCurrentlyPlayingContext();
     useMotionValueEvent(scrollYProgress, 'change', (v) => {
-        if (v < 0.5 && lineI !== 0) {
+        if (v < LINE_CHANGE && lineI !== 0) {
             setLineI(0);
-        } else if (v >= 0.5 && lineI !== 1) {
+        } else if (v >= LINE_CHANGE && lineI !== 1) {
             setLineI(1);
         }
     });
@@ -179,7 +133,7 @@ export function Intro() {
     return (
         <motion.section
             className={clsx(
-                'relative  flex h-[800vh] w-full flex-col items-start justify-start overflow-clip bg-theme font-title'
+                'relative  flex h-[1000vh] w-full flex-col items-start justify-start overflow-clip bg-theme font-title'
             )}
             ref={target}
             initial="hide"
@@ -242,7 +196,8 @@ export function Intro() {
                             <motion.h2
                                 key={lineI}
                                 initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}>
+                                animate={{ opacity: 1 }}
+                                style={{ scale: textScale }}>
                                 {lines[lineI]}
                                 {lineI === 1 && <Dot />}
                             </motion.h2>
@@ -255,7 +210,7 @@ export function Intro() {
                         <FaArrowDown />
                     </motion.div>
                 </motion.div>
-                <GrowingDot scroll={spring}>
+                <GrowingDot scroll={spring} breakpoints={[0.6, 0.9]}>
                     <About />
                 </GrowingDot>
             </motion.div>

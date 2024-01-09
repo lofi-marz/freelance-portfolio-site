@@ -134,16 +134,21 @@ export function Dots({
     x: MotionValue<number>;
     y: MotionValue<number>;
 }) {
+    const [visible, setVisible] = useState(false);
+
     return (
         <motion.div
             className="mx-auto flex h-screen w-screen max-w-screen-2xl flex-wrap place-content-center place-items-center overflow-clip p-6"
             initial="hide"
             whileInView="show"
+            onViewportEnter={() => setVisible(true)}
+            onViewportLeave={() => setVisible(true)}
             transition={{ delayChildren: 2 }}
             layout>
-            {[...new Array(100)].map((_, i) => (
-                <Dot key={i} x={x} y={y} followMouse={followMouse} />
-            ))}
+            {visible &&
+                [...new Array(100)].map((_, i) => (
+                    <Dot key={i} x={x} y={y} followMouse={followMouse} />
+                ))}
         </motion.div>
     );
 }
