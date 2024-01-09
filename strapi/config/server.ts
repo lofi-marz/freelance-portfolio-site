@@ -4,5 +4,5 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
-  url: env('URL', 'https://marimari.tech/cms')
+  url: 'https://marileon.me/cms',
 });
