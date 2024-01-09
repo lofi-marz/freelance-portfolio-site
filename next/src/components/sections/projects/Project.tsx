@@ -1,24 +1,19 @@
 import { ProjectContent } from '../../../utils/strapi';
-import { useMediaQuery } from '../../../hooks/useMediaQuery';
-import clsx from 'clsx';
+import { MdArrowOutward } from 'react-icons/md';
+import { HiArrowUpRight, HiMiniArrowUpRight } from 'react-icons/hi2';
 import Image from 'next/image';
-import { WithChildrenProps } from '../../../types';
+import { WithChildrenProps, WithClassNameProps } from '../../../types';
 import {
     motion,
-    useMotionValueEvent,
     useScroll,
     useSpring,
     useTransform,
     Variants,
 } from 'framer-motion';
-import { FaGithub, FaLink } from 'react-icons/fa';
-import {
-    projectTitleVariants,
-    underlineVariants,
-    verticalUnderlineVariants,
-} from '@/components/sections/projects/variants';
-import { useEffect, useRef, useState } from 'react';
-import { NavSpacer } from '@/components/Nav';
+import { FaGithub } from 'react-icons/fa';
+import { underlineVariants } from '@/components/sections/projects/variants';
+import { useRef } from 'react';
+import { cn } from '@/utils/index';
 
 const NoHoverTitleVariants: Variants = {
     initial: { bottom: 0, top: 'auto' },
@@ -57,7 +52,9 @@ const ProjectPreviewVariants = {
     },
 };
 
-export type ProjectProps = ProjectContent['attributes'] & { first?: boolean };
+export type ProjectProps = ProjectContent['attributes'] & {
+    first?: boolean;
+} & WithClassNameProps;
 function ProjectsHeading() {
     //TODO: why does the z index mess up
     return (
@@ -80,7 +77,7 @@ function ProjectsHeading() {
 function ProjectLink({ href, children }: { href: string } & WithChildrenProps) {
     return (
         <a
-            className="themed-bg-invert themed-text-invert card flex flex-row items-center justify-center gap-2 p-2 px-4 transition-all hover:bg-primary hover:text-light"
+            className="relative flex aspect-square h-full items-center justify-center rounded-full bg-theme-invert text-theme transition-all hover:bg-primary hover:text-light"
             href={href}>
             {children}
         </a>
@@ -95,7 +92,7 @@ export function MobileProjectImage({ src }: { src: string }) {
                     src={src}
                     alt=""
                     fill
-                    className="themed-bg z-10 rounded-t-xl object-cover object-top"
+                    className="z-10 rounded-t-xl bg-theme object-cover object-top"
                 />
             </div>
         </div>
@@ -108,11 +105,12 @@ export function ProjectImage({ src }: { src: string }) {
                 src={src}
                 alt=""
                 fill
-                className="card themed-bg z-10 object-cover object-top"
+                className="card z-10 bg-theme object-cover object-top"
             />
         </div>
     );
 }
+const MotionImage = motion(Image);
 export function Project({
     title,
     description,
@@ -122,73 +120,55 @@ export function Project({
     desktopPreview,
     mobilePreview,
     fullDesktop,
+    mockup,
     first = false,
+    className,
 }: ProjectProps) {
     const target = useRef(null);
     const { scrollYProgress } = useScroll({
         target,
         offset: ['start end', 'center center'],
     });
-    const imageHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-    const imagePosition = useTransform(scrollYProgress, (v) => {
-        if (v === 1) return 'fixed';
-        if (first) return 'absolute';
-        if (v > 0) return 'fixed';
-        return 'relative';
+    const spring = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 50,
+        mass: 1,
+        restDelta: 0.001,
     });
+    //const scroll = useTransform(spring, [0,1], [])
+    const parallax = useTransform(spring, [0, 1], ['-10%', '10%']);
+    const reverseParallax = useTransform(spring, [0, 1], ['10%', '-10%']);
     return (
-        <div
-            className="relative flex h-screen w-full flex-row justify-start"
-            ref={target}>
-            <motion.div
-                className={clsx(
-                    'relative z-10 flex flex-col items-center justify-start pl-24 md:h-screen md:justify-center lg:w-[50vw]'
-                )}>
-                <NavSpacer />
-
-                <div className="justify-baseline flex w-full flex-col items-start md:gap-6">
-                    <h3 className="w-full text-4xl font-bold md:text-7xl lg:text-8xl">
-                        {title}
-                    </h3>
-                    <p className="hidden w-full font-body md:block md:w-80">
-                        {brief}
-                    </p>
-                    <div className="card mt-6 flex flex-row items-center justify-center gap-3 text-xl">
-                        {liveLink && (
-                            <ProjectLink href={liveLink}>
-                                <FaLink /> Link
-                            </ProjectLink>
-                        )}
-                        {repoLink && (
-                            <ProjectLink href={repoLink}>
-                                <FaGithub /> Code
-                            </ProjectLink>
-                        )}
-                    </div>
+        <motion.div
+            className={cn(
+                'relative flex aspect-square h-full w-full max-w-[90vh] flex-row items-end justify-start gap-3 overflow-clip rounded-[3rem] p-6 text-xl font-semibold lg:text-3xl',
+                className
+            )}
+            ref={target}
+            style={{ y: reverseParallax }}>
+            <MotionImage
+                src={`https://marileon.me/cms/${mockup.data?.attributes.url}`}
+                alt=""
+                className="h-full w-full object-cover"
+                fill
+                style={{ y: parallax, scale: 1.2 }}
+            />
+            <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent from-80% to-dark/50" />
+            <div className="flex w-full flex-row flex-wrap-reverse gap-3  ">
+                <div className=" relative  z-10 flex h-12 items-center justify-center whitespace-nowrap px-10 font-semibold lowercase text-theme card-solid-theme-invert md:h-14 lg:h-20 lg:px-20">
+                    {title}
                 </div>
-            </motion.div>
-            <motion.div
-                className={clsx(
-                    'absolute right-0 top-0 h-full w-full overflow-clip brightness-50 will-change-[height] lg:block lg:w-[50vw] lg:brightness-100'
-                )}
-                style={{
-                    height: first ? '100%' : imageHeight,
-                    position: imagePosition,
-                }}>
-                <div className="relative h-screen w-full">
-                    <Image
-                        src={
-                            'https://marimari.tech/cms' +
-                            (fullDesktop
-                                ? fullDesktop?.data.attributes.url
-                                : desktopPreview.data.attributes.url)
-                        }
-                        className="h-full w-full object-cover"
-                        fill
-                        alt="Desktop preview"
-                    />
+                <div className="flex h-12 flex-row gap-3 md:h-14 lg:h-20">
+                    <ProjectLink href={liveLink}>
+                        <HiMiniArrowUpRight />
+                    </ProjectLink>
+                    {repoLink && (
+                        <ProjectLink href={repoLink}>
+                            <FaGithub />
+                        </ProjectLink>
+                    )}
                 </div>
-            </motion.div>
-        </div>
+            </div>
+        </motion.div>
     );
 }

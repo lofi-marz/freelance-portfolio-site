@@ -3,11 +3,10 @@
 @tailwind utilities;
 
 body {
-    @apply bg-black;
+    @apply bg-dark;
 }
 
 @layer base {
-
     html {
         scroll-behavior: smooth;
         @apply snap-y snap-proximity;
@@ -15,30 +14,17 @@ body {
 }
 
 @layer utilities {
-    .themed-bg {
-        @apply bg-light dark:bg-black;
-    }
-
-    .themed-text {
-        @apply text-black dark:text-light;
-    }
-
-    .themed-bg-invert {
-        @apply bg-black dark:bg-light;
-    }
-
-    .themed-text-invert {
-        @apply text-light dark:text-black;
-    }
-
     .text-gradient {
-        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important
+        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important;
     }
-
 }
 
 @layer components {
+
+    .heading {
+        @apply font-bold tracking-tight;
+    }
     .card {
-        @apply rounded-md;
+        @apply rounded-full;
     }
 }

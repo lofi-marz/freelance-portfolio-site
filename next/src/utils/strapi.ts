@@ -148,6 +148,7 @@ export type ProjectContent = StrapiContent<{
     desktopPreview: { data: StrapiImage };
     mobilePreview: { data: StrapiImage };
     fullDesktop?: { data: StrapiImage };
+    mockup: { data?: StrapiImage };
 }>;
 
 export type StrapiImage = StrapiContent<{

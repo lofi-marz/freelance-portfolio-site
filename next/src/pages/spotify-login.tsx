@@ -18,8 +18,8 @@ export default function SpotifyLogin({
     token?: SpotifyToken;
 }) {
     return (
-        <div className="flex h-screen w-full items-center justify-center bg-black">
-            <div className="prose prose-invert flex flex-col items-center justify-center bg-black">
+        <div className="flex h-screen w-full items-center justify-center bg-dark">
+            <div className="prose prose-invert flex flex-col items-center justify-center bg-dark">
                 <p>
                     I&apos;m just using this page to get my spotify token. If
                     you&apos;re here, hi!

@@ -1,41 +1,65 @@
 import clsx from 'clsx';
-import { title } from 'fonts';
-import { useCurrentlyPlayingContext } from '@/components/CurrentlyPlayingContext';
-import { CallToAction } from '@/components/sections/intro/CallToAction';
-import { useStrapiContentContext } from '@/components/StrapiContextProvider';
-import { WithChildrenProps } from '../../../types';
+import { WithChildrenProps, WithClassNameProps } from '../../../types';
+import Image from 'next/image';
+import me from 'assets/me-brighton.jpg';
 import {
     motion,
-    MotionValue,
-    useMotionValueEvent,
-    useScroll,
-    useSpring,
+    MotionValue, useSpring,
     useTransform,
-    Variants,
+    Variants
 } from 'framer-motion';
 import theme from '../../../../tailwind.config';
-import { forwardRef, MutableRefObject, useRef } from 'react';
+import { cn } from 'utils';
+import { MotionButton } from '@/components/motion';
+import { Dot } from '@/components/Dot';
 
 const primary = theme.theme.extend.colors.primary;
+function Photo({ scroll }: { scroll: MotionValue }) {
+    const spring = useSpring(scroll);
+    const rotate = useTransform(scroll, [0, 0.5, 1], [-10, 0, 5]);
 
-export function About() {
+    const y = useTransform(spring, [0, 1], [-100, 0]);
+    return (
+        <motion.div
+            className="relative w-full max-w-lg overflow-clip rounded-xl bg-theme-invert p-[5%] pb-[10%] text-theme xl:w-[30rem]"
+            style={{ rotate, y }}>
+            <motion.div
+                className="h-full w-full overflow-clip"
+                style={{ y: scroll }}>
+                <Image src={me} alt="Photo of me" className="scale-110 " />
+            </motion.div>
+            <div className="text-end text-xs opacity-10 transition-all hover:text-primary hover:opacity-100">
+                me!
+            </div>
+        </motion.div>
+    );
+}
+
+export function About({}) {
+    /*const dark = theme.theme.extend.colors.dark;
+    const light = theme.theme.extend.colors.light;
+    const backgroundColor = useTransform(
+        scrollYProgress,
+        [0, 0.9, 1],
+        [dark, dark, light]
+    );*/
+
+    //useMotionValueEvent(parallax, 'change', (v) => console.log('parallax', v));
     return (
         <motion.section
             id="about"
             className={clsx(
-                'themed-bg-invert themed-text-invert relative flex h-screen w-full flex-col items-center justify-center gap-8',
-                title.className
+                'relative z-50 mx-auto -mt-[5%] flex h-screen flex-col items-center justify-center gap-96 overflow-visible bg-primary p-6 px-24 font-semibold text-theme-invert'
             )}>
-            <div className="whitespace-pre-line p-6 text-center text-3xl font-medium sm:text-4xl md:text-4xl lg:p-12 lg:text-5xl">
-                <HighlightText>
-                    Hi, I&apos;m Omari! I&apos;m a Web Developer from England,
-                    currently studying in Nottingham. I like making fun,
-                    creative things with code. Creating new experiences,
-                    implementing eye pleasing designs, and bringing them to life
-                    with eye-catching animations is what I do best.
-                </HighlightText>
+            <div className="heading relative text-5xl lg:px-24 lg:text-7xl">
+                I make{' '}
+                <span className="text-primary mix-blend-difference">
+                    creative
+                </span>
+                , fun and functional things for the web, with a focus on
+                front-end development, powered by React/Next.js
+                <Dot />
             </div>
-            <CallToAction />
         </motion.section>
     );
 }
@@ -74,6 +98,24 @@ const charVariants = {
     },
 };
 
+function CTA() {
+    return (
+        <MotionButton
+            className="group relative mx-auto w-full overflow-clip rounded-full border border-theme-invert p-12 lowercase transition-all"
+            initial="outline"
+            whileHover="solid">
+            <motion.div
+                className="absolute bottom-0 left-0 w-full rounded-full bg-theme-invert"
+                variants={{ outline: { height: 0 }, solid: { height: '100%' } }}
+                transition={{ ease: 'easeInOut', duration: 0.2 }}
+            />
+            <span className="relative z-10 transition-all group-hover:text-theme">
+                Get in touch<span className="text-primary">.</span>
+            </span>
+        </MotionButton>
+    );
+}
+
 function HighlightChar({ char }: { char: string }) {
     return (
         <motion.div>
@@ -93,7 +135,7 @@ function HighlightChar({ char }: { char: string }) {
 function HighlightWord({ word }: { word: string }) {
     return (
         <motion.div
-            className="flex flex-row whitespace-pre"
+            className="flex flex-row whitespace-pre py-[0.07lh]"
             variants={lineVariants}
             transition={{ staggerChildren: 1 }}>
             {[...word].map((c, i) => (
@@ -106,12 +148,16 @@ function HighlightWord({ word }: { word: string }) {
 //TODO: Add some sort of reusability to this
 export function HighlightText({
     children,
-}: WithChildrenProps): JSX.Element | null {
+    className,
+}: WithChildrenProps & WithClassNameProps): JSX.Element | null {
     if (typeof children === 'string') {
         const words = children.split(' ');
         return (
             <motion.div
-                className="flex flex-row flex-wrap items-center justify-center whitespace-pre"
+                className={cn(
+                    'flex flex-row flex-wrap items-center justify-start whitespace-pre',
+                    className
+                )}
                 variants={{ hide: {}, show: {} }}
                 transition={{ staggerChildren: 0.1 }}>
                 {words.map((w, i) => (

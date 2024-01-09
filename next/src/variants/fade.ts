@@ -1,6 +1,6 @@
 import { Variants } from 'framer-motion';
 
 export const FadeInOut: Variants = {
-    hide: {opacity: 0},
-    show: {opacity: 1}
-}
+    hide: { opacity: 0 },
+    show: { opacity: 1 },
+};
