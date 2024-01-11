@@ -133,7 +133,7 @@ export function Intro() {
     return (
         <motion.section
             className={clsx(
-                'relative  flex h-[1000vh] w-full flex-col items-start justify-start overflow-clip bg-theme font-title'
+                'relative  flex h-[600vh] w-full flex-col items-start justify-start overflow-clip bg-theme font-title'
             )}
             ref={target}
             initial="hide"
