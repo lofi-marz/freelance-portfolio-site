@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { title } from '../../../fonts';
+import { title } from '../../../styles/fonts';
 import { SlideInText } from '@/components/SlideInText';
 import {
     motion,

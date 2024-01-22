@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { WithChildrenProps } from '../types';
 import clsx from 'clsx';
-import { title } from '../fonts';
+import { title } from '../styles/fonts';
 import { cn } from 'utils';
 import { Dot } from './Dot';
 

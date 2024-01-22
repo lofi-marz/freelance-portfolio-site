@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { LoadingScreen } from '@/components/sections/LoadingScreen';
 
 import { SlideInText } from '@/components/SlideInText';
-import { body, title } from '../fonts';
+import { body, title } from '../styles/fonts';
 import { SocialsDesktop } from '@/components/sections/intro/Socials';
 import { About } from '@/components/sections/about/About';
 import { CallToAction } from '@/components/sections/intro/CallToAction';
@@ -103,7 +103,7 @@ function Content() {
             <div className="relative flex h-full w-full flex-col items-start justify-evenly">
                 <Title />
                 <motion.p
-                    className="w-full text-center text-2xl text-dark md:text-start dark:text-light"
+                    className="w-full text-center text-2xl text-dark dark:text-light md:text-start"
                     variants={fadeVariants}>
                     Nottingham-based freelance web design and development.
                 </motion.p>
@@ -142,7 +142,7 @@ export default function Home({ content }: HomeProps) {
                     <Nav />
 
                     <Intro />
-                    
+
                     <Projects />
                     <Contact />
                 </motion.div>

@@ -2,9 +2,17 @@ import axios from 'axios';
 import path from 'path';
 import qs from 'qs';
 import { SpotifyToken } from './spotify';
+import {
+    PostBrief,
+    StrapiPaginatedResponse,
+    StrapiPostResponse,
+    StrapiPostShortResponse,
+} from 'types';
+
+const BLOG_PATH = '/posts';
 
 const STRAPI_URL = process.env.STRAPI_URL || 'http://127.0.0.1:1337/api/';
-const STRAPI_TOKEN = process.env.STRAPI_TOKEN || '';
+export const STRAPI_TOKEN = process.env.STRAPI_TOKEN || '';
 const STRAPI_SPOTIFY_TOKEN = process.env.STRAPI_SPOTIFY_TOKEN;
 
 export async function getStrapiContent<T>(
@@ -114,6 +122,91 @@ export async function updateSpotifyToken(token: SpotifyToken) {
         STRAPI_SPOTIFY_TOKEN
     );
     return res;
+}
+
+export function toURLSearchParams(
+    key: string,
+    objOrArray: string[] | Record<string, any>
+) {
+    return (
+        Array.isArray(objOrArray)
+            ? objOrArray.map((value, i) => `${key}[${i}]=${value}`)
+            : Object.entries(objOrArray).map(
+                  ([key2, value], i) => `${key}[${key2}]=${value}`
+              )
+    ).join('&');
+}
+export async function getAllArticles(page = 1, pageSize = 10) {
+    const fullPath =
+        STRAPI_URL +
+        BLOG_PATH +
+        `?pagination[page]=${page}&pagination[pageSize]=${pageSize}&fields[0]=slug&fields[1]=title&fields[2]=createdAt&fields[3]=description&sort=publishedAt:desc`;
+
+    const data = await axios
+        .get<StrapiPaginatedResponse<StrapiPostShortResponse>>(fullPath, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+            },
+        })
+        .then((res) => res.data);
+
+    return data;
+}
+
+export async function getAllMatchingSlugs(slug: string) {
+    const fullPath =
+        STRAPI_URL +
+        BLOG_PATH +
+        '?fields[0]=slug&pagination[page]=0&pagination[pageSize]=10&&filters[slug][$startsWithi]=' +
+        slug;
+
+    const data = await axios
+        .get<{ data: StrapiPostResponse[] }>(fullPath, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+            },
+        })
+        .then((res) => res.data)
+        .then((data) => data.data.map(({ attributes }) => attributes.slug));
+
+    return data;
+}
+
+export async function getPost(slug: string) {
+    const fullPath =
+        STRAPI_URL +
+        BLOG_PATH +
+        '?pagination[page]=0&pagination[pageSize]=1&filters[slug][$eq]=' +
+        slug;
+
+    const data = await axios
+        .get<{ data: StrapiPostResponse[] }>(fullPath, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+            },
+        })
+        .then((res) => res.data);
+
+    if (data.data.length === 0) return null;
+    return data.data[0];
+}
+
+function parseArticle(a: StrapiPostShortResponse): PostBrief {
+    return {
+        title: a.attributes.title,
+        slug: a.attributes.slug,
+        date: a.attributes.createdAt,
+        description: a.attributes.description,
+    };
+}
+export async function fetchArticleBriefs(page = 1) {
+    return getAllArticles(page, 10).then((res) => ({
+        pagination: res.meta.pagination,
+        articles: res.data.map(parseArticle),
+    }));
 }
 
 type StrapiContent<T> = {

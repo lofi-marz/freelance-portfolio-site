@@ -6,11 +6,12 @@ import { AnimatePresence, Variants, easeOut, motion } from 'framer-motion';
 import { useState } from 'react';
 import { MotionButton, MotionDialog, MotionModal } from './motion';
 import { Dot } from './Dot';
-import { title } from 'fonts';
+import { title } from '@/styles/fonts';
 import { cn } from 'utils';
 import Link from 'next/link';
 import { socials } from 'utils/socials';
 import { WithChildrenProps } from 'types';
+import { DarkModeToggle } from './DarkModeToggle';
 
 function Logo() {
     return (
@@ -135,14 +136,16 @@ export function Nav() {
                 'heading fixed top-0 z-20 flex h-16 w-full items-center justify-between px-12 font-title text-xl  text-theme-invert'
             )}>
             <Logo />
-
-            <MotionButton
-                className="flex flex-row items-center justify-center gap-2"
-                onPress={openNav}
-                layout
-                layoutId="nav-menu">
-                <FaBars />
-            </MotionButton>
+            <div className="flex gap-4">
+                <DarkModeToggle className="h-6" />
+                <MotionButton
+                    className="flex flex-row items-center justify-center gap-2"
+                    onPress={openNav}
+                    layout
+                    layoutId="nav-menu">
+                    <FaBars />
+                </MotionButton>
+            </div>
 
             <MotionModal
                 isOpen={dialogOpen}

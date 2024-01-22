@@ -1,6 +1,6 @@
 import { motion, Variants } from 'framer-motion';
 import clsx from 'clsx';
-import { title } from '../../../fonts';
+import { title } from '../../../styles/fonts';
 const fadeVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 2 } },

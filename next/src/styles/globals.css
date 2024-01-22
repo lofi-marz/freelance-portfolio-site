@@ -7,6 +7,9 @@ body {
 }
 
 @layer base {
+    .hljs {
+        background-color: transparent !important;
+    }
     html {
         scroll-behavior: smooth;
         @apply snap-y snap-proximity;

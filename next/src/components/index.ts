@@ -6,3 +6,4 @@ export * from './CurrentlyPlayingContext';
 export * from './Dot';
 export * from './DotsRow';
 export * from './GrowingDot';
+export * from './Footer';

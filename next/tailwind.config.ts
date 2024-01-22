@@ -31,6 +31,8 @@ const theme = {
         },
     },
     plugins: [
+        typography,
+        reactAria,
         plugin(function ({ addUtilities, theme }) {
             addUtilities({
                 '.light': {

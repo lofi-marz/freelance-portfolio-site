@@ -15,7 +15,7 @@ export const title = Inter({
     weight: 'variable',
     variable: '--font-title',
 });
-export const body = Vollkorn({
+export const body = Inter({
     subsets: ['latin'],
     variable: '--font-body',
 });
