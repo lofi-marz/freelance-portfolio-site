@@ -10,6 +10,7 @@ import {
     SpotifyToken,
     verifier,
 } from '../utils/spotify';
+import { NextSeo } from 'next-seo';
 export default function SpotifyLogin({
     authLink,
     token,
@@ -18,16 +19,19 @@ export default function SpotifyLogin({
     token?: SpotifyToken;
 }) {
     return (
-        <div className="flex h-screen w-full items-center justify-center bg-dark">
-            <div className="prose prose-invert flex flex-col items-center justify-center bg-dark">
-                <p>
-                    I&apos;m just using this page to get my spotify token. If
-                    you&apos;re here, hi!
-                </p>
-                <a href={authLink}>Link</a>
-                {token && <p>Token: {JSON.stringify(token)}</p>}
+        <>
+            <NextSeo noindex={true} />
+            <div className="flex h-screen w-full items-center justify-center bg-dark">
+                <div className="prose prose-invert flex flex-col items-center justify-center bg-dark">
+                    <p>
+                        I&apos;m just using this page to get my spotify token.
+                        If you&apos;re here, hi!
+                    </p>
+                    <a href={authLink}>Link</a>
+                    {token && <p>Token: {JSON.stringify(token)}</p>}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
