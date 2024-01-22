@@ -33,15 +33,23 @@ export default function Post({ post }: { post: Post }) {
     return (
         <>
             <NextSeo
-                titleTemplate="Intimate AI Girlfriend | %s"
+                titleTemplate="mari. | %s"
                 title={post.title}
                 description={post.description ?? post.title}
             />
-            <article className="prose dark:prose-invert lg:prose-lg prose-h1:mb-0 prose-a:transition-all prose-a:hover:underline prose-img:mx-auto prose-img:first-of-type:my-0 prose-headings:font-title max-w-screen-md py-8 font-body">
+
+            <article className="prose max-w-screen-md py-8 font-body dark:prose-invert lg:prose-lg prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:first-of-type:my-0 prose-a:hover:underline">
+                <ul className="flex w-full items-center justify-center gap-8">
+                    {post.categories.map(({ name, slug }) => (
+                        <span className="font-bold text-primary" key={slug}>
+                            {name}
+                        </span>
+                    ))}
+                </ul>
                 <div className="flex w-full flex-col gap-2">
                     <h1>{post.title}</h1>
                     <AuthorTag />
-                    <div>{post.description}</div>
+
                     <div className="flex flex-row text-sm">
                         {date.toDateString()} •{' '}
                         {Math.round(post.readingTime.minutes)} {suffix}
@@ -93,9 +101,10 @@ export const getStaticProps: GetStaticProps<{
         console.log(`Post ${slug} not found.`);
         return { notFound: true };
     }
+    console.log(post.attributes.postCategories.data);
     const mdxSource = await serialize(post.attributes.content);
 
-    console.log(post.attributes.content);
+    //console.log(post.attributes);
 
     const rt = readingTime(post.attributes.content);
     return {
@@ -105,6 +114,10 @@ export const getStaticProps: GetStaticProps<{
                 description: post.attributes.description,
                 content: mdxSource,
                 date: post.attributes.publishedAt,
+                categories: post.attributes.postCategories.data.map((v) => ({
+                    name: v.attributes.name,
+                    slug: v.attributes.slug,
+                })),
                 readingTime: rt,
             },
         },

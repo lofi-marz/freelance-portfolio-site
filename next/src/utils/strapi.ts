@@ -5,11 +5,13 @@ import { SpotifyToken } from './spotify';
 import {
     PostBrief,
     StrapiPaginatedResponse,
+    StrapiPostCategoryResponse,
     StrapiPostResponse,
     StrapiPostShortResponse,
 } from 'types';
 
 const BLOG_PATH = '/posts';
+const CATEGORIES_PATH = '/post-categories';
 
 const STRAPI_URL = process.env.STRAPI_URL || 'http://127.0.0.1:1337/api/';
 export const STRAPI_TOKEN = process.env.STRAPI_TOKEN || '';
@@ -174,11 +176,45 @@ export async function getAllMatchingSlugs(slug: string) {
     return data;
 }
 
+export async function getAllCategories() {
+    const fullPath = STRAPI_URL + CATEGORIES_PATH + '?populate=*';
+
+    const data = await axios
+        .get<{ data: StrapiPostCategoryResponse[] }>(fullPath, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+            },
+        })
+        .then((res) => res.data);
+
+    return data;
+}
+
+export async function getCategory(slug: string) {
+    const fullPath =
+        STRAPI_URL +
+        CATEGORIES_PATH +
+        '?populate=*&pagination[page]=0&pagination[pageSize]=1&filters[slug][$eq]=' +
+        slug;
+
+    const data = await axios
+        .get<{ data: StrapiPostCategoryResponse[] }>(fullPath, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+            },
+        })
+        .then((res) => res.data);
+
+    if (data.data.length === 0) return null;
+    return data.data[0];
+}
 export async function getPost(slug: string) {
     const fullPath =
         STRAPI_URL +
         BLOG_PATH +
-        '?pagination[page]=0&pagination[pageSize]=1&filters[slug][$eq]=' +
+        '?populate=*&pagination[page]=0&pagination[pageSize]=1&filters[slug][$eq]=' +
         slug;
 
     const data = await axios

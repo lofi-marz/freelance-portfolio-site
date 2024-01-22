@@ -17,6 +17,12 @@ export type Post = {
     content: MDXRemoteSerializeResult;
     date: string;
     readingTime: ReadTimeResults;
+    categories: PostCategory[];
+};
+
+export type PostCategory = {
+    name: string;
+    slug: string;
 };
 
 export type PostBrief = {
@@ -42,9 +48,19 @@ export type StrapiPostResponse = {
         description: string;
         slug: string;
         content: string;
+        postCategories: { data: StrapiPostCategoryResponse[] };
     };
 };
 
+export type StrapiPostCategoryResponse = {
+    id: number;
+    attributes: {
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        slug: string;
+    };
+};
 export type StrapiPostShortResponse = {
     id: number;
     attributes: Pick<
