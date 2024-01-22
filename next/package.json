@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "next dev -p 3005",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start -p 3005",
     "test": "jest --watch",
     "test:ci": "jest --ci"
