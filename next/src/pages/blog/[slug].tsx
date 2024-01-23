@@ -15,7 +15,7 @@ import { NextSeo } from 'next-seo';
 import { Post } from 'types';
 import { STRAPI_TOKEN, getPost } from '@/utils/strapi';
 import Image from 'next/image';
-import { AuthorTag, BlogLayout } from '@/components/blog';
+import { ArticleEnding, AuthorTag, BlogLayout } from '@/components/blog';
 import Link from 'next/link';
 const STRAPI_URL = process.env.STRAPI_URL ?? 'https://admin.myintimate.app';
 
@@ -59,6 +59,7 @@ export default function Post({ post }: { post: Post }) {
                 <div className="relative">
                     <MDXRemote {...post.content} components={components} />
                 </div>
+                <ArticleEnding />
             </article>
         </>
     );

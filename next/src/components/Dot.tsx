@@ -7,9 +7,7 @@ const dotVariants: Variants = {
 export function Dot({ animate = false }: { animate?: boolean }) {
     if (!animate)
         return (
-            <motion.span
-                className="h-fit w-fit text-primary dark:mix-blend-difference"
-                layout>
+            <motion.span className="h-fit w-fit text-primary" layout>
                 .
             </motion.span>
         );
