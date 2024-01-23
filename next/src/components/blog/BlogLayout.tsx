@@ -7,7 +7,7 @@ export function BlogLayout({ children }: PropsWithChildren) {
     return (
         <main
             className={cn(
-                'flex h-full min-h-screen w-full flex-col items-center justify-start bg-theme pt-28 transition-all',
+                'flex h-full min-h-screen w-full flex-col  items-center justify-start bg-theme  pt-28 transition-all',
                 title.variable,
                 body.variable
             )}>

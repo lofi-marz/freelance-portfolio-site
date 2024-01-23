@@ -38,7 +38,7 @@ export default function Post({ post }: { post: Post }) {
                 description={post.description ?? post.title}
             />
 
-            <article className="prose max-w-screen-md py-8 font-body dark:prose-invert lg:prose-lg prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:first-of-type:my-0 prose-a:hover:underline">
+            <article className="prose prose-sm w-full px-5 py-8 font-body dark:prose-invert md:prose-base lg:prose-lg prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:first-of-type:my-0 prose-a:hover:underline md:max-w-screen-md">
                 <ul className="flex w-full items-center justify-center gap-8">
                     {post.categories.map(({ name, slug }) => (
                         <span className="font-bold text-primary" key={slug}>

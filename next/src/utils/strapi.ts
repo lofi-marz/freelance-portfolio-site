@@ -17,26 +17,31 @@ const STRAPI_URL = process.env.STRAPI_URL || 'http://127.0.0.1:1337/api/';
 export const STRAPI_TOKEN = process.env.STRAPI_TOKEN || '';
 const STRAPI_SPOTIFY_TOKEN = process.env.STRAPI_SPOTIFY_TOKEN;
 
-export async function getStrapiContent<T>(
-    apiPath: string,
-    params: Record<string, unknown> = {},
-    token = STRAPI_TOKEN
-): Promise<T | undefined> {
-    return axios
-        .get<{ data: T }>(
-            path.join(STRAPI_URL, apiPath) + qs.stringify(params),
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-        .then(({ data }) => data.data)
-        .catch((e) => {
-            console.log(e);
-            return undefined; //TODO: Do I need to do this
-        });
+class StrapiClient {
+    private token: String;
+    private getHeaders() {
+        return {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.token}`,
+        };
+    }
+
+    private createPath(apiPath: string, params?: Record<string, unknown>) {
+        return path.join(STRAPI_URL, apiPath) + qs.stringify(params);
+    }
+    async getContent<T>(apiPath: string, params?: Record<string, unknown>) {
+        return axios
+            .get<{ data: T }>(this.createPath(apiPath, params), {
+                headers: this.getHeaders(),
+            })
+            .then(({ data }) => data.data)
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+    constructor(token = STRAPI_TOKEN) {
+        this.token = token;
+    }
 }
 
 export async function postStrapiContent<T>(
@@ -90,20 +95,21 @@ export async function putStrapiContent<T>(
 }
 
 export async function getSpotifyCode() {
-    const res = await getStrapiContent<{ attributes: { code: string } }>(
+    const client = new StrapiClient(STRAPI_SPOTIFY_TOKEN);
+    const res = await client.getContent<{ attributes: { code: string } }>(
         'spotify-code',
-        {},
-        STRAPI_SPOTIFY_TOKEN
+        {}
     );
     console.log('Code:', res);
     return res!.attributes.code;
 }
 
 export async function getSpotifyToken() {
-    const res = await getStrapiContent<{ attributes: { token: SpotifyToken } }>(
+    const client = new StrapiClient(STRAPI_SPOTIFY_TOKEN);
+    const res = await client.getContent<{ attributes: { token: SpotifyToken } }>(
         'spotify-token',
         {},
-        STRAPI_SPOTIFY_TOKEN
+       
     );
     return res?.attributes.token;
 }

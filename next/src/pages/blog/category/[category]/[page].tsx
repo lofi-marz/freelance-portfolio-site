@@ -49,7 +49,7 @@ export default function BlogPage({
                 title={`Page ${pagination.page}`}
                 description={`Blog posts page ${pagination.page}`}
             />
-            <div className="flex h-full w-full max-w-screen-md grow flex-col gap-20 font-title">
+            <div className="flex h-full w-full max-w-screen-md grow flex-col gap-20 px-5 font-title">
                 <h1 className="heading text-5xl font-bold lowercase">
                     {category.name}
                     <Dot />
