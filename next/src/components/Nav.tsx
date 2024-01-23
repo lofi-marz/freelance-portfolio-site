@@ -30,6 +30,7 @@ const links: { name: string; href: string }[] = [
     { name: 'Home', href: '/#home' },
     { name: 'About', href: '/#about' },
     { name: 'Projects', href: '/#projects' },
+    { name: 'Blog', href: '/blog/posts/1' },
 ];
 
 type NavLinksProps = { onClick: () => void };

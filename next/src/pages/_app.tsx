@@ -3,7 +3,7 @@ import 'highlight.js/styles/github-dark.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Analytics } from '@vercel/analytics/react';
-import { NextSeo } from 'next-seo';
+import { DefaultSeo, NextSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 import { ReactElement, ReactNode } from 'react';
 import { NextPage } from 'next';
@@ -21,9 +21,9 @@ export default function MyApp({
             <Head>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
-            <NextSeo
+            <DefaultSeo
                 title="Omari Thompson-Edwards"
+                titleTemplate="marz. | %s"
                 description="Nottingham-based freelance web developer."
             />
             {getLayout(<Component {...pageProps} />)}
