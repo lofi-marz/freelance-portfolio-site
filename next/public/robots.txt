@@ -3,8 +3,8 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://omarileon.me
+Host: https://www.omarileon.me
 
 # Sitemaps
-Sitemap: https://omarileon.me/sitemap.xml
-Sitemap: https://omarileon.me/blog-sitemap.xml
+Sitemap: https://www.omarileon.me/sitemap.xml
+Sitemap: https://www.omarileon.me/blog-sitemap.xml

@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: process.env.SITE_URL || 'https://omarileon.me',
+    siteUrl: process.env.SITE_URL || 'https://www.omarileon.me',
     generateRobotsTxt: true,
     exclude: [
         '/blog-sitemap.xml',
@@ -11,7 +11,7 @@ module.exports = {
     ],
     robotsTxtOptions: {
         additionalSitemaps: [
-            'https://omarileon.me/blog-sitemap.xml', // <==== Add here
+            'https://www.omarileon.me/blog-sitemap.xml', // <==== Add here
         ],
     },
 };

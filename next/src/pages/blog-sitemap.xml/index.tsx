@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const entries: ISitemapField[] = (await getAllArticles(0, 10000)).data.map(
         (a) =>
             ({
-                loc: 'https://omarileon.me/blog/' + a.attributes.slug,
+                loc: 'https://www.omarileon.me/blog/' + a.attributes.slug,
                 lastmod: a.attributes.createdAt,
             }) satisfies ISitemapField
     );
