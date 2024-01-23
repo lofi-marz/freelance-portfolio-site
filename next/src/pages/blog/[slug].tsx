@@ -120,6 +120,7 @@ export const getStaticProps: GetStaticProps<{
                 })),
                 readingTime: rt,
             },
+            revalidate: 3600,
         },
     };
 };
