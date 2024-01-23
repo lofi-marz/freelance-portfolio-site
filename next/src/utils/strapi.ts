@@ -17,7 +17,7 @@ const STRAPI_URL = process.env.STRAPI_URL || 'http://127.0.0.1:1337/api/';
 export const STRAPI_TOKEN = process.env.STRAPI_TOKEN || '';
 const STRAPI_SPOTIFY_TOKEN = process.env.STRAPI_SPOTIFY_TOKEN;
 
-class StrapiClient {
+export class StrapiClient {
     private token: String;
     private getHeaders() {
         return {
@@ -106,11 +106,9 @@ export async function getSpotifyCode() {
 
 export async function getSpotifyToken() {
     const client = new StrapiClient(STRAPI_SPOTIFY_TOKEN);
-    const res = await client.getContent<{ attributes: { token: SpotifyToken } }>(
-        'spotify-token',
-        {},
-       
-    );
+    const res = await client.getContent<{
+        attributes: { token: SpotifyToken };
+    }>('spotify-token', {});
     return res?.attributes.token;
 }
 

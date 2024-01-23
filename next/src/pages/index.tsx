@@ -14,9 +14,9 @@ import { GetStaticProps } from 'next';
 import { GetCurrentlyPlayingResponse } from '../utils/spotify';
 import {
     AboutContent,
-    getStrapiContent,
     GlobalContent,
     ProjectContent,
+    StrapiClient,
 } from '../utils/strapi';
 import { StrapiContentContextProvider } from '@/components/StrapiContextProvider';
 import { Projects } from '@/components/sections/projects';
@@ -152,6 +152,7 @@ export default function Home({ content }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+    const client = new StrapiClient();
     const query = qs.stringify(
         {
             populate: '*',
@@ -164,8 +165,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const [about = {}, projects = []] = await Promise.all([
         //getSpotifyProps(),
-        getStrapiContent<AboutContent>('about'),
-        getStrapiContent<ProjectContent[]>('projects?' + query),
+        client.getContent<AboutContent>('about'),
+        client.getContent<ProjectContent[]>('projects?' + query),
     ]);
 
     return { props: { content: { about, projects } } };
