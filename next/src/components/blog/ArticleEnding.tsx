@@ -3,7 +3,7 @@ import me from 'assets/me-brighton.jpg';
 import { Dot } from '../Dot';
 export function ArticleEnding() {
     return (
-        <div className="mt-24 flex flex-col  items-start justify-center gap-8 bg-theme-invert p-6 text-theme md:h-56 md:flex-row md:justify-center">
+        <div className="my-24 flex flex-col items-start justify-center  gap-8 rounded bg-theme-invert p-6 text-theme md:h-56 md:flex-row md:justify-center lg:my-12">
             <div className="relative aspect-square h-24 flex-shrink-0 overflow-clip rounded md:h-full">
                 <Image
                     src={me}
