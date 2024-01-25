@@ -10,9 +10,9 @@ export default async function handler(request: NextRequest) {
     // Make sure the font exists in the specified path:
 
     try {
-        const interRegularData = await fetch(
+        /*const interRegularData = await fetch(
             new URL('../../assets/Inter-Regular.ttf', import.meta.url)
-        ).then((res) => res.arrayBuffer());
+        ).then((res) => res.arrayBuffer());*/
         const interBoldData = await fetch(
             new URL('../../assets/Inter-Bold.ttf', import.meta.url)
         ).then((res) => res.arrayBuffer());
@@ -41,7 +41,7 @@ export default async function handler(request: NextRequest) {
                         height: '100%',
                         width: '100%',
                         fontSize: 20,
-                        fontFamily: '"Inter"',
+                        fontFamily: '"Inter Bold"',
                         paddingTop: '100px',
                         paddingLeft: '50px',
                         display: 'flex',
@@ -80,11 +80,6 @@ export default async function handler(request: NextRequest) {
                 width: 1200,
                 height: 630,
                 fonts: [
-                    {
-                        name: 'Inter',
-                        data: interRegularData,
-                        style: 'normal',
-                    },
                     {
                         name: 'Inter Bold',
                         data: interBoldData,
