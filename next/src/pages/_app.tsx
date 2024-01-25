@@ -22,7 +22,7 @@ export default function MyApp({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <DefaultSeo
-                title="Omari Thompson-Edwards"
+                title="Omari"
                 titleTemplate="marz. | %s"
                 description="Nottingham-based freelance web developer."
             />
