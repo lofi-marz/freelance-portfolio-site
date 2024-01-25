@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import {
+    GetStaticPaths,
+    GetStaticProps,
+    InferGetServerSidePropsType,
+    InferGetStaticPropsType,
+} from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
 import {
     MDXRemote,
@@ -23,19 +28,24 @@ const components: MDXRemoteProps['components'] = {
     a: ({ href, target }) => <Link href={href!} target={target} />,
 };
 hljs.registerLanguage('typescript', typescript);
-export default function Post({ post }: { post: Post }) {
+export default function Post({
+    post,
+    og,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
     const date = new Date(post.date);
     const readingMins = Math.round(post.readingTime.minutes);
     const suffix = readingMins === 1 ? 'mins' : 'min';
     useEffect(() => {
         hljs.highlightAll();
     }, []);
+
     return (
         <>
             <NextSeo
                 titleTemplate="mari. | %s"
                 title={post.title}
                 description={post.description ?? post.title}
+                openGraph={{ images: [{ url: og }] }}
             />
 
             <article className="prose prose-sm w-full px-5 py-8 font-body dark:prose-invert md:prose-base lg:prose-lg prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:first-of-type:my-0 prose-a:hover:underline md:max-w-screen-md">
@@ -93,6 +103,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<{
     post: Post;
+    og: string;
 }> = async ({ params }) => {
     const slug = params?.slug as string;
 
@@ -108,6 +119,14 @@ export const getStaticProps: GetStaticProps<{
     //console.log(post.attributes);
 
     const rt = readingTime(post.attributes.content);
+
+    const ogLink = new URL('http://www.omarileon.me/api/og');
+
+    ogLink.searchParams.append('title', post.attributes.title);
+    post.attributes.postCategories.data.forEach((c, i) =>
+        ogLink.searchParams.append('categories', c.attributes.name)
+    );
+
     return {
         props: {
             post: {
@@ -121,6 +140,7 @@ export const getStaticProps: GetStaticProps<{
                 })),
                 readingTime: rt,
             },
+            og: ogLink.toString(),
             revalidate: 3600,
         },
     };

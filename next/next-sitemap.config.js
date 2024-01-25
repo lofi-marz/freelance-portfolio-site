@@ -2,6 +2,7 @@
 module.exports = {
     siteUrl: process.env.SITE_URL || 'https://www.omarileon.me',
     generateRobotsTxt: true,
+
     exclude: [
         '/blog-sitemap.xml',
         '/blog/*',
