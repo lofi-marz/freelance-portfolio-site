@@ -22,7 +22,7 @@ import { STRAPI_TOKEN, getPost } from '@/utils/strapi';
 import Image from 'next/image';
 import { ArticleEnding, AuthorTag, BlogLayout } from '@/components/blog';
 import Link from 'next/link';
-const STRAPI_URL = process.env.STRAPI_URL ?? 'https://admin.myintimate.app';
+const STRAPI_URL = process.env.STRAPI_URL ?? 'https://cms.marileon.me';
 
 const components: MDXRemoteProps['components'] = {
     a: ({ href, target }) => <Link href={href!} target={target} />,
