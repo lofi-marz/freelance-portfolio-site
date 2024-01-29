@@ -15,7 +15,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@vercel/analytics": "^1.1.2",
     "@vercel/og": "^0.6.2",
-    "axios": "^1.6.5",
+    "axios": "^1.6.7",
     "clsx": "^2.1.0",
     "eslint-config-next": "^14.1.0",
     "framer-motion": "^11.0.3",
