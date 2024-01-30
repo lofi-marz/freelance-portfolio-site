@@ -15,7 +15,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@vercel/analytics": "^1.1.2",
     "@vercel/og": "^0.6.2",
-    "axios": "^1.6.5",
+    "axios": "^1.6.7",
     "clsx": "^2.1.0",
     "eslint-config-next": "^14.1.0",
     "framer-motion": "^11.0.3",
@@ -37,7 +37,7 @@
     "tailwindcss-react-aria-components": "1.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "6.2.1",
+    "@testing-library/jest-dom": "6.4.0",
     "@testing-library/react": "14.1.2",
     "@testing-library/user-event": "14.5.2",
     "@types/p5": "^1.7.6",
