@@ -134,11 +134,11 @@ export function Nav() {
     return (
         <nav
             className={clsx(
-                'heading fixed top-0 z-20 flex h-16 w-full items-center justify-between px-12 font-title text-xl  text-theme-invert'
+                'heading fixed top-0 z-20 flex h-16 w-full items-center justify-between px-6 font-title text-xl text-theme-invert  md:px-12'
             )}>
             <Logo />
             <div className="flex items-center justify-center gap-4">
-                <Link href="/blog" className="mx-6">
+                <Link href="/blog" className="mx-3 md:mx-6">
                     blog
                     <Dot />
                 </Link>
