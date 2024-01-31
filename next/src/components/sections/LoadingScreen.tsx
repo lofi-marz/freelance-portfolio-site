@@ -62,7 +62,7 @@ export function LoadingScreen({ onEnd }: LoadingScreenProps) {
     if (!visible) return null;
     return (
         <motion.div
-            className="themed-text fixed top-0 z-50 h-screen w-screen flex-col items-center justify-start overflow-hidden font-title text-8xl font-bold"
+            className="themed-text pointer-events-none fixed top-0 z-50 h-screen w-screen flex-col items-center justify-start overflow-hidden font-title text-8xl font-bold"
             initial="visible"
             animate={controls}
             layoutId="intro-section"

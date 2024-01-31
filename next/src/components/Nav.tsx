@@ -137,7 +137,11 @@ export function Nav() {
                 'heading fixed top-0 z-20 flex h-16 w-full items-center justify-between px-12 font-title text-xl  text-theme-invert'
             )}>
             <Logo />
-            <div className="flex gap-4">
+            <div className="flex items-center justify-center gap-4">
+                <Link href="/blog" className="mx-6">
+                    blog
+                    <Dot />
+                </Link>
                 <DarkModeToggle className="h-6" />
                 <MotionButton
                     className="flex flex-row items-center justify-center gap-2"
