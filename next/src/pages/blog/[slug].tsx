@@ -14,7 +14,7 @@ import {
 import readingTime from 'reading-time';
 import hljs from 'highlight.js/lib/core';
 import typescript from 'highlight.js/lib/languages/typescript';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import { NextSeo } from 'next-seo';
 import { Post } from 'types';

@@ -20,6 +20,10 @@ export default function MyApp({
         <ThemeProvider attribute="class" defaultTheme="dark">
             <Head>
                 <link rel="icon" href="/favicon.ico" />
+                <script
+                    async
+                    src="https://eu.umami.is/script.js"
+                    data-website-id="ee5487bf-e10b-426b-94f9-5ad3e77262e2"></script>
             </Head>
             <DefaultSeo
                 title="Omari"
