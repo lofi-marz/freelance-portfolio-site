@@ -191,7 +191,7 @@ export function Intro() {
                             </motion.div>
                         )}
                     </AnimatePresence>
-                    <header className="heading relative flex h-full w-fit max-w-screen-lg flex-col items-start justify-center gap-3 text-center text-5xl drop-shadow-xl saturate-0 md:text-7xl">
+                    <header className="heading relative flex h-full w-fit max-w-screen-lg flex-col items-start justify-center gap-3 text-center text-5xl bg-blend-difference drop-shadow-xl saturate-0 md:text-7xl">
                         <AnimatePresence mode="wait">
                             <motion.h2
                                 key={lineI}
