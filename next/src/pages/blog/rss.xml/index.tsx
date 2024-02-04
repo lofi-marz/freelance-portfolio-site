@@ -6,7 +6,9 @@ import {
 import { GetServerSideProps } from 'next';
 import { getAllArticles } from '@/utils/strapi';
 import { StrapiPostShortResponse } from 'types';
-export default function Rss() {}
+export default function Rss() {
+  
+}
 function buildRssItems(entries: StrapiPostShortResponse[]) {
     return entries
         .map((item) => {

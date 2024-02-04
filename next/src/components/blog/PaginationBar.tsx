@@ -28,14 +28,14 @@ export function PaginationBar({ current, start, end }: PaginationBarProps) {
                 {pages.map((page) => (
                     <PaginationLink
                         key={page}
-                        href={'/posts/' + page}
+                        href={'/blog/posts/' + page}
                         isCurrent={current === page}>
                         {page}
                     </PaginationLink>
                 ))}
                 <PaginationLink
                     key="next"
-                    href={'/posts/' + (current + 10)}
+                    href={'/blog/posts/' + (current + 10)}
                     disabled={pages[pages.length - 1] > end - 10}>
                     <FaChevronRight />
                 </PaginationLink>

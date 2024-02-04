@@ -14,6 +14,7 @@ import { FaGithub } from 'react-icons/fa';
 import { underlineVariants } from '@/components/sections/projects/variants';
 import { useRef } from 'react';
 import { cn } from '@/utils/index';
+import Link from 'next/link';
 
 const NoHoverTitleVariants: Variants = {
     initial: { bottom: 0, top: 'auto' },
@@ -155,9 +156,11 @@ export function Project({
             />
             <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent from-80% to-dark/50" />
             <div className="flex w-full flex-row flex-wrap-reverse gap-3  ">
-                <div className=" relative  z-10 flex h-12 items-center justify-center whitespace-nowrap px-10 font-semibold lowercase text-theme card-solid-theme-invert md:h-14 lg:h-20 lg:px-20">
+                <Link
+                    className=" relative z-10 flex h-12 items-center justify-center whitespace-nowrap px-10 font-semibold lowercase text-theme transition-all card-solid-theme-invert hover:bg-primary hover:text-light md:h-14 lg:h-20 lg:px-20"
+                    href={liveLink}>
                     {title}
-                </div>
+                </Link>
                 <div className="flex h-12 flex-row gap-3 md:h-14 lg:h-20">
                     <ProjectLink href={liveLink}>
                         <HiMiniArrowUpRight />
