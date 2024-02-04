@@ -82,7 +82,7 @@ export const trackVariants: Variants = {
 /* eslint-disable-next-line */
 const lines = ["hi, i'm omari", 'I develop creative experiences with code'];
 
-const LINE_CHANGE = 1 / 3;
+const LINE_CHANGE = 1 / 4;
 const DOTS_FADE_START = 0.05;
 const DOTS_FADE_END = 0.2;
 export function Intro() {
@@ -133,7 +133,7 @@ export function Intro() {
     return (
         <motion.section
             className={clsx(
-                'relative  flex h-[600vh] w-full flex-col items-start justify-start overflow-clip bg-theme font-title'
+                'relative  flex h-[800vh] w-full flex-col items-start justify-start overflow-clip bg-theme font-title'
             )}
             ref={target}
             initial="hide"
@@ -210,7 +210,7 @@ export function Intro() {
                         <FaArrowDown />
                     </motion.div>
                 </motion.div>
-                <GrowingDot scroll={spring} breakpoints={[0.6, 0.9]}>
+                <GrowingDot scroll={spring} breakpoints={[0.5, 0.8]}>
                     <About />
                 </GrowingDot>
             </motion.div>
