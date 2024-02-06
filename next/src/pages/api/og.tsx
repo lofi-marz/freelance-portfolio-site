@@ -13,9 +13,9 @@ export default async function handler(request: NextRequest) {
         /*const interRegularData = await fetch(
             new URL('../../assets/Inter-Regular.ttf', import.meta.url)
         ).then((res) => res.arrayBuffer());*/
-        const interBoldData = await fetch(
+        /*const interBoldData = await fetch(
             new URL('../../assets/Inter-Bold.ttf', import.meta.url)
-        ).then((res) => res.arrayBuffer());
+        ).then((res) => res.arrayBuffer());*/
 
         const imageData = await fetch(
             new URL('./../../assets/og-bg.webp', import.meta.url)
@@ -41,7 +41,7 @@ export default async function handler(request: NextRequest) {
                         height: '100%',
                         width: '100%',
                         fontSize: 20,
-                        fontFamily: '"Inter Bold"',
+
                         paddingTop: '100px',
                         paddingLeft: '50px',
                         display: 'flex',
@@ -79,14 +79,7 @@ export default async function handler(request: NextRequest) {
             {
                 width: 1200,
                 height: 630,
-                fonts: [
-                    {
-                        name: 'Inter Bold',
-                        data: interBoldData,
-                        style: 'normal',
-                        weight: 700,
-                    },
-                ],
+                fonts: [],
             }
         );
     } catch (e: any) {
