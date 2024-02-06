@@ -18,7 +18,7 @@ export default async function handler(request: NextRequest) {
         ).then((res) => res.arrayBuffer());
 
         const imageData = await fetch(
-            new URL('./../../assets/og-bg.webp', import.meta.url)
+            new URL('./../../assets/og-bg.png', import.meta.url)
         ).then((res) => res.arrayBuffer());
         //console.log('Url:', request.url);
         console.log('Request:', request);
