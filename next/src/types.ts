@@ -18,6 +18,7 @@ export type Post = {
     date: string;
     readingTime: ReadTimeResults;
     categories: PostCategory[];
+    slug: string;
 };
 
 export type PostCategory = {

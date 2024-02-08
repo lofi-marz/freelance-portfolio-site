@@ -16,7 +16,7 @@ import hljs from 'highlight.js/lib/core';
 import typescript from 'highlight.js/lib/languages/typescript';
 import { ReactElement, useEffect, useState } from 'react';
 
-import { NextSeo } from 'next-seo';
+import { ArticleJsonLd, NextSeo } from 'next-seo';
 import { Post } from 'types';
 import { STRAPI_TOKEN, getPost } from '@/utils/strapi';
 import Image from 'next/image';
@@ -46,6 +46,20 @@ export default function Post({
                 title={post.title}
                 description={post.description ?? post.title}
                 openGraph={{ images: [{ url: og }] }}
+            />
+            <ArticleJsonLd
+                useAppDir={false}
+                url={`https://www.omarileon.me/blog/${post.slug}`}
+                title={post.title}
+                images={[og]}
+                datePublished={post.date}
+                authorName={{
+                    name: 'Omari Thompson-Edwards',
+                    url: 'https://www.omarileon.me',
+                }}
+                publisherName="Omari Thompson-Edwards"
+                description={post.description}
+                isAccessibleForFree={true}
             />
 
             <article className="prose prose-sm w-full px-5 py-8 font-body dark:prose-invert md:prose-base lg:prose-lg prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:first-of-type:my-0 prose-a:hover:underline md:max-w-screen-md">
@@ -134,6 +148,7 @@ export const getStaticProps: GetStaticProps<{
                 description: post.attributes.description,
                 content: mdxSource,
                 date: post.attributes.publishedAt,
+                slug: post.attributes.slug,
                 categories: post.attributes.postCategories.data.map((v) => ({
                     name: v.attributes.name,
                     slug: v.attributes.slug,
