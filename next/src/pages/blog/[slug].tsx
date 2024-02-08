@@ -45,7 +45,27 @@ export default function Post({
                 titleTemplate="mari. | %s"
                 title={post.title}
                 description={post.description ?? post.title}
-                openGraph={{ images: [{ url: og }] }}
+                openGraph={{
+                    images: [
+                        {
+                            url: og,
+                            width: 1200,
+                            height: 630,
+                            alt: `Opengraph image for ${post.title}`,
+                        },
+                    ],
+                    type: 'article',
+                    article: {
+                        publishedTime: post.date,
+                        authors: ['https://www.omarileon.me'],
+                        tags: [
+                            'TypeScript',
+                            'JavaScript',
+                            'Web Development',
+                            'webdev',
+                        ],
+                    },
+                }}
             />
             <ArticleJsonLd
                 useAppDir={false}
