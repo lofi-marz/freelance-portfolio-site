@@ -14,6 +14,7 @@ import { GetStaticProps } from 'next';
 import { GetCurrentlyPlayingResponse } from '../utils/spotify';
 import {
     AboutContent,
+    fetchArticleBriefs,
     GlobalContent,
     ProjectContent,
     StrapiClient,
@@ -24,6 +25,7 @@ import qs from 'qs';
 import { Contact } from '@/components/sections/contact';
 import theme from '../../tailwind.config';
 import { DotsRow } from '../components/DotsRow';
+import { Blog } from '@/components/sections/blog';
 //const title = Poppins({ weight: ['600', '700', '800', '900'] });
 
 const headingVariants: Variants = {
@@ -59,21 +61,6 @@ function Title() {
                     variants={underlineVariants}></motion.div>
             </div>
         </motion.div>
-    );
-}
-
-function VideoBackground() {
-    return (
-        <div className="relative flex h-56 w-full items-center justify-center overflow-clip md:h-full">
-            <video
-                className="h-full w-full object-cover brightness-[.6] saturate-[.6]"
-                autoPlay
-                loop
-                muted>
-                <source src="/video.mp4" type="video/mp4" />
-            </video>
-            <SocialsDesktop />
-        </div>
     );
 }
 
@@ -144,6 +131,7 @@ export default function Home({ content }: HomeProps) {
                     <Intro />
 
                     <Projects />
+                    <Blog briefs={content.articleBriefs} />
                     <Contact />
                 </motion.div>
             </motion.div>
@@ -163,11 +151,12 @@ export const getStaticProps: GetStaticProps = async () => {
     );
     //TODO: How do I scale this up for more data
 
-    const [about = {}, projects = []] = await Promise.all([
+    const [about = {}, projects = [], articleBriefs = []] = await Promise.all([
         //getSpotifyProps(),
         client.getContent<AboutContent>('about'),
         client.getContent<ProjectContent[]>('projects?' + query),
+        fetchArticleBriefs().then(({ articles }) => articles),
     ]);
 
-    return { props: { content: { about, projects } } };
+    return { props: { content: { about, projects, articleBriefs } } };
 };

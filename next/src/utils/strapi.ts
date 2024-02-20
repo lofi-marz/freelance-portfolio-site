@@ -257,6 +257,7 @@ type StrapiContent<T> = {
 export type GlobalContent = {
     about: AboutContent;
     projects: ProjectContent[];
+    articleBriefs: PostBrief[];
 };
 
 type StrapiTimestamp = {
