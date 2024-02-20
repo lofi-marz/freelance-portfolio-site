@@ -168,9 +168,10 @@ export function Intro() {
                                     <motion.div
                                         key={i}
                                         className="absolute h-4/5 pt-6 md:h-full"
-                                        initial={{ rotate: 0 }}
+                                        initial={{ rotate: 0, scale: 0 }}
                                         animate={{
                                             rotate: 360 * (i / mockups.length),
+                                            scale: 1,
                                         }}
                                         transition={{
                                             ease: 'easeInOut',
