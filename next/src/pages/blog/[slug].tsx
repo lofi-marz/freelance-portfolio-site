@@ -46,6 +46,7 @@ export default function Post({
                 title={post.title}
                 description={post.description ?? post.title}
                 openGraph={{
+                    title: post.title,
                     images: [
                         {
                             url: og,
