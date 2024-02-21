@@ -64,7 +64,7 @@ export const getStaticProps: GetStaticProps<{
 }> = async () => {
     const pageNumber = 1;
 
-    const articleData = await fetchArticleBriefs(pageNumber);
+    const articleData = await fetchArticleBriefs(pageNumber, 20);
 
     return {
         props: { articleData },

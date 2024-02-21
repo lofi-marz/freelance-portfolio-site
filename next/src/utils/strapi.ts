@@ -242,8 +242,8 @@ function parseArticle(a: StrapiPostShortResponse): PostBrief {
         description: a.attributes.description,
     };
 }
-export async function fetchArticleBriefs(page = 1) {
-    return getAllArticles(page, 10).then((res) => ({
+export async function fetchArticleBriefs(page = 1, amount = 10) {
+    return getAllArticles(page, amount).then((res) => ({
         pagination: res.meta.pagination,
         articles: res.data.map(parseArticle),
     }));
