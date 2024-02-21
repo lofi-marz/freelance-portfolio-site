@@ -9,6 +9,7 @@ export function ArticleEnding() {
                     src={me}
                     alt="Me"
                     className="h-full w-full object-cover"
+                    style={{ maxWidth: 'none' }}
                 />
             </div>
             <div className="grow">
