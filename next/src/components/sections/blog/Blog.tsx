@@ -2,6 +2,7 @@ import { PostBrief } from 'types';
 import { Dot } from '../..';
 import Link from 'next/link';
 import { HiMiniArrowUpRight } from 'react-icons/hi2';
+import { Variants, motion } from 'framer-motion';
 
 export function Blog({ briefs }: { briefs: PostBrief[] }) {
     return (
@@ -19,6 +20,14 @@ export function Blog({ briefs }: { briefs: PostBrief[] }) {
     );
 }
 
+const articleCardVariants: Variants = {
+    hide: { opacity: 0, x: -50 },
+    show: { opacity: 1, x: 0 },
+};
+const timestampVariants: Variants = {
+    hide: { opacity: 0 },
+    show: { opacity: 1 },
+};
 function ArticleCard({ title, description, date, slug }: PostBrief) {
     const formattedDate = new Date(date).toLocaleDateString('en-us', {
         year: 'numeric',
@@ -26,11 +35,21 @@ function ArticleCard({ title, description, date, slug }: PostBrief) {
         day: 'numeric',
     });
     return (
-        <li className="flex flex-row text-primary">
-            <div className="heading hidden w-72 lowercase md:block">
+        <motion.li
+            className="flex flex-row text-primary"
+            initial="hide"
+            whileInView="show"
+            viewport={{ once: true }}>
+            <motion.div
+                className="heading hidden w-72 lowercase md:block"
+                variants={timestampVariants}
+                transition={{ ease: 'easeOut', duration: 1 }}>
                 {formattedDate}
-            </div>
-            <div className="flex w-full flex-col justify-between gap-3 text-xs text-theme md:gap-6 md:text-sm">
+            </motion.div>
+            <motion.div
+                className="flex w-full flex-col justify-between gap-3 text-xs text-theme md:gap-6 md:text-sm"
+                variants={articleCardVariants}
+                transition={{ ease: 'easeOut', duration: 1 }}>
                 <Link
                     href={`/blog/${slug}`}
                     className="heading text-2xl lowercase opacity-90 hover:underline md:text-4xl">
@@ -44,7 +63,7 @@ function ArticleCard({ title, description, date, slug }: PostBrief) {
                     className="heading flex w-fit flex-row items-center justify-center gap-1 rounded-full text-primary opacity-90 transition-all hover:underline">
                     read
                 </Link>
-            </div>
-        </li>
+            </motion.div>
+        </motion.li>
     );
 }
