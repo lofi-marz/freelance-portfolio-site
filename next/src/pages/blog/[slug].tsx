@@ -25,7 +25,11 @@ import Link from 'next/link';
 const STRAPI_URL = process.env.STRAPI_URL ?? 'https://cms.marileon.me';
 
 const components: MDXRemoteProps['components'] = {
-    a: ({ href, target }) => <Link href={href!} target={target} />,
+    a: ({ href, target, children }) => (
+        <Link href={href!} target={target}>
+            {children}
+        </Link>
+    ),
 };
 hljs.registerLanguage('typescript', typescript);
 export default function Post({
@@ -148,7 +152,7 @@ export const getStaticProps: GetStaticProps<{
         console.log(`Post ${slug} not found.`);
         return { notFound: true };
     }
-    console.log(post.attributes.postCategories.data);
+    console.log(post.attributes.content);
     const mdxSource = await serialize(post.attributes.content);
 
     //console.log(post.attributes);
