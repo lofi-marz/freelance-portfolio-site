@@ -113,7 +113,7 @@ export default function Post({
                 isAccessibleForFree={true}
             />
 
-            <article className="prose prose-sm w-full px-5 pb-8 font-body dark:prose-invert md:prose-base lg:prose-lg marker:text-primary prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:max-w-[60%] prose-img:first-of-type:my-0 prose-a:hover:underline md:max-w-screen-md">
+            <article className="prose prose-sm prose-stone w-full px-5 pb-8 font-body dark:prose-invert md:prose-base lg:prose-lg marker:text-primary prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:max-w-[60%] prose-img:first-of-type:my-0 prose-a:hover:underline md:max-w-screen-md">
                 <ul className="flex w-full items-center justify-center gap-8">
                     {post.categories.map(({ name, slug }) => (
                         <span className="font-bold text-primary" key={slug}>
