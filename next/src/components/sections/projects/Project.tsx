@@ -142,7 +142,7 @@ export function Project({
     return (
         <motion.div
             className={cn(
-                'relative flex aspect-square h-full w-full max-w-[90vh] flex-row items-end justify-start gap-3 overflow-clip rounded-[3rem] p-6 text-xl font-semibold lg:text-3xl',
+                'relative flex aspect-square h-full w-full max-w-[90vh] flex-row items-end justify-start gap-3 overflow-clip rounded-[3rem] p-6 text-xl font-semibold xl:text-3xl',
                 className
             )}
             ref={target}
