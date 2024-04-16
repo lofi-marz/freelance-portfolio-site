@@ -1,20 +1,15 @@
 import axios from 'axios';
 import hljs from 'highlight.js/lib/core';
 import typescript from 'highlight.js/lib/languages/typescript';
-import {
-    GetStaticPaths,
-    GetStaticProps, InferGetStaticPropsType
-} from 'next';
-import {
-    MDXRemote,
-    MDXRemoteProps
-} from 'next-mdx-remote';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import {
-    AnchorHTMLAttributes, DetailedHTMLProps,
+    AnchorHTMLAttributes,
+    DetailedHTMLProps,
     HTMLAttributes,
     ReactElement,
-    useEffect
+    useEffect,
 } from 'react';
 import readingTime from 'reading-time';
 
@@ -185,7 +180,6 @@ export default function PostPage({
                     </ul>
                 </div>
                 <ArticleEnding />
-                <JoinNewsletter />
             </article>
         </>
     );
