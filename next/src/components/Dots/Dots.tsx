@@ -99,8 +99,10 @@ function Dot({
             );
             return ((sin + 1) / 2) * 0.5;
         }
-        const xPos = (x.get() - MOUSE_OFFSET_X - dotX) / window.screen.width;
-        const yPos = (y.get() - MOUSE_OFFSET_y - dotY) / window.screen.height;
+        const xPos: number =
+            (x.get() - MOUSE_OFFSET_X - dotX) / window.screen.width;
+        const yPos: number =
+            (y.get() - MOUSE_OFFSET_y - dotY) / window.screen.height;
 
         return Math.hypot(xPos, yPos);
     });
