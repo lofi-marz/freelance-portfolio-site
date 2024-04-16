@@ -4,9 +4,10 @@ import Image from 'next/image';
 import me from 'assets/me-brighton.jpg';
 import {
     motion,
-    MotionValue, useSpring,
+    MotionValue,
+    useSpring,
     useTransform,
-    Variants
+    Variants,
 } from 'framer-motion';
 import theme from '../../../../tailwind.config';
 import { cn } from 'utils';

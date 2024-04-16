@@ -23,7 +23,6 @@ body {
 }
 
 @layer components {
-
     .heading {
         @apply font-bold tracking-tight;
     }

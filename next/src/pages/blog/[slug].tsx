@@ -1,29 +1,32 @@
 import axios from 'axios';
-import {
-    GetStaticPaths,
-    GetStaticProps,
-    InferGetServerSidePropsType,
-    InferGetStaticPropsType,
-} from 'next';
-import { serialize } from 'next-mdx-remote/serialize';
-import {
-    MDXRemote,
-    MDXRemoteProps,
-    MDXRemoteSerializeResult,
-} from 'next-mdx-remote';
-import readingTime from 'reading-time';
 import hljs from 'highlight.js/lib/core';
 import typescript from 'highlight.js/lib/languages/typescript';
-import { ReactElement, useEffect, useState } from 'react';
+import {
+    GetStaticPaths,
+    GetStaticProps, InferGetStaticPropsType
+} from 'next';
+import {
+    MDXRemote,
+    MDXRemoteProps
+} from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import {
+    AnchorHTMLAttributes, DetailedHTMLProps,
+    HTMLAttributes,
+    ReactElement,
+    useEffect
+} from 'react';
+import readingTime from 'reading-time';
 
-import { ArticleJsonLd, NextSeo } from 'next-seo';
-import { Post, PostBrief, WithChildrenProps } from 'types';
-import { STRAPI_TOKEN, fetchArticleBriefs, getPost } from '@/utils/strapi';
-import Image from 'next/image';
-import { ArticleEnding, AuthorTag, BlogLayout } from '@/components/blog';
-import Link from 'next/link';
 import { Dot } from '@/components/Dot';
+import { ArticleEnding, AuthorTag, BlogLayout } from '@/components/blog';
+import { JoinNewsletter } from '@/components/blog/JoinNewsletter';
 import { cn } from '@/utils/index';
+import { STRAPI_TOKEN, fetchArticleBriefs, getPost } from '@/utils/strapi';
+import { motion } from 'framer-motion';
+import { ArticleJsonLd, NextSeo } from 'next-seo';
+import Link from 'next/link';
+import { Post, PostBrief, WithChildrenProps } from 'types';
 const STRAPI_URL = process.env.STRAPI_URL ?? 'https://cms.marileon.me';
 function FormattedHeading({ children }: WithChildrenProps) {
     if (typeof children !== 'string') return children;
@@ -45,19 +48,33 @@ function FormattedHeading({ children }: WithChildrenProps) {
     );
 }
 const components: MDXRemoteProps['components'] = {
-    a: ({ href, target, children }) => (
+    a: ({
+        href,
+        target,
+        children,
+    }: DetailedHTMLProps<
+        AnchorHTMLAttributes<HTMLAnchorElement>,
+        HTMLAnchorElement
+    >) => (
         <Link href={href!} target={target}>
             {children}
         </Link>
     ),
-    h2: ({ className, children, ...props }) => (
+    h2: ({
+        className,
+        children,
+        ...props
+    }: DetailedHTMLProps<
+        HTMLAttributes<HTMLHeadingElement>,
+        HTMLHeadingElement
+    >) => (
         <h2 {...props} className={cn(className, 'lowercase')}>
             <FormattedHeading>{children}</FormattedHeading>
         </h2>
     ),
 };
 hljs.registerLanguage('typescript', typescript);
-export default function Post({
+export default function PostPage({
     post,
     relatedPosts,
     og,
@@ -114,15 +131,34 @@ export default function Post({
             />
 
             <article className="prose prose-sm prose-stone w-full px-5 pb-8 font-body dark:prose-invert md:prose-base lg:prose-lg marker:text-primary prose-headings:font-title prose-h1:mb-0 prose-a:transition-all prose-img:mx-auto prose-img:max-w-[60%] prose-img:first-of-type:my-0 prose-a:hover:underline md:max-w-screen-md">
-                <ul className="flex w-full items-center justify-center gap-8">
+                <div className="flex w-full items-center justify-center gap-8">
                     {post.categories.map(({ name, slug }) => (
-                        <span className="font-bold text-primary" key={slug}>
-                            {name}
-                        </span>
+                        <motion.span
+                            className="relative flex font-bold text-primary"
+                            key={slug}
+                            initial="hide"
+                            whileHover="show">
+                            <motion.div
+                                className="absolute  inset-0 rounded-full bg-primary"
+                                variants={{
+                                    hide: { scaleX: 0 },
+                                    show: { scaleX: [null, 1, 1, 0] },
+                                }}
+                            />
+                            <p className="relative my-0 md:m-0 lg:my-0">
+                                {name}
+                            </p>
+                        </motion.span>
                     ))}
-                </ul>
+                </div>
                 <div className="flex w-full flex-col gap-2">
-                    <h1>{post.title}</h1>
+                    <motion.h1
+                        layoutId={`title-${post.slug}`}
+                        layout="preserve-aspect"
+                        transition={{ duration: 0.4 }}
+                        className="z-10">
+                        {post.title}
+                    </motion.h1>
                     <AuthorTag />
                     <div className="flex flex-row text-sm">
                         {date.toDateString()} •{' '}
@@ -149,6 +185,7 @@ export default function Post({
                     </ul>
                 </div>
                 <ArticleEnding />
+                <JoinNewsletter />
             </article>
         </>
     );
@@ -231,4 +268,4 @@ export const getStaticProps: GetStaticProps<{
     };
 };
 
-Post.getLayout = (page: ReactElement) => <BlogLayout>{page}</BlogLayout>;
+PostPage.getLayout = (page: ReactElement) => <BlogLayout>{page}</BlogLayout>;

@@ -8,6 +8,7 @@ import { NextSeo } from 'next-seo';
 import { PostBrief } from 'types';
 import Link from 'next/link';
 import { Dot } from '@/components/Dot';
+import { motion } from 'framer-motion';
 function PostLink({
     article: { title, date, slug, description },
 }: {
@@ -21,9 +22,12 @@ function PostLink({
     });
     return (
         <li className="flex flex-col gap-3">
-            <h2 className="font-title text-2xl font-semibold leading-tight sm:text-3xl">
+            <motion.h2
+                className="font-title text-2xl font-semibold leading-tight sm:text-3xl"
+                layoutId={`title-${slug}`}
+                layout="preserve-aspect">
                 {title}
-            </h2>
+            </motion.h2>
             <p className="text-xs opacity-[.9]">{formattedDate}</p>
             <p className="font-body text-base">{description}</p>
             <Link

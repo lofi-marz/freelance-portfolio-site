@@ -39,7 +39,7 @@
     "**/*.ts",
     "**/*.tsx",
     "types.d.ts"
-  ],
+, "../test/tst.ts"  ],
   "exclude": [
     "node_modules"
   ]

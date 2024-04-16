@@ -7,7 +7,8 @@ import { DefaultSeo, NextSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 import { ReactElement, ReactNode } from 'react';
 import { NextPage } from 'next';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient();
 type NextPageWithLayout = NextPage & {
     getLayout: (page: ReactElement) => ReactNode;
 };
@@ -17,21 +18,23 @@ export default function MyApp({
 }: AppProps & { Component: NextPageWithLayout }) {
     const getLayout = Component.getLayout || ((page) => page);
     return (
-        <ThemeProvider attribute="class" defaultTheme="dark">
-            <Head>
-                <link rel="icon" href="/favicon.ico" />
-                <script
-                    async
-                    src="https://eu.umami.is/script.js"
-                    data-website-id="ee5487bf-e10b-426b-94f9-5ad3e77262e2"></script>
-            </Head>
-            <DefaultSeo
-                title="Omari"
-                titleTemplate="marz. | %s"
-                description="Nottingham-based freelance web developer."
-            />
-            {getLayout(<Component {...pageProps} />)}
-            <Analytics />
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider attribute="class" defaultTheme="dark">
+                <Head>
+                    <link rel="icon" href="/favicon.ico" />
+                    <script
+                        async
+                        src="https://eu.umami.is/script.js"
+                        data-website-id="ee5487bf-e10b-426b-94f9-5ad3e77262e2"></script>
+                </Head>
+                <DefaultSeo
+                    title="Omari"
+                    titleTemplate="marz. | %s"
+                    description="Nottingham-based freelance web developer."
+                />
+                {getLayout(<Component {...pageProps} />)}
+                <Analytics />
+            </ThemeProvider>
+        </QueryClientProvider>
     );
 }

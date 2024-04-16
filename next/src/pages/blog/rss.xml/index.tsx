@@ -35,7 +35,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
             description: attributes.description,
             url: `${SITE_URL}/blog/${attributes.slug}`,
             date: attributes.createdAt,
-            
         })
     );
     /*const rssFeed = `<?xml version="1.0"?>
