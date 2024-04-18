@@ -133,13 +133,6 @@ export default function PostPage({
                             key={slug}
                             initial="hide"
                             whileHover="show">
-                            <motion.div
-                                className="absolute  inset-0 rounded-full bg-primary"
-                                variants={{
-                                    hide: { scaleX: 0 },
-                                    show: { scaleX: [null, 1, 1, 0] },
-                                }}
-                            />
                             <p className="relative my-0 md:m-0 lg:my-0">
                                 {name}
                             </p>
